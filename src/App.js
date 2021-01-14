@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import Home from "./screens/Home/Home";
 import './App.css';
 
+/** Componente que contiene todas las rutas
+ *  de navegación en la aplicación
+ */
 function App() {
   return (
     <Router>
