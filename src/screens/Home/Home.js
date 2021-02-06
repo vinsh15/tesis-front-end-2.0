@@ -1,5 +1,8 @@
-import React from 'react';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import React, { useContext } from 'react';
+import Sidebar from '../../components/SideBar/Sidebar';
+
+import AuthContext from "../../auth/context/context";
+import googleAuth from "../../firebase/googleAuth";
 
 const dummydata = ["Grafo 1", "Grafo 2", "Grafo 3"];
 
@@ -8,6 +11,22 @@ const dummydata = ["Grafo 1", "Grafo 2", "Grafo 3"];
  */
 function Home() {
     const [drawerItems, setDrawerItems] = React.useState(dummydata);
+    const { user, setUser } = useContext(AuthContext);
+
+    /**
+     * Hacer inicio de sesión
+     */
+    const login = async () => {
+        await googleAuth(setUser);
+    }
+
+    /**
+     * Cerrar sesión
+     */
+    const logout = () => {
+        localStorage.removeItem('user');
+        setUser(null);
+    }
 
     return (
         <>
