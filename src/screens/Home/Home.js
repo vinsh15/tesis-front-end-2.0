@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
-import Sidebar from '../../components/SideBar/Sidebar';
+import React, { useState } from "react";
+import Sidebar from "../../components/SideBar/Sidebar";
 
-const dummydata = ["Grafo 1", "Grafo 2", "Grafo 3"];
+const dummydata = ["Proyecto 1", "Proyecto 2", "Proyecto 3"];
 
-/** Componente que representa la página 
+/** Componente que representa la página
  *  principal de navegación
  */
 function Home() {
-    const [drawerItems, setDrawerItems] = React.useState(dummydata);
-    const [usuario, setUsuario] = useState(false);
-  
-    async function prueba() {
-      console.log("usuario true");
-      setUsuario(true);
-    }
-  
+  const [drawerItems, setDrawerItems] = React.useState(dummydata);
+  const [user, setUsuario] = useState(false);
 
-    return (
-        <>
-            <Sidebar items={drawerItems} user="false" />
-            <h1>Home Page</h1>
-        </>
-    );
+  async function changeState() {
+    console.log("usuario true");
+    setUsuario(true);
+  }
+
+  return (
+    <>
+      <Sidebar items={drawerItems} user={user} state={changeState} />
+      {user ? <h1 style={{marginLeft: "40%",}}>Home Page</h1> : null}
+    </>
+  );
 }
 
 export default Home;
