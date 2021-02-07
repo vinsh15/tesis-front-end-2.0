@@ -17,7 +17,7 @@ function Home() {
      * Hacer inicio de sesión
      */
     const login = async () => {
-        await googleAuth(setUser);
+        const projects = await googleAuth(setUser);
     }
 
     /**
@@ -31,7 +31,7 @@ function Home() {
     return (
         <>
             <Sidebar items={drawerItems}/>
-            <h1>Home Page</h1>
+            <h1 onClick={login}>Home Page</h1>
         </>
     );
 }
