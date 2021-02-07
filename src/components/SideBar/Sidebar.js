@@ -49,8 +49,8 @@ function Sidebar(props) {
   function Logged(items) {
     return (
       <List>
-        {items.map((text, index) => {
-          return <SidebarItem key={index} item={text} index={index} />;
+        {items.map((item,index) => {
+          return <SidebarItem key={item.proyecto.id} item={item} index={index} />;
         })}
       </List>
     );
