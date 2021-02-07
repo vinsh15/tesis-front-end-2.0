@@ -14,9 +14,9 @@ function App() {
   /**
    * Restaurar usuario si ya se ha iniciado sesión
    */
-  const restoreUser = async () => {
-    const user = await localStorage.getItem('user');
-    if(user) setUser(JSON.parse(user));
+  const restoreUser = () => {
+    const tempUser = localStorage.getItem('user');
+    if(tempUser) setUser(JSON.parse(tempUser));
   }
 
   useEffect(() => {
