@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../../components/Sidebar/Sidebar';
+import Sidebar from '../../components/SideBar/Sidebar';
 
 const dummydata = ["Grafo 1", "Grafo 2", "Grafo 3"];
 
