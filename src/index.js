@@ -4,8 +4,13 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import axios from "axios";
 import { FirebaseAppProvider } from 'reactfire';
 import firebaseConfig from "./firebase/firebase-config";
+import settings from "./config/settings/settings";
+
+axios.defaults.baseURL = settings.apiUrl;
+axios.defaults.timeout = 10000;
 
 ReactDOM.render(
   <React.StrictMode>
