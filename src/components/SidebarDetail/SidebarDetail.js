@@ -8,7 +8,6 @@ import TreeItem from '@material-ui/lab/TreeItem';
 
 const useStyles = makeStyles({
   root: {
-    height: 216,
     flexGrow: 1,
     maxWidth: 400,
   },
@@ -31,8 +30,6 @@ function SidebarDetail(props) {
   const renderTree = (nodes) => (
     <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.id}>
       {Array.isArray(nodes.arquitecturas) ? nodes.arquitecturas.map((node) => renderTree(node)) : null}
-      {Array.isArray(nodes.nodes) ? nodes.nodes.map((node) => renderTree(node)): null}
-      {Array.isArray(nodes.edges) ? nodes.edges.map((edge) => renderTree(edge)): null}
     </TreeItem>
   );
   
@@ -48,8 +45,7 @@ function SidebarDetail(props) {
           onNodeToggle={handleToggle}
           onNodeSelect={handleSelect}
         >
-        {renderTree(props.item)}
-  
+        {renderTree(props.item)} 
         </TreeView>
       </AccordionDetails>
     </>

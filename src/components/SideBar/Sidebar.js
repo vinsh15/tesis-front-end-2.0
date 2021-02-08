@@ -5,6 +5,7 @@ import SidebarItem from "../SidebarItem/SidebarItem";
 import LoginButton from "../LoginButton/LoginButton";
 import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
+import Loader from "../Loader/Loader";
 
 /** Componente que representa la barra lateral de navegación */
 
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     backgroundColor: "#18202C",
   },
-  // necessary for content to be below app bar
+
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
@@ -47,8 +48,9 @@ function Sidebar(props) {
   const classes = useStyles();
 
   function Logged(items) {
+    
     return (
-      <List>
+      <List>      
         {items.map((item,index) => {
           return <SidebarItem key={item.proyecto.id} item={item} index={index} />;
         })}
@@ -60,10 +62,11 @@ function Sidebar(props) {
     return (
       <div className={classes.title}>
         <h1>Iniciar sesión</h1>
-        <LoginButton state={props.state} />
+        <LoginButton login={props.login} />
       </div>
     );
   }
+
 
   return (
     <div className={classes.root}>
@@ -75,7 +78,10 @@ function Sidebar(props) {
         }}
         anchor="left"
       >
-        {props.user ? Logged(props.items) : unLogged()}
+        
+        { props.user ? Logged(props.items)  
+        : unLogged()}
+        
       </Drawer>
     </div>
   );
