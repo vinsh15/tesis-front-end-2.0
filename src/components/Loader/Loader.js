@@ -1,7 +1,7 @@
 import React from 'react';
 import './Loader.css'
 
-/** Componente que representa el loader */
+/** Componente que representa el loader de carga*/
 function Loader(props) {
     return (
     <div className="loading show">

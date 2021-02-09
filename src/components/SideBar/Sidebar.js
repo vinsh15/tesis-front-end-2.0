@@ -1,16 +1,18 @@
 import React from "react";
 import "./Sidebar.css";
-import PropTypes from "prop-types";
-import SidebarItem from "../SidebarItem/SidebarItem";
-import LoginButton from "../LoginButton/LoginButton";
+
 import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+
 import Loader from "../Loader/Loader";
+import LoginButton from "../LoginButton/LoginButton";
+import SidebarItem from "../SidebarItem/SidebarItem";
 
-/** Componente que representa la barra lateral de navegación */
 
+/** Creacion de capa de estilos para el componente */
 const drawerWidth = "35%";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -21,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawer: {
     width: drawerWidth,
+    minWidth: 200,
     flexShrink: 0,
     backgroundColor: "#18202C",
   },
@@ -36,28 +39,65 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3),
   },
   title: {
-    margin: 'auto',
-    textAlign: 'center',
+    margin: "auto",
+    textAlign: "center",
     width: "95%",
-    color: 'white',
-    letterSpacing: 1
-}
+    color: "white",
+    letterSpacing: 1,
+  },
+  display: {
+    display: "flex",
+    padding: 10,
+  },
 }));
+
+/**
+ * Componente que representa la barra lateral
+ * princial de navegacion
+ */
 
 function Sidebar(props) {
   const classes = useStyles();
 
+  /**
+   * Creacion de elementos en barra lateral segun contenido de usuario existente
+   * @param {Array} items almacena el arreglo de proyecto correspondiente al usuario
+   * @returns {} estructura de elementos en la barra lateral
+   */
   function Logged(items) {
-    
-    return (
-      <List>      
-        {items.map((item,index) => {
-          return <SidebarItem key={item.proyecto.id} item={item} index={index} />;
-        })}
-      </List>
-    );
+    if (Array.isArray(items)) {
+      return (
+        <>
+          <div className={classes.display}>
+            <Button variant="contained" onClick={props.logout}>
+              <ExitToAppIcon />
+            </Button>
+          </div>
+          <List>
+            {items.map((item, index) => {
+              return <SidebarItem key={item.name} item={item} index={index} />;
+            })}
+          </List>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <div className={classes.display}>
+            <Button variant="contained" onClick={props.logout}>
+              <ExitToAppIcon />
+            </Button>
+          </div>
+          <h1>No tienes proyectos actualmente</h1>
+        </>
+      );
+    }
   }
 
+  /**
+   * Creacion de elementos en barra lateral para usuario no existente
+   * @returns {} estructura de elementos en la barra lateral
+   */
   function unLogged() {
     return (
       <div className={classes.title}>
@@ -66,7 +106,6 @@ function Sidebar(props) {
       </div>
     );
   }
-
 
   return (
     <div className={classes.root}>
@@ -78,17 +117,16 @@ function Sidebar(props) {
         }}
         anchor="left"
       >
-        
-        { props.user ? Logged(props.items)  
-        : unLogged()}
-        
+        {props.loader ? (
+          <Loader />
+        ) : props.user ? (
+          Logged(props.items)
+        ) : (
+          unLogged()
+        )}
       </Drawer>
     </div>
   );
 }
-
-Sidebar.propTypes = {
-  items: PropTypes.array,
-};
 
 export default Sidebar;

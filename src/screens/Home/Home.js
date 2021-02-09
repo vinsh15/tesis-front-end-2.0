@@ -1,47 +1,26 @@
-import React, { useContext } from "react";
-import Sidebar from "../../components/SideBar/Sidebar";
-import AuthContext from "../../auth/context/context";
-import googleAuth from "../../firebase/googleAuth";
+import React, { useContext, useState, useEffect } from "react";
 
-const dummydata = [
-  {
-    proyecto: {
-      id: "proyecto1Id",
-      name: "Proyecto 1",
-      arquitecturas: [
-        {
-          id: "arquitectura1Id",
-          name: "Arquitectura 1",
-          elements: {
-            nodes: [{ id: "nodo1" }],
-            edges: [{ id: "edge1" }],
-          },
-        },
-        {
-          id: "arquitectura2Id",
-          name: "Arquitectura 1",
-          elements: {
-            nodes: [{ id: "nodo1" }],
-            edges: [{ id: "edge1" }],
-          },
-        },
-      ],
-    },
-  },
-];
+import Sidebar from "../../components/SideBar/Sidebar";
+
+import AuthContext from "../../auth/context/context";
+import { googleAuth, getProjects } from "../../firebase/googleAuth";
+
 
 /** Componente que representa la página
  *  principal de navegación
  */
 function Home() {
-  const [drawerItems, setDrawerItems] = React.useState(dummydata);
+  const [drawerItems, setDrawerItems] = React.useState();
+  const [load, setLoad] = useState(true);
   const { user, setUser } = useContext(AuthContext);
 
   /**
    * Llamar a google auth para establecer ususario
    */
   const login = async () => {
-    await googleAuth(setUser);
+    let drawer = await googleAuth(setUser);
+    setDrawerItems(drawer);
+    setLoad(false);
   };
 
   /**
@@ -56,9 +35,31 @@ function Home() {
    * Cambiar estado de usuario e iniciar sesion
    */
   async function changeState() {
-    console.log(dummydata);
     login();
   }
+
+  /**
+   * Actualizar arreglo de proyectos
+   */
+  const getProject = async () => {
+    let elements = await getProjects(user, setUser);
+    setDrawerItems(elements);
+    console.log(elements, "Elements");
+  };
+
+  /**
+   * Llamar a la actualizacion de proyectos
+   */
+  async function get() {
+    getProject();
+  }
+
+  useEffect(() => {
+    setLoad(false);
+    if (user) {
+      get();
+    }
+  }, [user]);
 
   return (
     <>
@@ -67,8 +68,8 @@ function Home() {
         user={user}
         login={changeState}
         logout={logout}
+        loader={load}
       />
-
       {user ? <h1 style={{ marginLeft: "40%" }}>Home Page</h1> : null}
     </>
   );

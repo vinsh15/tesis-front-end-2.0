@@ -1,11 +1,13 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import TreeView from '@material-ui/lab/TreeView';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import TreeItem from '@material-ui/lab/TreeItem';
+import React from "react";
 
+import { makeStyles } from "@material-ui/core/styles";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import TreeItem from "@material-ui/lab/TreeItem";
+import TreeView from "@material-ui/lab/TreeView";
+
+/** Creacion de capa de estilos para el componente */
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
@@ -13,6 +15,10 @@ const useStyles = makeStyles({
   },
 });
 
+/**
+ * Componente que representa el contenido
+ * del item añadido como proyecto en la barra lateral
+ */
 function SidebarDetail(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState([]);
@@ -26,13 +32,19 @@ function SidebarDetail(props) {
     setSelected(nodeIds);
   };
 
-
+  /**
+   * Funcion recursiva que agrega elementos al arbol como nodos
+   * @param {Array} items almacena el arreglo de proyecto correspondiente al usuario
+   * @returns {} estructura de elementos en detalle
+   */
   const renderTree = (nodes) => (
-    <TreeItem key={nodes.id} nodeId={nodes.id} label={nodes.id}>
-      {Array.isArray(nodes.arquitecturas) ? nodes.arquitecturas.map((node) => renderTree(node)) : null}
+    <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name}>
+      {Array.isArray(nodes.architectures)
+        ? nodes.architectures.map((node) => renderTree(node))
+        : null}
     </TreeItem>
   );
-  
+
   return (
     <>
       <AccordionDetails>
@@ -45,11 +57,11 @@ function SidebarDetail(props) {
           onNodeToggle={handleToggle}
           onNodeSelect={handleSelect}
         >
-        {renderTree(props.item)} 
+          {renderTree(props.item)}
         </TreeView>
       </AccordionDetails>
     </>
   );
-};
+}
 
 export default SidebarDetail;
