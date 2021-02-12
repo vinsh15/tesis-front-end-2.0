@@ -25,30 +25,36 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
     minWidth: 200,
     flexShrink: 0,
-    backgroundColor: "#18202C",
+    backgroundColor: "var(--primaryDark)",
   },
   drawerPaper: {
     width: drawerWidth,
-    backgroundColor: "#18202C",
+    backgroundColor: "var(--primaryDark)",
   },
 
   toolbar: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
-    backgroundColor: "#18202C",
+    backgroundColor: "var(--primaryDark)",
     padding: theme.spacing(3),
   },
   title: {
     margin: "auto",
     textAlign: "center",
     width: "95%",
-    color: "white",
+    color: 'var(--background)',
     letterSpacing: 1,
+    fontFamily: 'var(--font-family-headline)'
   },
   display: {
     display: "flex",
     padding: 10,
   },
+  h1: {
+    color: 'var(--background)',
+    margin: 'auto',
+    textAlign: 'center',
+  }
 }));
 
 /**
@@ -88,7 +94,7 @@ function Sidebar(props) {
               <ExitToAppIcon />
             </Button>
           </div>
-          <h1>No tienes proyectos actualmente</h1>
+          <h1 className={classes.h1}>No tienes proyectos actualmente</h1>
         </>
       );
     }

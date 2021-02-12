@@ -1,0 +1,38 @@
+/** Global CSS variables **/
+
+/** Theme and variables **/
+
+:root {
+    
+    /** Font family **/
+  
+    --font-family-headline: "IBM Plex Serif", serif;
+    --font-family-content: "IBM Plex Sans", sans-serif;
+  
+    /** Primary colors **/
+  
+    --primaryDark: #18202C;
+    --primaryIndigo: #6c62d9;
+    --primaryBright: #80e8e8;
+  
+    /** Secundary colors **/
+  
+    --secondaryPurple: #a65ba6;
+    --secondaryRed: #e65945;
+    --secondaryYellow: #ffc74d;
+    --secondaryPink: #f2a291;
+    --secondaryGreen: #54d26f;
+  
+    /** UI colors **/
+  
+    --type: #16161d;
+    --background: #fafafa;
+    --error: #ef1b26;
+    --sucess: #36f36b;
+    --uiDarkGrey: #7B788D;
+    --uiMidGrey: #b8b6c7;
+    --uiLightGrey: #f8f7fc;
+    --shadow: rgba(206,217,224,.5);
+    --disabled: #f0f0f0;
+    --disabledFont: #666666;
+  }

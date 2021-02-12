@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { GlobalStyle } from "./styles/Global";
+import "./App.css";
+import "./styles/Theme/variables.css";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./screens/Home/Home";
-import './App.css';
 
 import AuthContext from "./auth/context/context";
 
@@ -15,22 +18,25 @@ function App() {
    * Restaurar usuario si ya se ha iniciado sesión
    */
   const restoreUser = () => {
-    const tempUser = localStorage.getItem('user');
-    if(tempUser) setUser(JSON.parse(tempUser));
-  }
+    const tempUser = localStorage.getItem("user");
+    if (tempUser) setUser(JSON.parse(tempUser));
+  };
 
   useEffect(() => {
     restoreUser();
-  }, [])
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      <Router>
-        <Switch>
-          <Route path="/" component={Home} />
-        </Switch>
-      </Router>
-    </AuthContext.Provider>
+    <>
+      <GlobalStyle />
+      <AuthContext.Provider value={{ user, setUser }}>
+        <Router>
+          <Switch>
+            <Route path="/" component={Home} />
+          </Switch>
+        </Router>
+      </AuthContext.Provider>
+    </>
   );
 }
 
