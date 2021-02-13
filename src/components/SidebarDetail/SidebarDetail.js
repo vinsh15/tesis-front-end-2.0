@@ -42,6 +42,7 @@ function SidebarDetail(props) {
       {Array.isArray(nodes.architectures)
         ? nodes.architectures.map((node) => renderTree(node))
         : null}
+      
     </TreeItem>
   );
 

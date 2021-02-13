@@ -44,6 +44,7 @@ function Home() {
   const getProject = async () => {
     let elements = await getProjects(user, setUser);
     setDrawerItems(elements);
+    setLoad(false);
     console.log(elements, "Elements");
   };
 
@@ -55,11 +56,11 @@ function Home() {
   }
 
   useEffect(() => {
-    setLoad(false);
     if (user) {
       get();
     }
   }, [user]);
+
 
   return (
     <>

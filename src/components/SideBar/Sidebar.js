@@ -8,6 +8,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import Loader from "../Loader/Loader";
 import LoginButton from "../LoginButton/LoginButton";
+import { FileReader } from "../FileReader/FileReader";
 import SidebarItem from "../SidebarItem/SidebarItem";
 
 
