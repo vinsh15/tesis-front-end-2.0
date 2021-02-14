@@ -1,4 +1,5 @@
 import React from "react";
+import './SidebarItem.css';
 
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
@@ -19,7 +20,8 @@ const useStyles = makeStyles({
     width: "95%",
     margin: "auto",
     marginBottom: "15px",
-  },
+    
+  }
 });
 
 /** Componente que representa el item proyecto
@@ -40,7 +42,7 @@ function SidebarItem(props) {
 
   return (
     <div className={classes.root}>
-      <Accordion>
+      <Accordion className={classes.accordion}>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-label="Expand"
@@ -59,9 +61,7 @@ function SidebarItem(props) {
         <Divider />
         <AccordionActions>
           <Button size="small" onClick={handleOpen}>Agregar arquitectura</Button>
-          <Button size="small" color="primary">
-            Save
-          </Button>
+          
         </AccordionActions>
       </Accordion>
       {open ? <Modal open={open} onClose={handleClose} /> : null}

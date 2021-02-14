@@ -1,26 +1,31 @@
 import React from "react";
+import "./FileReader.css";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
+import TextField from "@material-ui/core/TextField";
 
-function getModalStyle() {
-  const top = 50;
-  const left = 50;
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`,
-  };
-}
+import Dropzone from "react-dropzone-uploader";
+import "react-dropzone-uploader/dist/styles.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    width: 'auto',
-    backgroundColor: 'var(--background)',
-    border: 'none',
+    top: "30%",
+    left: "20%",
+    width: "60%",
+    border: "none",
+    borderRadius: 5,
+    background: "var(--background)",
     boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
+    padding: "32px 24px 20px",
+  },
+  h1: {
+    color: "var(--uiDarkGrey)",
+    margin: "auto",
+    marginBottom: 35,
+    textAlign: "center",
+    fontFamily: "var(font-family-content)",
   },
 }));
 
@@ -29,18 +34,30 @@ const useStyles = makeStyles((theme) => ({
  */
 function FileReader(props) {
   const classes = useStyles();
-  // getModalStyle is not a pure function, we roll the style only on the first render
-  const [modalStyle] = React.useState(getModalStyle);
+  const [name, setName] = React.useState("");
 
-  const body = (
-    <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">
-        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-      </p>
-      <FileReader />
-    </div>
-  );
+  const handleChangeStatus = ({ meta }, status) => {
+    //console.log(status, meta)
+  };
+
+  const onSubmit = (file, formData) => {
+    formData.append("file", file.file, file.meta.name);
+    file.remove();
+  };
+
+  const handleSubmit = (allFiles) => {
+    const formData = new FormData();
+
+    if (name !== "")
+      allFiles.forEach((file) => {
+        //onSubmit(file, formData)
+        console.log(file);
+      });
+  };
+
+  const handleChange = (event) => {
+    setName(event.target.value);
+  };
 
   return (
     <div>
@@ -50,7 +67,33 @@ function FileReader(props) {
         open={props.open}
         onClose={props.onClose}
       >
-        {body}
+        <div className={classes.paper}>
+          <h2 className={classes.h1}>Agregar arquitectura</h2>
+          <TextField
+            required
+            id="outlined-basic"
+            label="Nombre"
+            value={name}
+            onChange={handleChange}
+            variant="outlined"
+          />
+          <Dropzone
+            onChangeStatus={handleChangeStatus}
+            onSubmit={handleSubmit}
+            styles={{ dropzone: { maxHeight: 200, maxWidth: 400 } }}
+            accept="text/xml"
+            inputContent={(files, extra) =>
+              extra.reject
+                ? "XML files only"
+                : "Agrega archivos o haz click para buscar"
+            }
+            styles={{
+              dropzoneReject: { borderColor: "red", backgroundColor: "#DAA" },
+              inputLabel: (files, extra) =>
+                extra.reject ? { color: "red" } : {},
+            }}
+          />
+        </div>
       </Modal>
     </div>
   );

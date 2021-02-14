@@ -7,7 +7,7 @@
     /** Font family **/
   
     --font-family-headline: "IBM Plex Serif", serif;
-    --font-family-content: "IBM Plex Sans", sans-serif;
+    --font-family-content: "Roboto", "Helvetica", "Arial", sans-serif;
   
     /** Primary colors **/
   

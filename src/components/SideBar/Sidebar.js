@@ -4,11 +4,11 @@ import "./Sidebar.css";
 import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
 import Button from "@material-ui/core/Button";
+import IconButton from '@material-ui/core/IconButton'
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import Loader from "../Loader/Loader";
 import LoginButton from "../LoginButton/LoginButton";
-import { FileReader } from "../FileReader/FileReader";
 import SidebarItem from "../SidebarItem/SidebarItem";
 
 
@@ -50,11 +50,16 @@ const useStyles = makeStyles((theme) => ({
   display: {
     display: "flex",
     padding: 10,
+    justifyContent: 'flex-end',
+  },
+  icon: {
+    color: 'var(--background)'
   },
   h1: {
     color: 'var(--background)',
     margin: 'auto',
     textAlign: 'center',
+    fontFamily: 'var(font-family-content)'
   }
 }));
 
@@ -76,9 +81,9 @@ function Sidebar(props) {
       return (
         <>
           <div className={classes.display}>
-            <Button variant="contained" onClick={props.logout}>
+            <IconButton className={classes.icon} onClick={props.logout}>
               <ExitToAppIcon />
-            </Button>
+            </IconButton>
           </div>
           <List>
             {items.map((item, index) => {
@@ -91,9 +96,9 @@ function Sidebar(props) {
       return (
         <>
           <div className={classes.display}>
-            <Button variant="contained" onClick={props.logout}>
+            <IconButton className={classes.icon} onClick={props.logout}>
               <ExitToAppIcon />
-            </Button>
+            </IconButton>
           </div>
           <h1 className={classes.h1}>No tienes proyectos actualmente</h1>
         </>

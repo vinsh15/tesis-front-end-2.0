@@ -1,0 +1,61 @@
+.dzu-inputLabel {
+  margin-top: 5%;
+  margin: auto;
+  display: block !important;
+  color: var(--uiDarkGrey) !important;
+  outline: none;
+  transition: border 0.24s ease-in-out;
+  overflow: none !important;
+  border-radius: 5px;
+  border: 1px solid var(--uiMidGrey) !important;
+  font-family: var(--font-family-content) !important;
+  font-weight: 100 !important;
+  padding: 18.5px 14px;
+  font-size: 1rem !important;
+}
+
+.dzu-inputLabel:hover {
+  border: 1px solid var(--type) !important;
+}
+
+.dzu-dropzone {
+  margin: 15px auto !important;
+  width: 80%;
+  background-color: var(--background);
+  overflow: unset !important;
+  border: none !important;
+}
+
+.dzu-previewContainer {
+  border: 1px solid var(--uiMidGrey) !important;
+  border-radius: 5px;
+}
+
+.dzu-previewContainer:hover {
+  border: 1px solid var(--type) !important;
+}
+
+.MuiFormLabel-root .Mui-focused {
+  color: var(--uiDarkGrey) !important;
+}
+
+.dzu-submitButton {
+  border-radius: 5px !important;
+  font-family: var(--font-family-content) !important;
+  font-size: 1rem !important;
+  background-color: var(--uiDarkGrey) !important;
+  color: var(--background) !important;
+  padding: 10px 15px !important;
+  line-height: 1rem !important;
+  font-weight: 500 !important;
+}
+
+.dzu-inputLabelWithFiles {
+  font-weight: 500 !important;
+  border-radius: 5px !important;
+  font-family: var(--font-family-content) !important;
+  font-size: 1rem !important;
+  background-color: var(--uiDarkGrey) !important;
+  color: var(--background) !important;
+  padding: 5px 10px !important;
+}

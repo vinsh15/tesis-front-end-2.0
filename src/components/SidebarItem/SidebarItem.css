@@ -1,0 +1,8 @@
+.MuiButton-root {
+    text-transform: none !important;
+    background-color: var(--uiDarkGrey) !important;
+    color: var(--background) !important;
+    padding: 5px 10px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+}

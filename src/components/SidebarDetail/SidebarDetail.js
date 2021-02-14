@@ -34,7 +34,7 @@ function SidebarDetail(props) {
 
   /**
    * Funcion recursiva que agrega elementos al arbol como nodos
-   * @param {Array} items almacena el arreglo de proyecto correspondiente al usuario
+   * @param {Array} items almacena el arreglo de proyectos correspondiente al usuario
    * @returns {} estructura de elementos en detalle
    */
   const renderTree = (nodes) => (
