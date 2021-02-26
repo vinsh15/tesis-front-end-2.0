@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "32px 24px 20px",
   },
   h1: {
-    color: "var(--uiDarkGrey)",
+    color: "var(--primaryDark)",
     margin: "auto",
     marginBottom: 35,
     textAlign: "center",

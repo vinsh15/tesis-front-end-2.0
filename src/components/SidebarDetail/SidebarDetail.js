@@ -41,8 +41,7 @@ function SidebarDetail(props) {
     <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name}>
       {Array.isArray(nodes.architectures)
         ? nodes.architectures.map((node) => renderTree(node))
-        : null}
-      
+        : null}      
     </TreeItem>
   );
 

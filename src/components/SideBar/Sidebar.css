@@ -1,1 +1,17 @@
+.MuiAppBar-colorPrimary {
+    color: var(--background) !important;
+    background-color: var(--primaryDark) !important;
+}
 
+.divider{
+    background-color:var(--background) !important;
+    opacity: 0.8 !important;
+    width: 95%;
+    margin-left: 2.5% !important;
+    margin-bottom: 2.5% !important;
+}
+
+.list {
+    height: 95% !important;
+    overflow: auto;
+}

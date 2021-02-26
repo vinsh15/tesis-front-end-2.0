@@ -1,15 +1,14 @@
 import React from "react";
-import './SidebarItem.css';
+import "./SidebarItem.css";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
-import AccordionActions from '@material-ui/core/AccordionActions';
+import AccordionActions from "@material-ui/core/AccordionActions";
 import Button from "@material-ui/core/Button";
-import Checkbox from "@material-ui/core/Checkbox";
-import Divider from '@material-ui/core/Divider';
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Typography from "@material-ui/core/Typography";
 
 import Modal from "../FileReader/FileReader";
 import SidebarDetail from "../SidebarDetail/SidebarDetail";
@@ -20,8 +19,10 @@ const useStyles = makeStyles({
     width: "95%",
     margin: "auto",
     marginBottom: "15px",
-    
-  }
+  },
+  accordion: {
+    backgroundColor: 'var(--background)'
+  } 
 });
 
 /** Componente que representa el item proyecto
@@ -46,22 +47,16 @@ function SidebarItem(props) {
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-label="Expand"
-          aria-controls="additional-actions1-content"
           id={props.item.name}
         >
-          <FormControlLabel
-            aria-label="Acknowledge"
-            onClick={(event) => event.stopPropagation()}
-            onFocus={(event) => event.stopPropagation()}
-            control={<Checkbox />}
-            label={props.item.name}
-          />
+          <Typography>{props.item.name}</Typography>
         </AccordionSummary>
         <SidebarDetail item={props.item} />
-        <Divider />
+        <Divider className="dividerItem"/>
         <AccordionActions>
-          <Button size="small" onClick={handleOpen}>Agregar arquitectura</Button>
-          
+          <Button size="small" variant="outlined" onClick={handleOpen}>
+            Agregar arquitectura
+          </Button>
         </AccordionActions>
       </Accordion>
       {open ? <Modal open={open} onClose={handleClose} /> : null}

@@ -1,6 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
+import './Home.css';
 
 import Sidebar from "../../components/SideBar/Sidebar";
+
+import Swal from "sweetalert2";
 
 import AuthContext from "../../auth/context/context";
 import { googleAuth, getProjects } from "../../firebase/googleAuth";
@@ -27,8 +30,22 @@ function Home() {
    * Cerrar sesión
    */
   const logout = () => {
-    localStorage.removeItem("user");
-    setUser(null);
+    Swal.fire({
+      text: '¿Seguro que deseas cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: 'var(--success)',
+      cancelButtonColor: 'var(--error)',
+      confirmButtonText: 'Si, seguro'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setLoad(true);
+        localStorage.removeItem("user");
+        setUser(null);
+        setLoad(false);
+      }
+      
+    })
   };
 
   /**
@@ -57,6 +74,7 @@ function Home() {
 
   useEffect(() => {
     if (user) {
+      setLoad(true);
       get();
     }
   }, [user]);
