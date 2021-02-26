@@ -6,7 +6,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
 
 import AppBar from "@material-ui/core/AppBar";
-import AccountIcon from '@material-ui/icons/AccountCircleOutlined';
+import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import Toolbar from "@material-ui/core/Toolbar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -26,12 +26,14 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
   },
+
   appBar: {
     transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
   },
+
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
@@ -40,24 +42,29 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+
   menuButton: {
     marginRight: theme.spacing(2),
   },
+
   hide: {
     display: "none",
   },
+
   drawer: {
     width: drawerWidth,
     minWidth: 200,
     flexShrink: 0,
     backgroundColor: "var(--primaryDark)",
   },
+
   drawerPaper: {
     width: drawerWidth,
     backgroundColor: "var(--primaryDark)",
     boxShadow:
       "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
   },
+
   drawerHeader: {
     display: "flex",
     alignItems: "center",
@@ -65,22 +72,15 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
     justifyContent: "space-between",
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: -drawerWidth,
+
+  drawerFooter: {
+    display: "flex",
+    alignItems: "center",
+    padding: theme.spacing(0, 1),
+    ...theme.mixins.toolbar,
+    justifyContent: "space-between",
   },
-  contentShift: {
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-    marginLeft: 0,
-  },
+
   title: {
     margin: "auto",
     textAlign: "center",
@@ -89,24 +89,22 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: 1,
     fontFamily: "var(--font-family-headline)",
   },
-  display: {
-    display: "flex",
-    padding: 10,
-    justifyContent: "flex-end",
-  },
+  
   icon: {
     color: "var(--background)",
   },
+
   h1: {
     color: "var(--background)",
     margin: "auto",
     textAlign: "center",
     fontFamily: "var(font-family-content)",
   },
-  p : {
+
+  p: {
     marginLeft: 5,
-    fontSize: '1rem',
-  }
+    fontSize: "1rem",
+  },
 }));
 
 /**
@@ -127,70 +125,82 @@ function Sidebar(props) {
     setOpen(false);
   };
 
+    /**
+   * Creacion de barra superior del SideBar con informacion del usuario 
+   * @returns {JSX} estructura de elementos en la barra lateral
+   */
+  function SideBarHeader() {
+    return (
+      <>
+        <div className={classes.drawerHeader}>
+          <IconButton className={classes.icon}>
+            <AccountIcon />
+            <p className={classes.p}>{props.user.displayName}</p>
+          </IconButton>
+          <IconButton className={classes.icon} onClick={handleDrawerClose}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider className="divider" />
+      </>
+    );
+  }
+
   /**
-   * Creacion de elementos en barra lateral segun contenido de usuario existente
+   * Creacion de barra inferior fija del SideBar con boton logout 
+   * @returns {JSX} estructura de elementos en la barra lateral
+   */
+  function SideBarFooter() {
+    return (
+      <>
+        <Divider className="divider" />
+        <div className={classes.drawerFooter}>
+          <IconButton className={classes.icon} onClick={props.logout}>
+            <ExitToAppIcon />
+          </IconButton>
+        </div>
+      </>
+    );
+  }
+
+  /**
+   * Agregar elementos en barra lateral segun proyectos del usuario
    * @param {Array} items almacena el arreglo de proyecto correspondiente al usuario
-   * @returns {} estructura de elementos en la barra lateral
+   * @returns {JSX} estructura de elementos en la barra lateral
    */
   function Logged(items) {
     if (Array.isArray(items)) {
       return (
         <>
-          <div className={classes.drawerHeader}>
-          <IconButton className={classes.icon} >
-              <AccountIcon /> <p className={classes.p}>{props.user.displayName}</p>
-            </IconButton>
-            <IconButton className={classes.icon} onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider className="divider" />
+          {SideBarHeader()}
           <List className="list">
             {items.map((item, index) => {
               return <SidebarItem key={item.name} item={item} index={index} />;
             })}
           </List>
-          <Divider className="divider" />
-          <div className={classes.drawerHeader}>
-            <IconButton className={classes.icon} onClick={props.logout}>
-              <ExitToAppIcon />
-            </IconButton>
-          </div>
+          {SideBarFooter()}
         </>
       );
     } else {
       return (
         <>
-          <div className={classes.drawerHeader}>
-            <IconButton className={classes.icon} onClick={handleDrawerClose}>
-              {theme.direction === "ltr" ? (
-                <ChevronLeftIcon />
-              ) : (
-                <ChevronRightIcon />
-              )}
-            </IconButton>
-          </div>
-          <Divider />
+          {SideBarHeader()}
           <h1 className={classes.h1} className="list">
             No tienes proyectos actualmente
           </h1>
-          <div className={classes.drawerHeader}>
-            <IconButton className={classes.icon} onClick={props.logout}>
-              <ExitToAppIcon />
-            </IconButton>
-          </div>
+          {SideBarFooter()}
         </>
       );
     }
   }
 
   /**
-   * Creacion de elementos en barra lateral para usuario no existente
-   * @returns {} estructura de elementos en la barra lateral
+   * Barra lateral con contenido para iniciar sesion
+   * @returns {JSX} estructura de elementos en la barra lateral
    */
   function unLogged() {
     return (
