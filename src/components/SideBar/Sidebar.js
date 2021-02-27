@@ -78,7 +78,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
   },
 
   title: {
@@ -179,7 +179,7 @@ function Sidebar(props) {
           {SideBarHeader()}
           <List className="list">
             {items.map((item, index) => {
-              return <SidebarItem key={item.name} item={item} index={index} />;
+              return <SidebarItem key={item.name} item={item} index={index} setItem={props.setItem}/>;
             })}
           </List>
           {SideBarFooter()}
@@ -229,6 +229,7 @@ function Sidebar(props) {
             className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
+            <p className={classes.h1} style={{marginLeft: '10px'}}>{props.item}</p>
           </IconButton>
         </Toolbar>
       </AppBar>

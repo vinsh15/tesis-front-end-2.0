@@ -13,7 +13,8 @@ import { googleAuth, getProjects } from "../../firebase/googleAuth";
  *  principal de navegación
  */
 function Home() {
-  const [drawerItems, setDrawerItems] = React.useState();
+  const [drawerItems, setDrawerItems] = useState();
+  const [item, setItem] = useState();
   const [load, setLoad] = useState(true);
   const { user, setUser } = useContext(AuthContext);
 
@@ -80,16 +81,26 @@ function Home() {
   }, [user]);
 
 
+  const setProject = (itemSelected) => {   
+    setItem(itemSelected)
+  }
+
+  useEffect(() => {
+    console.log(item, "selected!!!")
+  }, [item]);
+
   return (
     <>
       <Sidebar
+        item={item}
         items={drawerItems}
+        setItem={setProject}
         user={user}
         login={changeState}
         logout={logout}
         loader={load}
       />
-      {user ? <h1 style={{ marginLeft: "40%" }}>Home Page</h1> : null}
+      {item ? <h1 style={{ marginLeft: "40%" }}>{item}</h1> : null}
     </>
   );
 }

@@ -51,7 +51,9 @@ function SidebarItem(props) {
         >
           <Typography>{props.item.name}</Typography>
         </AccordionSummary>
-        <SidebarDetail item={props.item} />
+
+        <SidebarDetail item={props.item} setItem={props.setItem}/>
+        
         <Divider className="dividerItem"/>
         <AccordionActions>
           <Button size="small" variant="outlined" onClick={handleOpen}>

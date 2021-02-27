@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import Swal from "sweetalert2";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
@@ -29,21 +31,52 @@ function SidebarDetail(props) {
   };
 
   const handleSelect = (event, nodeIds) => {
-    setSelected(nodeIds);
+    if (nodeIds !== selected) {
+      Swal.fire({
+        text: "¿Deseas mostrar " + { nodeIds } + " ?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "var(--success)",
+        cancelButtonColor: "var(--error)",
+        confirmButtonText: "Si, seguro",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setSelected(nodeIds);
+        }
+      });
+    }
   };
 
   /**
    * Funcion recursiva que agrega elementos al arbol como nodos
    * @param {Array} items almacena el arreglo de proyectos correspondiente al usuario
-   * @returns {} estructura de elementos en detalle
+   * @returns {JSX} estructura de elementos en detalle
    */
   const renderTree = (nodes) => (
-    <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name}>
-      {Array.isArray(nodes.architectures)
-        ? nodes.architectures.map((node) => renderTree(node))
-        : null}      
-    </TreeItem>
+    <>
+      {console.log(nodes)}
+      {nodes.name ? (
+        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name}>
+          {Array.isArray(nodes.elements.edges)
+            ? nodes.elements.edges.map((node) => renderTree(node))
+            : null}
+        </TreeItem>
+      ) : (
+        <TreeItem
+          key={nodes.data.id}
+          nodeId={nodes.data.id}
+          label={nodes.data.id}
+        ></TreeItem>
+      )}
+    </>
   );
+
+  useEffect(() => {
+    if (selected) {
+      console.log(selected);
+      props.setItem(selected);
+    }
+  }, [selected]);
 
   return (
     <>
@@ -57,7 +90,9 @@ function SidebarDetail(props) {
           onNodeToggle={handleToggle}
           onNodeSelect={handleSelect}
         >
-          {renderTree(props.item)}
+          {props.item.architectures.map((architecture) =>
+            renderTree(architecture)
+          )}
         </TreeView>
       </AccordionDetails>
     </>
