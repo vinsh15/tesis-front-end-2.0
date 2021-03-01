@@ -1,12 +1,13 @@
 import React from "react";
 import "./FileReader.css";
+import "react-dropzone-uploader/dist/styles.css";
 
 import { makeStyles } from "@material-ui/core/styles";
+import { postArchitecture } from "../../api/architecture/architecture";
+import Dropzone from "react-dropzone-uploader";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 
-import Dropzone from "react-dropzone-uploader";
-import "react-dropzone-uploader/dist/styles.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -40,21 +41,52 @@ function FileReader(props) {
     //console.log(status, meta)
   };
 
-  const onSubmit = (file, formData) => {
+  /**
+   * Agrega el archivo al form-data y lo elimina del dropzone
+   * @param {File} file archivo XML
+   * @param {FormData} formData objeto form-data
+   */
+  const addFile = (file, formData) => {
     formData.append("file", file.file, file.meta.name);
     file.remove();
   };
 
-  const handleSubmit = (allFiles) => {
+  /**
+   * Construir el form-data
+   * @param {Array} allFiles arreglo que contiene todos los archivos XML
+   */
+  const getFormData = (allFiles) => {
     const formData = new FormData();
+    formData.append('uid', props.uid);
+    formData.append('name', name);
+    formData.append('index', props.index);
+    allFiles.forEach(file => {
+      addFile(file, formData);
+    })
+    return formData;
+  }
 
-    if (name !== "")
-      allFiles.forEach((file) => {
-        //onSubmit(file, formData)
-        console.log(file);
-      });
+  /**
+   * 
+   * @param {Array} allFiles arreglo que contiene todos los archivos XML
+   */
+  const handleSubmit = async (allFiles) => {
+    if(name !== ""){
+      const formData = getFormData(allFiles);
+      var response = await postArchitecture(formData);
+      if(response !== 'Error'){
+        //Respuesta fallida
+      }
+      else{
+        //Respuesta exitosa
+      }
+    }
   };
 
+  /**
+   * Actualizar el nombre según se actualice el TextField
+   * @param {Event} event objeto de tipo evento
+   */
   const handleChange = (event) => {
     setName(event.target.value);
   };
@@ -68,7 +100,7 @@ function FileReader(props) {
         onClose={props.onClose}
       >
         <div className={classes.paper}>
-          <h2 className={classes.h1}>Agregar arquitectura</h2>
+          <h2 className={classes.h1}>Agregar {props.type}</h2>
           <TextField
             required
             id="outlined-basic"
@@ -85,7 +117,7 @@ function FileReader(props) {
             inputContent={(files, extra) =>
               extra.reject
                 ? "XML files only"
-                : "Agrega archivos o haz click para buscar"
+                : "Agrega archivos o has click para buscar"
             }
             styles={{
               dropzoneReject: { borderColor: "red", backgroundColor: "#DAA" },
