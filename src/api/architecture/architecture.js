@@ -13,7 +13,7 @@ const postArchitecture = async (formData) => {
         return response.data;
     }
     catch(error){
-        return error;
+        return "Error";
     }
 }
 
