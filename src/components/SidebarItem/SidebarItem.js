@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./SidebarItem.css";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
+import AuthContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -32,9 +33,11 @@ function SidebarItem(props) {
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
+  const {user} = useContext(AuthContext);
 
   const handleOpen = () => {
     setOpen(true);
+    console.log(user.uid);
   };
 
   const handleClose = () => {
@@ -61,7 +64,15 @@ function SidebarItem(props) {
           </Button>
         </AccordionActions>
       </Accordion>
-      {open ? <Modal open={open} onClose={handleClose} /> : null}
+      {open ? (
+          <Modal 
+            open={open} 
+            onClose={handleClose} 
+            uid={user.uid}
+            index={props.index}
+            type={"Arquitectura"}
+          />
+        ) : null}
     </div>
   );
 }
