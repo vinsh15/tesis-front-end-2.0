@@ -57,7 +57,7 @@ function SidebarItem(props) {
         <Divider className="dividerItem"/>
         <AccordionActions>
           <Button size="small" variant="outlined" onClick={handleOpen}>
-            Agregar arquitectura
+            Agregar Arquitectura
           </Button>
         </AccordionActions>
       </Accordion>

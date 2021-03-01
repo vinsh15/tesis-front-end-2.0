@@ -23,17 +23,13 @@ const useStyles = makeStyles({
  */
 function SidebarDetail(props) {
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState([]);
   const [selected, setSelected] = React.useState([]);
 
-  const handleToggle = (event, nodeIds) => {
-    setExpanded(nodeIds);
-  };
 
   const handleSelect = (event, nodeIds) => {
-    if (nodeIds !== selected) {
+    if (event.target.innerText !== selected) {
       Swal.fire({
-        text: "¿Deseas mostrar " + { nodeIds } + " ?",
+        text: "¿Deseas mostrar " + event.target.innerText + " ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "var(--success)",
@@ -41,7 +37,8 @@ function SidebarDetail(props) {
         confirmButtonText: "Si, seguro",
       }).then((result) => {
         if (result.isConfirmed) {
-          setSelected(nodeIds);
+          console.log(event.target.innerText)
+          setSelected(event.target.innerText);
         }
       });
     }
@@ -49,16 +46,16 @@ function SidebarDetail(props) {
 
   /**
    * Funcion recursiva que agrega elementos al arbol como nodos
-   * @param {Array} items almacena el arreglo de proyectos correspondiente al usuario
+   * @param {Array} node almacena el arreglo de proyectos correspondiente al usuario
    * @returns {JSX} estructura de elementos en detalle
    */
-  const renderTree = (nodes) => (
+  const renderTree = (nodes, select) => (
     <>
-      {console.log(nodes)}
+      {console.log(nodes, select)}
       {nodes.name ? (
-        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name}>
-          {Array.isArray(nodes.elements.edges)
-            ? nodes.elements.edges.map((node) => renderTree(node))
+        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name} onLabelClick={select ? handleSelect : null}>
+          {Array.isArray(nodes.versions)
+            ? nodes.versions.map((node) => renderTree(node, true))
             : null}
         </TreeItem>
       ) : (
@@ -84,14 +81,10 @@ function SidebarDetail(props) {
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-          expanded={expanded}
-          selected={selected}
-          onNodeToggle={handleToggle}
-          onNodeSelect={handleSelect}
+          defaultExpandIcon={<ChevronRightIcon />}         
         >
           {props.item.architectures.map((architecture) =>
-            renderTree(architecture)
+            renderTree(architecture, false)
           )}
         </TreeView>
       </AccordionDetails>

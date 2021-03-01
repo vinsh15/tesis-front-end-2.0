@@ -7,17 +7,19 @@ import { Drawer, List } from "@material-ui/core";
 
 import AppBar from "@material-ui/core/AppBar";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
-import Toolbar from "@material-ui/core/Toolbar";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Toolbar from "@material-ui/core/Toolbar";
 
 import Loader from "../Loader/Loader";
 import LoginButton from "../LoginButton/LoginButton";
+import NavbarItem from "../NavbarItem/NavbarItem";
 import SidebarItem from "../SidebarItem/SidebarItem";
 
 /** Creacion de capa de estilos para el componente */
@@ -89,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: 1,
     fontFamily: "var(--font-family-headline)",
   },
-  
+
   icon: {
     color: "var(--background)",
   },
@@ -104,6 +106,16 @@ const useStyles = makeStyles((theme) => ({
   p: {
     marginLeft: 5,
     fontSize: "1rem",
+  },
+
+  button: {
+    width: "95%",
+    margin: "auto",
+    textTransform: "none !important",
+    color: "var(--background) !important",
+    border: "1px solid var(--background) !important",
+    padding: "5px 10px !important",
+    cursor: "pointer !important",
   },
 }));
 
@@ -125,8 +137,8 @@ function Sidebar(props) {
     setOpen(false);
   };
 
-    /**
-   * Creacion de barra superior del SideBar con informacion del usuario 
+  /**
+   * Creacion de barra superior del SideBar con informacion del usuario
    * @returns {JSX} estructura de elementos en la barra lateral
    */
   function SideBarHeader() {
@@ -146,12 +158,20 @@ function Sidebar(props) {
           </IconButton>
         </div>
         <Divider className="divider" />
+        <Button
+          size="small"
+          variant="outlined"
+          className={classes.button}
+          onClick={console.log("new project")}
+        >
+          Agregar Proyecto
+        </Button>
       </>
     );
   }
 
   /**
-   * Creacion de barra inferior fija del SideBar con boton logout 
+   * Creacion de barra inferior fija del SideBar con boton logout
    * @returns {JSX} estructura de elementos en la barra lateral
    */
   function SideBarFooter() {
@@ -179,7 +199,14 @@ function Sidebar(props) {
           {SideBarHeader()}
           <List className="list">
             {items.map((item, index) => {
-              return <SidebarItem key={item.name} item={item} index={index} setItem={props.setItem}/>;
+              return (
+                <SidebarItem
+                  key={item.name}
+                  item={item}
+                  index={index}
+                  setItem={props.setItem}
+                />
+              );
             })}
           </List>
           {SideBarFooter()}
@@ -189,9 +216,7 @@ function Sidebar(props) {
       return (
         <>
           {SideBarHeader()}
-          <h1 className={classes.h1} className="list">
-            No tienes proyectos actualmente
-          </h1>
+          <h1 className={classes.h1}>No tienes proyectos actualmente</h1>
           {SideBarFooter()}
         </>
       );
@@ -229,8 +254,20 @@ function Sidebar(props) {
             className={clsx(classes.menuButton, open && classes.hide)}
           >
             <MenuIcon />
-            <p className={classes.h1} style={{marginLeft: '10px'}}>{props.item}</p>
           </IconButton>
+          {props.item ? (
+            props.item.length !== 0 ? (
+              <>
+                <h1 className={classes.h1} style={{ marginLeft: "0" }}>
+                  {props.item}
+                </h1>
+                <div>
+                  <NavbarItem item={props.item} />
+                  <NavbarItem type={"add"} item={props.item} />
+                </div>
+              </>
+            ) : null
+          ) : null}
         </Toolbar>
       </AppBar>
 
