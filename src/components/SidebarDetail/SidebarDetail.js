@@ -37,7 +37,7 @@ function SidebarDetail(props) {
         confirmButtonText: "Si, seguro",
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log(event.target.innerText)
+          //console.log(event.target.innerText)
           setSelected(event.target.innerText);
         }
       });
@@ -51,7 +51,7 @@ function SidebarDetail(props) {
    */
   const renderTree = (nodes, select) => (
     <>
-      {console.log(nodes, select)}
+      
       {nodes.name ? (
         <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name} onLabelClick={select ? handleSelect : null}>
           {Array.isArray(nodes.versions)
@@ -70,7 +70,7 @@ function SidebarDetail(props) {
 
   useEffect(() => {
     if (selected) {
-      console.log(selected);
+      //console.log(selected);
       props.setItem(selected);
     }
   }, [selected]);

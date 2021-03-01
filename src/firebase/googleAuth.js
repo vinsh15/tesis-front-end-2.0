@@ -14,7 +14,7 @@ const googleAuth = async (setUser) => {
         if(result) {
             const user = result.user;
             const response = await getProjects(user, setUser);
-            console.log(response);
+            //console.log(response);
             return response;
         }
     }

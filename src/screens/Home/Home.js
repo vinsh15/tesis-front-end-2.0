@@ -63,7 +63,7 @@ function Home() {
     let elements = await getProjects(user, setUser);
     setDrawerItems(elements);
     setLoad(false);
-    console.log(elements, "Elements");
+    //console.log(elements, "Elements");
   };
 
   /**
@@ -85,9 +85,9 @@ function Home() {
     setItem(itemSelected)
   }
 
-  useEffect(() => {
-    console.log(item, "selected!!!")
-  }, [item]);
+  //useEffect(() => {
+    //console.log(item, "selected!!!")
+  //}, [item]);
 
   return (
     <>
