@@ -4,19 +4,18 @@ import Swal from "sweetalert2";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import AddIcon from '@material-ui/icons/AddOutlined';
-import EditIcon from '@material-ui/icons/EditOutlined';
-
+import AddIcon from "@material-ui/icons/AddOutlined";
+import EditIcon from "@material-ui/icons/EditOutlined";
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    minWidth: '11rem',
+    minWidth: "11rem",
     textTransform: "none !important",
     color: "var(--background) !important",
     border: "1px solid var(--background) !important",
     padding: "5px 10px !important",
     cursor: "pointer !important",
-    marginRight: "5px"
+    marginRight: "5px",
   },
 }));
 
@@ -25,47 +24,45 @@ function NavbarItem(props) {
   const classes = useStyles();
   const [name, setName] = React.useState("");
 
-
-  const swlInput = async() => {
+  const swlInput = async () => {
     const { value: ipAddress } = await Swal.fire({
-      title: 'Ingrese el nombre de la nueva versión',
-      input: 'text',
-      inputPlaceholder: 'Nombre',
+      title: "Ingrese el nombre de la nueva versión",
+      input: "text",
+      inputPlaceholder: "Nombre",
       showCancelButton: true,
-      confirmButtonText: 'Crear versión',
-      cancelButtonText: 'Cancelar',
+      confirmButtonText: "Crear versión",
+      cancelButtonText: "Cancelar",
       inputValidator: (value) => {
         if (!value) {
-          return 'El nombre de la arquitectura es obligatorio'
-        }else{
+          return "El nombre de la arquitectura es obligatorio";
+        } else {
+          setName(value);
           swlSuccess();
         }
-      }
-    })
-  }
+      },
+    });
+  };
 
-    /**
+  /**
    * Popup temporal de SweetAlert con mensaje exitoso
    */
   function swlSuccess() {
     Swal.fire({
-        title: '¡Arquitectura creada!',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 4000
-      });
+      title: "¡Nueva versión creada!",
+      icon: "success",
+      showConfirmButton: false,
+      timer: 4000,
+    });
   }
 
-  
-  function handleAdd(){
-    console.log("add")
-    swlInput()
+  function handleAdd() {
+    console.log("add");
+    swlInput();
   }
 
-  function handleCreate(){
-      console.log("Create")
+  function handleCreate() {
+    console.log("Create");
   }
-
 
   return (
     <>
