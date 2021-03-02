@@ -1,5 +1,7 @@
 import React from "react";
 
+import Swal from "sweetalert2";
+
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import AddIcon from '@material-ui/icons/AddOutlined';
@@ -21,14 +23,49 @@ const useStyles = makeStyles((theme) => ({
 /** Componente que representa la barra  de navegación */
 function NavbarItem(props) {
   const classes = useStyles();
+  const [name, setName] = React.useState("");
 
+
+  const swlInput = async() => {
+    const { value: ipAddress } = await Swal.fire({
+      title: 'Ingrese el nombre de la nueva versión',
+      input: 'text',
+      inputPlaceholder: 'Nombre',
+      showCancelButton: true,
+      confirmButtonText: 'Crear versión',
+      cancelButtonText: 'Cancelar',
+      inputValidator: (value) => {
+        if (!value) {
+          return 'El nombre de la arquitectura es obligatorio'
+        }else{
+          swlSuccess();
+        }
+      }
+    })
+  }
+
+    /**
+   * Popup temporal de SweetAlert con mensaje exitoso
+   */
+  function swlSuccess() {
+    Swal.fire({
+        title: '¡Arquitectura creada!',
+        icon: 'success',
+        showConfirmButton: false,
+        timer: 4000
+      });
+  }
+
+  
   function handleAdd(){
     console.log("add")
+    swlInput()
   }
 
   function handleCreate(){
       console.log("Create")
   }
+
 
   return (
     <>

@@ -62,6 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
   drawerPaper: {
     width: drawerWidth,
+    zIndex: 0,
     backgroundColor: "var(--primaryDark)",
     boxShadow:
       "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
@@ -110,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
 
   button: {
     width: "95%",
-    margin: "auto",
+    marginLeft: "2.5%",
     textTransform: "none !important",
     color: "var(--background) !important",
     border: "1px solid var(--background) !important",
