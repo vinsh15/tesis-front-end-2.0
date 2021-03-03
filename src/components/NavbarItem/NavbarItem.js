@@ -25,7 +25,7 @@ function NavbarItem(props) {
   const [name, setName] = React.useState("");
 
   const swlInput = async () => {
-    const { value: ipAddress } = await Swal.fire({
+    const value  = await Swal.fire({
       title: "Ingrese el nombre de la nueva versión",
       input: "text",
       inputPlaceholder: "Nombre",
@@ -37,7 +37,6 @@ function NavbarItem(props) {
           return "El nombre de la arquitectura es obligatorio";
         } else {
           setName(value);
-          swlSuccess();
         }
       },
     });
