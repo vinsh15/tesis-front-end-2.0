@@ -70,7 +70,6 @@ function SidebarItem(props) {
             onClose={handleClose} 
             uid={user.uid}
             index={props.index}
-            type={"Arquitectura"}
           />
         ) : null}
     </div>

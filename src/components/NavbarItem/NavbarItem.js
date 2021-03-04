@@ -23,7 +23,7 @@ function NavbarItem(props) {
   const classes = useStyles();
 
   function handleAdd(){
-    console.log("add")
+    console.log(props.item)
   }
 
   function handleCreate(){

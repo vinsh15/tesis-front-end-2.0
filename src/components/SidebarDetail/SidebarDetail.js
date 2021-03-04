@@ -26,10 +26,10 @@ function SidebarDetail(props) {
   const [selected, setSelected] = React.useState([]);
 
 
-  const handleSelect = (event, nodeIds) => {
-    if (event.target.innerText !== selected) {
+  const handleSelect = (nodeName, index) => {
+    if (nodeName !== selected) {
       Swal.fire({
-        text: "¿Deseas mostrar " + event.target.innerText + " ?",
+        text: "¿Deseas mostrar " + nodeName + " ?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "var(--success)",
@@ -37,8 +37,8 @@ function SidebarDetail(props) {
         confirmButtonText: "Si, seguro",
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log(event.target.innerText)
-          setSelected(event.target.innerText);
+          console.log(nodeName)
+          setSelected([nodeName, index]);
         }
       });
     }
@@ -49,13 +49,13 @@ function SidebarDetail(props) {
    * @param {Array} node almacena el arreglo de proyectos correspondiente al usuario
    * @returns {JSX} estructura de elementos en detalle
    */
-  const renderTree = (nodes, select) => (
+  const renderTree = (nodes, select, arqIndex) => (
     <>
       {console.log(nodes, select)}
       {nodes.name ? (
-        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name} onLabelClick={select ? handleSelect : null}>
+        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name} onLabelClick={select ? () => handleSelect(nodes.name, arqIndex) : null}>
           {Array.isArray(nodes.versions)
-            ? nodes.versions.map((node) => renderTree(node, true))
+            ? nodes.versions.map((node, index) => renderTree(node, true, index))
             : null}
         </TreeItem>
       ) : (
@@ -83,8 +83,8 @@ function SidebarDetail(props) {
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}         
         >
-          {props.item.architectures.map((architecture) =>
-            renderTree(architecture, false)
+          {props.item.architectures.map((architecture, index) =>
+            renderTree(architecture, false, index)
           )}
         </TreeView>
       </AccordionDetails>
