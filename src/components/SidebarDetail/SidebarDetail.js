@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Swal from "sweetalert2";
 
@@ -23,10 +23,15 @@ const useStyles = makeStyles({
  */
 function SidebarDetail(props) {
   const classes = useStyles();
-  const [selected, setSelected] = React.useState([]);
+  const [selected, setSelected] = useState([]);
 
-
-  const handleSelect = (nodeName, index) => {
+/**
+ * Preguntar al usuario si desea mostrar la versión seleccionada
+ * @param {String} nodeName nombre de la versión
+ * @param {Integer} arqIndex índice de la arquitectura seleccionada
+ * @param {Integer} verIndex índice de la versión seleccionada
+ */
+  const handleSelect = (nodeName, arqIndex, verIndex) => {
     if (nodeName !== selected) {
       Swal.fire({
         text: "¿Deseas mostrar " + nodeName + " ?",
@@ -37,8 +42,7 @@ function SidebarDetail(props) {
         confirmButtonText: "Si, seguro",
       }).then((result) => {
         if (result.isConfirmed) {
-          console.log(nodeName)
-          setSelected([nodeName, index]);
+          setSelected([nodeName, verIndex, arqIndex]);
         }
       });
     }
@@ -49,13 +53,12 @@ function SidebarDetail(props) {
    * @param {Array} node almacena el arreglo de proyectos correspondiente al usuario
    * @returns {JSX} estructura de elementos en detalle
    */
-  const renderTree = (nodes, select, arqIndex) => (
+  const renderTree = (nodes, select, arqIndex, verIndex) => (
     <>
-      {console.log(nodes, select)}
       {nodes.name ? (
-        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name} onLabelClick={select ? () => handleSelect(nodes.name, arqIndex) : null}>
+        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name} onLabelClick={select ? () => handleSelect(nodes.name, arqIndex, verIndex) : null}>
           {Array.isArray(nodes.versions)
-            ? nodes.versions.map((node, index) => renderTree(node, true, index))
+            ? nodes.versions.map((node, index) => renderTree(node, true, arqIndex, index))
             : null}
         </TreeItem>
       ) : (
@@ -70,7 +73,6 @@ function SidebarDetail(props) {
 
   useEffect(() => {
     if (selected) {
-      console.log(selected);
       props.setItem(selected);
     }
   }, [selected]);
@@ -84,7 +86,7 @@ function SidebarDetail(props) {
           defaultExpandIcon={<ChevronRightIcon />}         
         >
           {props.item.architectures.map((architecture, index) =>
-            renderTree(architecture, false, index)
+            renderTree(architecture, false, index, null)
           )}
         </TreeView>
       </AccordionDetails>
