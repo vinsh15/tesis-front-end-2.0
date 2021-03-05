@@ -65,13 +65,12 @@ const FileReader = ({
       const formData = getFormData(allFiles);
       const response = await postArchitecture(formData);
       if(response !== 'Error'){
-        //Respuesta fallida
-        swlError()
+        setName("");
+        swlSuccess();
+        
       }
       else{
-        setName("")       
-        swlSuccess()
-        //Respuesta exitosa
+        swlError();
       }
     }else{
       setValid(false);     
