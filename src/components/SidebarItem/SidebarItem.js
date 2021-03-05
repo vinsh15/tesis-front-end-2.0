@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import "./SidebarItem.css";
 
 import { makeStyles } from "@material-ui/core/styles";
+
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
-import AppContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -24,7 +24,6 @@ const SidebarItem = ({
 }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const {user} = useContext(AppContext);
 
   return (
     <div className={classes.root}>
@@ -54,8 +53,7 @@ const SidebarItem = ({
           <Modal 
             open={open} 
             onClose={() => setOpen(false)} 
-            uid={user.uid}
-            index={projectIndex}
+            projectIndex={projectIndex}
           />
         ) : null}
     </div>
