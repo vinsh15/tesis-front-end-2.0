@@ -1,7 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AddIcon from '@material-ui/icons/AddOutlined';
-import AuthContext from "../../auth/context/context";
+import AppContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/EditOutlined';
 import { postVersion } from "../../api/versions/versions";
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 /** Componente que representa la barra  de navegación */
 function NavbarItem(props) {
   const classes = useStyles();
-  const { user, selectedProject } = useContext(AuthContext);
+  const { user, selectedProject } = useContext(AppContext);
 
   /**
    * Pedir al usuario el nombre de la nueva versión para

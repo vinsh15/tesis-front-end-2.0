@@ -6,7 +6,7 @@ import "./styles/Theme/variables.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./screens/Home/Home";
 
-import AuthContext from "./auth/context/context";
+import AppContext from "./auth/context/context";
 
 /** Componente que contiene todas las rutas
  *  de navegación en la aplicación
@@ -29,13 +29,13 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <AuthContext.Provider value={{ user, setUser, selectedProject, setSelectedProject }}>
+      <AppContext.Provider value={{ user, setUser, selectedProject, setSelectedProject }}>
         <Router>
           <Switch>
             <Route path="/" component={Home} />
           </Switch>
         </Router>
-      </AuthContext.Provider>
+      </AppContext.Provider>
     </>
   );
 }

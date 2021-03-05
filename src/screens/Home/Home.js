@@ -5,7 +5,7 @@ import Sidebar from "../../components/SideBar/Sidebar";
 
 import Swal from "sweetalert2";
 
-import AuthContext from "../../auth/context/context";
+import AppContext from "../../auth/context/context";
 import { googleAuth, getProjects } from "../../firebase/googleAuth";
 
 
@@ -16,7 +16,7 @@ function Home() {
   const [drawerItems, setDrawerItems] = useState();
   const [item, setItem] = useState();
   const [load, setLoad] = useState(true);
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser } = useContext(AppContext);
   /**
    * Llamar a google auth para establecer ususario
    */

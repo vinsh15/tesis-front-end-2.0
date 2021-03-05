@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AuthContext from "../../auth/context/context";
+import AppContext from "../../auth/context/context";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TreeItem from "@material-ui/lab/TreeItem";
@@ -21,7 +21,7 @@ const SidebarDetail = ({
 }) => {
   const classes = useStyles();
   const [selected, setSelected] = useState([]);
-  const { setSelectedProject } = useContext(AuthContext);
+  const { setSelectedProject } = useContext(AppContext);
 
 /**
  * Preguntar al usuario si desea mostrar la versión seleccionada
