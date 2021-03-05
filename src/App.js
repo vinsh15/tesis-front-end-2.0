@@ -13,7 +13,7 @@ import AuthContext from "./auth/context/context";
  */
 function App() {
   const [user, setUser] = useState();
-
+  const [selectedProject, setSelectedProject] = useState();
   /**
    * Restaurar usuario si ya se ha iniciado sesión
    */
@@ -29,7 +29,7 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser, selectedProject, setSelectedProject }}>
         <Router>
           <Switch>
             <Route path="/" component={Home} />
