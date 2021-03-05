@@ -4,24 +4,206 @@ import "./Sidebar.css";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
+import { manageCreateVersion } from "../../helpers/versions/versions";
 
-import AppBar from "@material-ui/core/AppBar";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
-import AuthContext from "../../auth/context/context";
+import AddIcon from '@material-ui/icons/AddOutlined';
+import AppBar from "@material-ui/core/AppBar";
+import AppContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
+import EditIcon from '@material-ui/icons/EditOutlined';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import Toolbar from "@material-ui/core/Toolbar";
-
 import Loader from "../Loader/Loader";
 import LoginButton from "../LoginButton/LoginButton";
+import MenuIcon from "@material-ui/icons/Menu";
 import NavbarItem from "../NavbarItem/NavbarItem";
 import SidebarItem from "../SidebarItem/SidebarItem";
+import Toolbar from "@material-ui/core/Toolbar";
+
+
+
+/**
+ * Componente que representa la barra lateral
+ * princial de navegacion
+ */
+
+const Sidebar = ({
+  loader,
+  login,
+  logout,
+  item,
+  items,
+  setItem
+}) => {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [open, setOpen] = useState(true);
+  const { user, selectedProject } = useContext(AppContext);
+
+  /**
+   * Creacion de barra superior del SideBar con informacion del usuario
+   * @returns {JSX} estructura de elementos en la barra lateral
+   */
+  const SideBarHeader = () => {
+    return (
+      <>
+        <div className={classes.drawerHeader}>
+          <IconButton className={classes.icon}>
+            <AccountIcon />
+            <p className={classes.p}>{user.displayName}</p>
+          </IconButton>
+          <IconButton className={classes.icon} onClick={() => setOpen(false)}>
+            {theme.direction === "ltr" ? (
+              <ChevronLeftIcon />
+            ) : (
+              <ChevronRightIcon />
+            )}
+          </IconButton>
+        </div>
+        <Divider className="divider" />
+        <Button
+          size="small"
+          variant="outlined"
+          className={classes.button}
+        >
+          Agregar Proyecto
+        </Button>
+      </>
+    );
+  }
+
+  /**
+   * Creacion de barra inferior fija del SideBar con boton logout
+   * @returns {JSX} estructura de elementos en la barra lateral
+   */
+  const SideBarFooter = () => {
+    return (
+      <>
+        <Divider className="divider" />
+        <div className={classes.drawerFooter}>
+          <IconButton className={classes.icon} onClick={logout}>
+            <ExitToAppIcon />
+          </IconButton>
+        </div>
+      </>
+    );
+  }
+
+  /**
+   * Agregar elementos en barra lateral segun proyectos del usuario
+   * @param {Array} items almacena el arreglo de proyecto correspondiente al usuario
+   * @returns {JSX} estructura de elementos en la barra lateral
+   */
+  const Logged = (items) => {
+    if (Array.isArray(items)) {
+      return (
+        <>
+          {SideBarHeader()}
+          <List className="list">
+            {items.map((item, index) => {
+              return (
+                <SidebarItem
+                  key={item.name}
+                  item={item}
+                  projectIndex={index}
+                  setItem={setItem}
+                />
+              );
+            })}
+          </List>
+          {SideBarFooter()}
+        </>
+      );
+    } else {
+      return (
+        <>
+          {SideBarHeader()}
+          <h1 className={classes.h1}>No tienes proyectos actualmente</h1>
+          {SideBarFooter()}
+        </>
+      );
+    }
+  }
+
+  /**
+   * Barra lateral con contenido para iniciar sesion
+   * @returns {JSX} estructura de elementos en la barra lateral
+   */
+  const unLogged = () => {
+    return (
+      <div className={classes.title}>
+        <h1>Iniciar sesión</h1>
+        <LoginButton login={login} />
+      </div>
+    );
+  }
+
+  return (
+    <div className={classes.root}>
+      <CssBaseline />
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setOpen(true)}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          {item && item.length !== 0 ? (
+            <>
+                <h1 className={classes.h1} style={{ marginLeft: "0" }}>
+                  {item[0]}
+                </h1>
+                <div>
+                  <NavbarItem
+                    icon={<AddIcon />}
+                    title={"Crear nueva versión"}
+                    onClick={() => manageCreateVersion(user, selectedProject)}
+                  />
+                  <NavbarItem
+                    icon={<EditIcon />}
+                    title={"Agregar elementos"}
+                    onClick={() => console.log("Agregar elementos")}
+                  />
+                </div>
+              </>
+          ) : null}
+        </Toolbar>
+      </AppBar>
+
+      <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        {loader ? (
+          <Loader />
+        ) : user ? (
+          Logged(items)
+        ) : (
+          unLogged()
+        )}
+      </Drawer>
+    </div>
+  );
+}
 
 /** Creacion de capa de estilos para el componente */
 const drawerWidth = 280;
@@ -120,177 +302,5 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer !important",
   },
 }));
-
-/**
- * Componente que representa la barra lateral
- * princial de navegacion
- */
-
-function Sidebar(props) {
-  const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = useState(true);
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-
-  /**
-   * Creacion de barra superior del SideBar con informacion del usuario
-   * @returns {JSX} estructura de elementos en la barra lateral
-   */
-  function SideBarHeader() {
-    return (
-      <>
-        <div className={classes.drawerHeader}>
-          <IconButton className={classes.icon}>
-            <AccountIcon />
-            <p className={classes.p}>{props.user.displayName}</p>
-          </IconButton>
-          <IconButton className={classes.icon} onClick={handleDrawerClose}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider className="divider" />
-        <Button
-          size="small"
-          variant="outlined"
-          className={classes.button}
-        >
-          Agregar Proyecto
-        </Button>
-      </>
-    );
-  }
-
-  /**
-   * Creacion de barra inferior fija del SideBar con boton logout
-   * @returns {JSX} estructura de elementos en la barra lateral
-   */
-  function SideBarFooter() {
-    return (
-      <>
-        <Divider className="divider" />
-        <div className={classes.drawerFooter}>
-          <IconButton className={classes.icon} onClick={props.logout}>
-            <ExitToAppIcon />
-          </IconButton>
-        </div>
-      </>
-    );
-  }
-
-  /**
-   * Agregar elementos en barra lateral segun proyectos del usuario
-   * @param {Array} items almacena el arreglo de proyecto correspondiente al usuario
-   * @returns {JSX} estructura de elementos en la barra lateral
-   */
-  function Logged(items) {
-    if (Array.isArray(items)) {
-      return (
-        <>
-          {SideBarHeader()}
-          <List className="list">
-            {items.map((item, index) => {
-              return (
-                <SidebarItem
-                  key={item.name}
-                  item={item}
-                  projectIndex={index}
-                  setItem={props.setItem}
-                />
-              );
-            })}
-          </List>
-          {SideBarFooter()}
-        </>
-      );
-    } else {
-      return (
-        <>
-          {SideBarHeader()}
-          <h1 className={classes.h1}>No tienes proyectos actualmente</h1>
-          {SideBarFooter()}
-        </>
-      );
-    }
-  }
-
-  /**
-   * Barra lateral con contenido para iniciar sesion
-   * @returns {JSX} estructura de elementos en la barra lateral
-   */
-  function unLogged() {
-    return (
-      <div className={classes.title}>
-        <h1>Iniciar sesión</h1>
-        <LoginButton login={props.login} />
-      </div>
-    );
-  }
-
-  return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          {props.item ? (
-            props.item.length !== 0 ? (
-              <>
-                <h1 className={classes.h1} style={{ marginLeft: "0" }}>
-                  {props.item[0]}
-                </h1>
-                <div>
-                  <NavbarItem/>
-                  <NavbarItem type={"add"}/>
-                </div>
-              </>
-            ) : null
-          ) : null}
-        </Toolbar>
-      </AppBar>
-
-      <Drawer
-        className={classes.drawer}
-        variant="persistent"
-        anchor="left"
-        open={open}
-        classes={{
-          paper: classes.drawerPaper,
-        }}
-      >
-        {props.loader ? (
-          <Loader />
-        ) : props.user ? (
-          Logged(props.items)
-        ) : (
-          unLogged()
-        )}
-      </Drawer>
-    </div>
-  );
-}
 
 export default Sidebar;
