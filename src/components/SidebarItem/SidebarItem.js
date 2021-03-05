@@ -9,10 +9,58 @@ import AuthContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Typography from "@material-ui/core/Typography";
-
 import Modal from "../FileReader/FileReader";
 import SidebarDetail from "../SidebarDetail/SidebarDetail";
+import Typography from "@material-ui/core/Typography";
+
+
+/** Componente que representa el item proyecto
+ *  a ser añadido en el componente Sidebar
+ */
+const SidebarItem = ({
+  item,
+  setItem,
+  projectIndex
+}) => {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(false);
+  const {user} = useContext(AuthContext);
+
+  return (
+    <div className={classes.root}>
+      <Accordion className={classes.accordion}>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-label="Expand"
+          id={item.name}
+        >
+          <Typography>{item.name}</Typography>
+        </AccordionSummary>
+
+        <SidebarDetail 
+          item={item} 
+          setItem={setItem}
+          projectIndex={projectIndex}
+        />
+        
+        <Divider className="dividerItem"/>
+        <AccordionActions>
+          <Button size="small" variant="outlined" onClick={() => setOpen(true)}>
+            Agregar Arquitectura
+          </Button>
+        </AccordionActions>
+      </Accordion>
+      {open ? (
+          <Modal 
+            open={open} 
+            onClose={() => setOpen(false)} 
+            uid={user.uid}
+            index={projectIndex}
+          />
+        ) : null}
+    </div>
+  );
+}
 
 /** Creacion de capa de estilos para el componente */
 const useStyles = makeStyles({
@@ -25,55 +73,5 @@ const useStyles = makeStyles({
     backgroundColor: 'var(--background)'
   } 
 });
-
-/** Componente que representa el item proyecto
- *  a ser añadido en el componente Sidebar
- */
-function SidebarItem(props) {
-  const classes = useStyles();
-
-  const [open, setOpen] = React.useState(false);
-  const {user} = useContext(AuthContext);
-
-  const handleOpen = () => {
-    setOpen(true);
-    console.log(user.uid);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div className={classes.root}>
-      <Accordion className={classes.accordion}>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-label="Expand"
-          id={props.item.name}
-        >
-          <Typography>{props.item.name}</Typography>
-        </AccordionSummary>
-
-        <SidebarDetail item={props.item} setItem={props.setItem}/>
-        
-        <Divider className="dividerItem"/>
-        <AccordionActions>
-          <Button size="small" variant="outlined" onClick={handleOpen}>
-            Agregar Arquitectura
-          </Button>
-        </AccordionActions>
-      </Accordion>
-      {open ? (
-          <Modal 
-            open={open} 
-            onClose={handleClose} 
-            uid={user.uid}
-            index={props.index}
-          />
-        ) : null}
-    </div>
-  );
-}
 
 export default SidebarItem;

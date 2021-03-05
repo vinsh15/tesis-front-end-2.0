@@ -17,7 +17,6 @@ function Home() {
   const [item, setItem] = useState();
   const [load, setLoad] = useState(true);
   const { user, setUser } = useContext(AuthContext);
-
   /**
    * Llamar a google auth para establecer ususario
    */
@@ -63,7 +62,6 @@ function Home() {
     let elements = await getProjects(user, setUser);
     setDrawerItems(elements);
     setLoad(false);
-    console.log(elements, "Elements");
   };
 
   /**

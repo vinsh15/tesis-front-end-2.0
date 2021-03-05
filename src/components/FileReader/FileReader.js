@@ -73,7 +73,7 @@ function FileReader(props) {
   const handleSubmit = async (allFiles) => {
     if(name !== ""){
       const formData = getFormData(allFiles);
-      var response = await postArchitecture(formData);
+      const response = await postArchitecture(formData);
       if(response !== 'Error'){
         //Respuesta fallida
       }

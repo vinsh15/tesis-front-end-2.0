@@ -1,10 +1,10 @@
-import React from "react";
-
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import AddIcon from '@material-ui/icons/AddOutlined';
+import AuthContext from "../../auth/context/context";
+import Button from "@material-ui/core/Button";
 import EditIcon from '@material-ui/icons/EditOutlined';
-
+import { postVersion } from "../../api/versions/versions";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -21,9 +21,30 @@ const useStyles = makeStyles((theme) => ({
 /** Componente que representa la barra  de navegación */
 function NavbarItem(props) {
   const classes = useStyles();
+  const { user, selectedProject } = useContext(AuthContext);
 
-  function handleAdd(){
-    console.log(props.item)
+  const handleAdd = async () => {
+    const formData = getFormData();
+    const response = await postVersion(formData);
+    console.log(response);
+    if(response !== 'Error'){
+      //Respuesta exitosa
+    }
+    else{
+      //Respuesta fallida
+    }
+    
+  }
+
+  const getFormData = () => {
+    const formData = new FormData();
+    const versionName = 'Samuel' //Nombre temporal
+    formData.append('uid', user.uid);
+    formData.append('version_name', versionName);
+    formData.append('ver_index', selectedProject.verIndex);
+    formData.append('arc_index', selectedProject.arcIndex);
+    formData.append('project_index', selectedProject.projectIndex);
+    return formData;
   }
 
   function handleCreate(){

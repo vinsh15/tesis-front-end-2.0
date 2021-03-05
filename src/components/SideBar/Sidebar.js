@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import clsx from "clsx";
 import "./Sidebar.css";
 
@@ -7,6 +7,7 @@ import { Drawer, List } from "@material-ui/core";
 
 import AppBar from "@material-ui/core/AppBar";
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
+import AuthContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
@@ -162,7 +163,6 @@ function Sidebar(props) {
           size="small"
           variant="outlined"
           className={classes.button}
-          onClick={console.log("new project")}
         >
           Agregar Proyecto
         </Button>
@@ -203,7 +203,7 @@ function Sidebar(props) {
                 <SidebarItem
                   key={item.name}
                   item={item}
-                  index={index}
+                  projectIndex={index}
                   setItem={props.setItem}
                 />
               );
@@ -259,11 +259,11 @@ function Sidebar(props) {
             props.item.length !== 0 ? (
               <>
                 <h1 className={classes.h1} style={{ marginLeft: "0" }}>
-                  {props.item}
+                  {props.item[0]}
                 </h1>
                 <div>
-                  <NavbarItem item={props.item} />
-                  <NavbarItem type={"add"} item={props.item} />
+                  <NavbarItem/>
+                  <NavbarItem type={"add"}/>
                 </div>
               </>
             ) : null
