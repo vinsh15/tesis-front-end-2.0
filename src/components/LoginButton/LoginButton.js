@@ -2,7 +2,7 @@ import React from "react";
 import "./LoginButton.css";
 
 /** Componente que representa el boton de iniciar sesion con Google */
-function LoginButton(props) {
+const LoginButton = (props) => {
   return (
     <>
       <button type="button" onClick={props.login} className="google-button">

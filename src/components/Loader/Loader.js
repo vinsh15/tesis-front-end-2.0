@@ -2,7 +2,7 @@ import React from 'react';
 import './Loader.css'
 
 /** Componente que representa el loader de carga*/
-function Loader(props) {
+const Loader = (props) => {
     return (
     <div className="loading show">
         <div className="spin"></div>
