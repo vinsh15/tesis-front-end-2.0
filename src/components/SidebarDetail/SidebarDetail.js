@@ -1,32 +1,31 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useContext, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
+import AuthContext from "../../auth/context/context";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TreeItem from "@material-ui/lab/TreeItem";
 import TreeView from "@material-ui/lab/TreeView";
 
-/** Creacion de capa de estilos para el componente */
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-    maxWidth: 400,
-  },
-});
-
 /**
  * Componente que representa el contenido
  * del item añadido como proyecto en la barra lateral
  */
-function SidebarDetail(props) {
+const SidebarDetail = ({
+  projectIndex,
+  setItem,
+  item,
+
+}) => {
   const classes = useStyles();
   const [selected, setSelected] = useState([]);
+  const { setSelectedProject } = useContext(AuthContext);
 
 /**
  * Preguntar al usuario si desea mostrar la versión seleccionada
+ * y actualizar el proyecto seleccionado
  * @param {String} nodeName nombre de la versión
  * @param {Integer} arqIndex índice de la arquitectura seleccionada
  * @param {Integer} verIndex índice de la versión seleccionada
@@ -43,13 +42,19 @@ function SidebarDetail(props) {
       }).then((result) => {
         if (result.isConfirmed) {
           setSelected([nodeName, verIndex, arqIndex]);
+          setSelectedProject({
+            'versionName': nodeName,
+            'projectIndex': projectIndex,
+            'arcIndex': arqIndex,
+            'verIndex': verIndex
+          })
         }
       });
     }
   };
 
   /**
-   * Funcion recursiva que agrega elementos al arbol como nodos
+   * Función recursiva que agrega elementos al arbol como nodos
    * @param {Array} node almacena el arreglo de proyectos correspondiente al usuario
    * @returns {JSX} estructura de elementos en detalle
    */
@@ -73,7 +78,7 @@ function SidebarDetail(props) {
 
   useEffect(() => {
     if (selected) {
-      props.setItem(selected);
+      setItem(selected);
     }
   }, [selected]);
 
@@ -85,7 +90,7 @@ function SidebarDetail(props) {
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}         
         >
-          {props.item.architectures.map((architecture, index) =>
+          {item.architectures.map((architecture, index) =>
             renderTree(architecture, false, index, null)
           )}
         </TreeView>
@@ -93,5 +98,13 @@ function SidebarDetail(props) {
     </>
   );
 }
+
+/** Creacion de capa de estilos para el componente */
+const useStyles = makeStyles({
+  root: {
+    flexGrow: 1,
+    maxWidth: 400,
+  },
+});
 
 export default SidebarDetail;
