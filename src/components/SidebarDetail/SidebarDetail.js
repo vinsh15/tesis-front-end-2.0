@@ -42,6 +42,7 @@ const SidebarDetail = ({
       }).then((result) => {
         if (result.isConfirmed) {
           setSelected([nodeName, verIndex, arqIndex]);
+          // setSelected(event.target.innerText);
           setSelectedProject({
             'versionName': nodeName,
             'projectIndex': projectIndex,

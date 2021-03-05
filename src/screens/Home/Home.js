@@ -83,9 +83,9 @@ function Home() {
     setItem(itemSelected)
   }
 
-  useEffect(() => {
-    console.log(item, "selected!!!")
-  }, [item]);
+  //useEffect(() => {
+    //console.log(item, "selected!!!")
+  //}, [item]);
 
   return (
     <>
