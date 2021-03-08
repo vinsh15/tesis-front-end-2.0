@@ -7,7 +7,7 @@ import { postVersion } from "../../api/versions/versions";
  * @param {JSON} user objeto con información del usuario
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  */
-const manageCreateVersion = async (user, selectedProject) => {
+const manageCreateVersion = async (user, selectedProject, setReloadSidebar) => {
     await Swal.fire({
       title: "Ingrese el nombre de la nueva versión",
       input: "text",
@@ -22,7 +22,7 @@ const manageCreateVersion = async (user, selectedProject) => {
       },
     }).then(result => {
       if(result.isConfirmed){
-        submitVersion(result.value, user, selectedProject);
+        submitVersion(result.value, user, selectedProject, setReloadSidebar);
       }
     });
 };
@@ -33,11 +33,13 @@ const manageCreateVersion = async (user, selectedProject) => {
  * @param {JSON} user objeto con información del usuario
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  */
-const submitVersion = async (versionName, user, selectedProject) => {
+const submitVersion = async (versionName, user, selectedProject, setReloadSidebar) => {
     const formData = getFormData(versionName, user, selectedProject);
     const response = await postVersion(formData);
     if(response !== 'Error'){
+      setReloadSidebar(true);
       ModalMessage("¡Nueva versión creada!", "Se ha agregado una nueva versión a la arquitectura", "success", false, 5000);
+      setReloadSidebar(false);
     }
     else{
       ModalMessage("¡Hubo un error!", "No se ha creado una nueva versión", "error", false, 5500);

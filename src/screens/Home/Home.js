@@ -14,9 +14,8 @@ import { googleAuth, getProjects } from "../../firebase/googleAuth";
  */
 function Home() {
   const [drawerItems, setDrawerItems] = useState();
-  const [item, setItem] = useState();
   const [load, setLoad] = useState(true);
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser, reloadSidebar, selectedProject } = useContext(AppContext);
   /**
    * Llamar a google auth para establecer ususario
    */
@@ -27,7 +26,7 @@ function Home() {
   };
 
   /**
-   * Cerrar sesión
+   * Mensaje de confirmación para cerrar sesión
    */
   const logout = () => {
     Swal.fire({
@@ -36,7 +35,8 @@ function Home() {
       showCancelButton: true,
       confirmButtonColor: 'var(--success)',
       cancelButtonColor: 'var(--error)',
-      confirmButtonText: 'Si, seguro'
+      confirmButtonText: 'Si, seguro',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
         setLoad(true);
@@ -71,34 +71,31 @@ function Home() {
     getProject();
   }
 
-  useEffect(() => {
-    if (user) {
-      setLoad(true);
-      get();
-    }
-  }, [user]);
 
-
-  const setProject = (itemSelected) => {   
-    setItem(itemSelected)
+  /**
+   * Actualizar el contenido del Sidebar
+   */
+  const refreshSidebar = () => {
+    setLoad(true);
+    get();
   }
 
-  //useEffect(() => {
-    //console.log(item, "selected!!!")
-  //}, [item]);
+  useEffect(() => {
+    if (user || reloadSidebar) {
+      refreshSidebar();
+    }
+  }, [user, reloadSidebar]);
+
 
   return (
     <>
       <Sidebar
-        item={item}
         items={drawerItems}
-        setItem={setProject}
-        user={user}
         login={changeState}
         logout={logout}
         loader={load}
       />
-      {item ? <h1 style={{ marginLeft: "40%" }}>{item}</h1> : null}
+      {selectedProject ? <h1 style={{ marginLeft: "40%" }}>{selectedProject.versionName}</h1> : null}
     </>
   );
 }
