@@ -1,3 +1,4 @@
+import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import Swal from "sweetalert2";
 import { postVersion } from "../../api/versions/versions";
 
@@ -36,24 +37,13 @@ const submitVersion = async (versionName, user, selectedProject) => {
     const formData = getFormData(versionName, user, selectedProject);
     const response = await postVersion(formData);
     if(response !== 'Error'){
-        swlSuccess();
+      ModalMessage("¡Nueva versión creada!", "Se ha agregado una nueva versión a la arquitectura", "success", false, 5000);
     }
     else{
-        //Respuesta fallida
+      ModalMessage("¡Hubo un error!", "No se ha creado una nueva versión", "error", false, 5500);
     }
 } 
 
-/**
- * Popup temporal de SweetAlert con mensaje exitoso
- */
-const swlSuccess = () => {
-    Swal.fire({
-      title: "¡Nueva versión creada!",
-      icon: "success",
-      showConfirmButton: false,
-      timer: 4000,
-    });
-}
 
 /**
  * Construir el form-data
