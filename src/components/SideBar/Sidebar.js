@@ -1,96 +1,27 @@
 import React, { useContext, useState } from "react";
-import clsx from "clsx";
 import "./Sidebar.css";
 
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
-import { manageCreateVersion } from "../../helpers/versions/versions";
 
-import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
-import AddIcon from '@material-ui/icons/AddOutlined';
-import AppBar from "@material-ui/core/AppBar";
+import Navbar from "../Navbar/Navbar";
+import SidebarHeader from "../SidebarHeader/SidebarHeader";
+import SidebarFooter from "../SidebarFooter/SidebarFooter";
 import AppContext from "../../auth/context/context";
-import Button from "@material-ui/core/Button";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Divider from "@material-ui/core/Divider";
-import EditIcon from '@material-ui/icons/EditOutlined';
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import IconButton from "@material-ui/core/IconButton";
 import Loader from "../Loader/Loader";
 import LoginButton from "../LoginButton/LoginButton";
-import MenuIcon from "@material-ui/icons/Menu";
-import NavbarItem from "../NavbarItem/NavbarItem";
 import SidebarItem from "../SidebarItem/SidebarItem";
-import Toolbar from "@material-ui/core/Toolbar";
-
-
 
 /**
  * Componente que representa la barra lateral
  * princial de navegacion
  */
 
-const Sidebar = ({
-  loader,
-  login,
-  logout,
-  items
-}) => {
+const Sidebar = ({ loader, login, logout, items }) => {
   const classes = useStyles();
-  const theme = useTheme();
   const [open, setOpen] = useState(true);
-  const { user, selectedProject, setReloadSidebar } = useContext(AppContext);
-
-  /**
-   * Creacion de barra superior del SideBar con informacion del usuario
-   * @returns {JSX} estructura de elementos en la barra lateral
-   */
-  const SideBarHeader = () => {
-    return (
-      <>
-        <div className={classes.drawerHeader}>
-          <IconButton className={classes.icon}>
-            <AccountIcon />
-            <p className={classes.p}>{user.displayName}</p>
-          </IconButton>
-          <IconButton className={classes.icon} onClick={() => setOpen(false)}>
-            {theme.direction === "ltr" ? (
-              <ChevronLeftIcon />
-            ) : (
-              <ChevronRightIcon />
-            )}
-          </IconButton>
-        </div>
-        <Divider className="divider" />
-        <Button
-          size="small"
-          variant="outlined"
-          className={classes.button}
-        >
-          Agregar Proyecto
-        </Button>
-      </>
-    );
-  }
-
-  /**
-   * Creacion de barra inferior fija del SideBar con boton logout
-   * @returns {JSX} estructura de elementos en la barra lateral
-   */
-  const SideBarFooter = () => {
-    return (
-      <>
-        <Divider className="divider" />
-        <div className={classes.drawerFooter}>
-          <IconButton className={classes.icon} onClick={logout}>
-            <ExitToAppIcon />
-          </IconButton>
-        </div>
-      </>
-    );
-  }
+  const { user } = useContext(AppContext);
 
   /**
    * Agregar elementos en barra lateral segun proyectos del usuario
@@ -101,31 +32,27 @@ const Sidebar = ({
     if (Array.isArray(items)) {
       return (
         <>
-          {SideBarHeader()}
+          <SidebarHeader setOpen={setOpen} />
           <List className="list">
             {items.map((item, index) => {
               return (
-                <SidebarItem
-                  key={item.name}
-                  item={item}
-                  projectIndex={index}
-                />
+                <SidebarItem key={item.name} item={item} projectIndex={index} />
               );
             })}
           </List>
-          {SideBarFooter()}
+          <SidebarFooter logout={logout} />
         </>
       );
     } else {
       return (
         <>
-          {SideBarHeader()}
+          <SidebarHeader setOpen={setOpen} />
           <h1 className={classes.h1}>No tienes proyectos actualmente</h1>
-          {SideBarFooter()}
+          <SidebarFooter logout={logout} />
         </>
       );
     }
-  }
+  };
 
   /**
    * Barra lateral con contenido para iniciar sesion
@@ -138,49 +65,12 @@ const Sidebar = ({
         <LoginButton login={login} />
       </div>
     );
-  }
+  };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => setOpen(true)}
-            edge="start"
-            className={clsx(classes.menuButton, open && classes.hide)}
-          >
-            <MenuIcon />
-          </IconButton>
-          {selectedProject ? (
-            <>
-                <h1 className={classes.h1} style={{ marginLeft: "0", minWidth:145 }}>
-                  {selectedProject.versionName}
-                </h1>
-                <div style={{ textAlign: "right" }}>
-                  <NavbarItem
-                    icon={<AddIcon />}
-                    title={"Crear nueva versión"}
-                    onClick={() => manageCreateVersion(user, selectedProject, setReloadSidebar)}
-                  />
-                  <NavbarItem
-                    icon={<EditIcon />}
-                    title={"Agregar elementos"}
-                    onClick={() => console.log("Agregar elementos")}
-                  />
-                </div>
-              </>
-          ) : null}
-        </Toolbar>
-      </AppBar>
-
+      <Navbar open={open} setOpen={setOpen} />
       <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -190,47 +80,17 @@ const Sidebar = ({
           paper: classes.drawerPaper,
         }}
       >
-        {loader ? (
-          <Loader />
-        ) : user ? (
-          Logged(items)
-        ) : (
-          unLogged()
-        )}
+        {loader ? <Loader /> : user ? Logged(items) : unLogged()}
       </Drawer>
     </div>
   );
-}
+};
 
 /** Creacion de capa de estilos para el componente */
 const drawerWidth = 280;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-  },
-
-  appBar: {
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-
-  appBarShift: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-
-  hide: {
-    display: "none",
   },
 
   drawer: {
@@ -248,22 +108,6 @@ const useStyles = makeStyles((theme) => ({
       "0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%)",
   },
 
-  drawerHeader: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: "space-between",
-  },
-
-  drawerFooter: {
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
-  },
-
   title: {
     margin: "auto",
     textAlign: "center",
@@ -273,29 +117,10 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "var(--font-family-headline)",
   },
 
-  icon: {
-    color: "var(--background)",
-  },
-
   h1: {
     color: "var(--background)",
     margin: "auto",
     fontFamily: "var(font-family-content)",
-  },
-
-  p: {
-    marginLeft: 5,
-    fontSize: "1rem",
-  },
-
-  button: {
-    width: "95%",
-    marginLeft: "2.5%",
-    textTransform: "none !important",
-    color: "var(--background) !important",
-    border: "1px solid var(--background) !important",
-    padding: "5px 10px !important",
-    cursor: "pointer !important",
   },
 }));
 

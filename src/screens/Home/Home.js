@@ -71,18 +71,10 @@ function Home() {
     getProject();
   }
 
-
-  /**
-   * Actualizar el contenido del Sidebar
-   */
-  const refreshSidebar = () => {
-    setLoad(true);
-    get();
-  }
-
   useEffect(() => {
     if (user || reloadSidebar) {
-      refreshSidebar();
+      setLoad(true);
+      get();
     }
   }, [user, reloadSidebar]);
 
