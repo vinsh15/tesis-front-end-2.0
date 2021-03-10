@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
-
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+import { manageCreateProject } from "../../helpers/projects/projects"
+
+
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
 import AppContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
@@ -33,7 +36,12 @@ const SidebarHeader = ({ setOpen }) => {
         </IconButton>
       </div>
       <Divider className="divider" />
-      <Button size="small" variant="outlined" className={classes.button}>
+      <Button 
+        size="small" 
+        variant="outlined" 
+        className={classes.button}
+        onClick={() => manageCreateProject(user)}
+      >
         Agregar Proyecto
       </Button>
     </>

@@ -35,7 +35,11 @@ const Sidebar = ({ loader, login, logout, items }) => {
           <List className="list">
             {items.map((item, index) => {
               return (
-                <SidebarItem key={item.name} item={item} projectIndex={index} />
+                <SidebarItem
+                  key={item.name}
+                  item={item}
+                  projectIndex={index}
+                />
               );
             })}
           </List>
