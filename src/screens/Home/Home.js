@@ -15,9 +15,8 @@ import { postLogin } from "../../api/login/login";
  */
 function Home() {
   const [drawerItems, setDrawerItems] = useState();
-  const [item, setItem] = useState();
   const [load, setLoad] = useState(true);
-  const { user, setUser } = useContext(AppContext);
+  const { user, setUser, reloadSidebar, selectedProject, setSelectedProject } = useContext(AppContext);
   /**
    * Llamar a google auth para establecer ususario
    */
@@ -28,7 +27,7 @@ function Home() {
   };
 
   /**
-   * Cerrar sesión
+   * Mensaje de confirmación para cerrar sesión
    */
   const logout = () => {
     Swal.fire({
@@ -37,9 +36,11 @@ function Home() {
       showCancelButton: true,
       confirmButtonColor: 'var(--success)',
       cancelButtonColor: 'var(--error)',
-      confirmButtonText: 'Si, seguro'
+      confirmButtonText: 'Si, seguro',
+      cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
+        setSelectedProject();
         setLoad(true);
         localStorage.removeItem("user");
         setUser(null);
@@ -73,33 +74,23 @@ function Home() {
   }
 
   useEffect(() => {
-    if (user) {
+    setLoad(false);
+    if (user || reloadSidebar) {
       setLoad(true);
       get();
     }
-  }, [user]);
+  }, [user, reloadSidebar]);
 
-
-  const setProject = (itemSelected) => {   
-    setItem(itemSelected)
-  }
-
-  //useEffect(() => {
-    //console.log(item, "selected!!!")
-  //}, [item]);
 
   return (
     <>
       <Sidebar
-        item={item}
         items={drawerItems}
-        setItem={setProject}
-        user={user}
         login={changeState}
         logout={logout}
         loader={load}
       />
-      {item ? <h1 style={{ marginLeft: "40%" }}>{item}</h1> : null}
+      {selectedProject ? <h1 style={{ marginLeft: "40%" }}>{selectedProject.versionName}</h1> : null}
     </>
   );
 }

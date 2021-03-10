@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Loader from "../Loader/Loader";
 import Modal from "@material-ui/core/Modal";
 import { postArchitecture } from "../../api/architecture/architecture";
-import Swal from "sweetalert2";
+import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import TextField from "@material-ui/core/TextField";
 
 /** Componente que representa pop-up
@@ -24,7 +24,7 @@ const FileReader = ({
   const [name, setName] = useState("");
   const [valid, setValid] = useState(true);
   const [loader, setLoader] = useState(false);
-  const { user } = useContext(AppContext);
+  const { user, setReloadSidebar } = useContext(AppContext);
 
   const handleChangeStatus = ({ meta }, status) => {
     //console.log(status, meta)
@@ -66,8 +66,7 @@ const FileReader = ({
       const response = await postArchitecture(formData);
       if(response !== 'Error'){
         setName("");
-        swlSuccess();
-        
+        swlSuccess();        
       }
       else{
         swlError();
@@ -94,12 +93,9 @@ const FileReader = ({
   function swlSuccess() {
     setTimeout(setLoader(false), 3000);
     onClose();
-    Swal.fire({
-        title: '¡Arquitectura creada!',
-        icon: 'success',
-        showConfirmButton: false,
-        timer: 4000
-      });
+    setReloadSidebar(true);
+    ModalMessage("¡Arquitectura creada!", "Se ha creado una nueva arquitectura", "success", false, 5000);
+    setReloadSidebar(false);
   }
 
     /**
@@ -108,13 +104,7 @@ const FileReader = ({
   function swlError() {
     setTimeout(setLoader(false), 3000);
     onClose();
-    Swal.fire({
-      icon: 'error',
-      title: '¡Hubo un error!',
-      text: 'La arquitectura no fue creada',
-      showConfirmButton: false,
-      timer: 5500
-    })
+    ModalMessage("¡Hubo un error!", "No se ha creado una nueva arquitectura", "error", false, 5500);
   }
 
   return (

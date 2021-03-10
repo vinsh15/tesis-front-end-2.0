@@ -15,25 +15,23 @@ import TreeView from "@material-ui/lab/TreeView";
  */
 const SidebarDetail = ({
   projectIndex,
-  setItem,
   item,
 
 }) => {
   const classes = useStyles();
-  const [selected, setSelected] = useState([]);
-  const { setSelectedProject } = useContext(AppContext);
+  const { selectedProject, setSelectedProject } = useContext(AppContext);
 
-/**
- * Preguntar al usuario si desea mostrar la versión seleccionada
- * y actualizar el proyecto seleccionado
- * @param {String} nodeName nombre de la versión
- * @param {Integer} arqIndex índice de la arquitectura seleccionada
- * @param {Integer} verIndex índice de la versión seleccionada
- */
+  /**
+   * Preguntar al usuario si desea mostrar la versión seleccionada
+   * y actualizar el proyecto seleccionado
+   * @param {String} nodeName nombre de la versión
+   * @param {Integer} arqIndex índice de la arquitectura seleccionada
+   * @param {Integer} verIndex índice de la versión seleccionada
+   */
   const handleSelect = (nodeName, arqIndex, verIndex) => {
-    if (nodeName !== selected) {
+    if (nodeName !== selectedProject) {
       Swal.fire({
-        text: "¿Deseas mostrar " + nodeName + " ?",
+        text: "¿Deseas mostrar " + nodeName + "?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "var(--success)",
@@ -41,14 +39,12 @@ const SidebarDetail = ({
         confirmButtonText: "Si, seguro",
       }).then((result) => {
         if (result.isConfirmed) {
-          setSelected([nodeName, verIndex, arqIndex]);
-          // setSelected(event.target.innerText);
           setSelectedProject({
-            'versionName': nodeName,
-            'projectIndex': projectIndex,
-            'arcIndex': arqIndex,
-            'verIndex': verIndex
-          })
+            versionName: nodeName,
+            projectIndex: projectIndex,
+            arcIndex: arqIndex,
+            verIndex: verIndex,
+          });
         }
       });
     }
@@ -60,36 +56,31 @@ const SidebarDetail = ({
    * @returns {JSX} estructura de elementos en detalle
    */
   const renderTree = (nodes, select, arqIndex, verIndex) => (
-    <>
-      {nodes.name ? (
-        <TreeItem key={nodes.name} nodeId={nodes.name} label={nodes.name} onLabelClick={select ? () => handleSelect(nodes.name, arqIndex, verIndex) : null}>
-          {Array.isArray(nodes.versions)
-            ? nodes.versions.map((node, index) => renderTree(node, true, arqIndex, index))
-            : null}
-        </TreeItem>
-      ) : (
-        <TreeItem
-          key={nodes.data.id}
-          nodeId={nodes.data.id}
-          label={nodes.data.id}
-        ></TreeItem>
-      )}
-    </>
+    
+      <TreeItem
+        key={nodes.name}
+        nodeId={nodes.name}
+        label={nodes.name}
+        onLabelClick={
+          select ? () => handleSelect(nodes.name, arqIndex, verIndex) : null
+        }
+      >
+        {Array.isArray(nodes.versions)
+          ? nodes.versions.map((node, index) =>
+              renderTree(node, true, arqIndex, index)
+            )
+          : null}
+      </TreeItem>
+  
   );
 
-  useEffect(() => {
-    if (selected) {
-      setItem(selected);
-    }
-  }, [selected]);
-
   return (
-    <>
+
       <AccordionDetails>
         <TreeView
           className={classes.root}
           defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}         
+          defaultExpandIcon={<ChevronRightIcon />}
         >
           {/* Aqúi hay que colocar cuando un proeycto no tiene arquitecturas  */}
           {item.architectures?.map((architecture, index) =>
@@ -97,9 +88,9 @@ const SidebarDetail = ({
           )}
         </TreeView>
       </AccordionDetails>
-    </>
+
   );
-}
+};
 
 /** Creacion de capa de estilos para el componente */
 const useStyles = makeStyles({

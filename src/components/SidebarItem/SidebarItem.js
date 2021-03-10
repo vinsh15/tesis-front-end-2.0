@@ -19,7 +19,6 @@ import Typography from "@material-ui/core/Typography";
  */
 const SidebarItem = ({
   item,
-  setItem,
   projectIndex
 }) => {
   const classes = useStyles();
@@ -38,7 +37,6 @@ const SidebarItem = ({
 
         <SidebarDetail 
           item={item} 
-          setItem={setItem}
           projectIndex={projectIndex}
         />
         

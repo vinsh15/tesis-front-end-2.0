@@ -28,13 +28,13 @@ const NavbarItem = ({
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    minWidth: "11rem",
+    minWidth: "9rem",
     textTransform: "none !important",
     color: "var(--background) !important",
     border: "1px solid var(--background) !important",
     padding: "5px 10px !important",
     cursor: "pointer !important",
-    marginRight: "5px",
+    margin: "5px",
   },
 }));
 
