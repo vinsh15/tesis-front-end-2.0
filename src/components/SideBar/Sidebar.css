@@ -1,3 +1,5 @@
+/** Capa de estilo con CSS puro para modificar clases globales del componente */
+
 .MuiAppBar-colorPrimary {
     color: var(--background) !important;
     background-color: var(--primaryDark) !important;

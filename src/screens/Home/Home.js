@@ -16,6 +16,7 @@ function Home() {
   const [drawerItems, setDrawerItems] = useState();
   const [load, setLoad] = useState(true);
   const { user, setUser, reloadSidebar, selectedProject, setSelectedProject } = useContext(AppContext);
+  
   /**
    * Llamar a google auth para establecer ususario
    */

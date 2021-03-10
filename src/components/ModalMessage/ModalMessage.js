@@ -1,10 +1,10 @@
 import React from 'react';
 import Swal from "sweetalert2";
 
-/** Componente que representa pop-up
- *  para mostrar un mensaje de importancia
+/**
+ * Componente que representa pop-up
+ * para estado de una accion
  */
-
 const ModalMessage = (
     title,
     text,

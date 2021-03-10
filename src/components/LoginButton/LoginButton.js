@@ -1,11 +1,14 @@
 import React from "react";
 import "./LoginButton.css";
 
-/** Componente que representa el boton de iniciar sesion con Google */
-const LoginButton = (props) => {
+/** 
+ * Componente que representa el
+ * boton de iniciar sesion con Google
+ */
+const LoginButton = ({ login }) => {
   return (
     <>
-      <button type="button" onClick={props.login} className="google-button">
+      <button type="button" onClick={login} className="google-button">
         <span className="google-button__icon">
           <svg viewBox="0 0 366 372" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -33,6 +36,6 @@ const LoginButton = (props) => {
       </button>
     </>
   );
-}
+};
 
 export default LoginButton;

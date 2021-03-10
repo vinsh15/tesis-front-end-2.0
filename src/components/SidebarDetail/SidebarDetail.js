@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Swal from "sweetalert2";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -48,21 +48,21 @@ const SidebarDetail = ({ projectIndex, item }) => {
 
   /**
    * Función recursiva que agrega elementos al arbol como nodos
-   * @param {Array} node almacena el arreglo de proyectos correspondiente al usuario
+   * @param {Array} node almacena el elemento por agregar
    * @returns {JSX} estructura de elementos en detalle
    */
-  const renderTree = (nodes, select, arqIndex, verIndex) => (
+  const renderTree = (node, select, arqIndex, verIndex) => (
     
       <TreeItem
-        key={nodes.name}
-        nodeId={nodes.name}
-        label={nodes.name}
+        key={node.name}
+        nodeId={node.name}
+        label={node.name}
         onLabelClick={
-          select ? () => handleSelect(nodes.name, arqIndex, verIndex) : null
+          select ? () => handleSelect(node.name, arqIndex, verIndex) : null
         }
       >
-        {Array.isArray(nodes.versions)
-          ? nodes.versions.map((node, index) =>
+        {Array.isArray(node.versions)
+          ? node.versions.map((node, index) =>
               renderTree(node, true, arqIndex, index)
             )
           : null}

@@ -11,15 +11,11 @@ import { postArchitecture } from "../../api/architecture/architecture";
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import TextField from "@material-ui/core/TextField";
 
-/** Componente que representa pop-up
- *  para añadir archivos
+/**
+ * Componente que representa pop-up
+ * para añadir archivos
  */
-const FileReader = ({
-  onClose,
-  open,
-  projectIndex,
-  type,
-}) => {
+const FileReader = ({ onClose, open, projectIndex, type }) => {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [valid, setValid] = useState(true);
@@ -46,37 +42,34 @@ const FileReader = ({
    */
   const getFormData = (allFiles) => {
     const formData = new FormData();
-    formData.append('uid', user.uid);
-    formData.append('name', name);
-    formData.append('index', projectIndex);
-    allFiles.forEach(file => {
+    formData.append("uid", user.uid);
+    formData.append("name", name);
+    formData.append("index", projectIndex);
+    allFiles.forEach((file) => {
       addFile(file, formData);
-    })
+    });
     return formData;
-  }
+  };
 
   /**
-   * 
+   *
    * @param {Array} allFiles arreglo que contiene todos los archivos XML
    */
   const handleSubmit = async (allFiles) => {
     setLoader(true);
-    if(name !== ""){
+    if (name !== "") {
       const formData = getFormData(allFiles);
       const response = await postArchitecture(formData);
-      if(response !== 'Error'){
+      if (response !== "Error") {
         setName("");
-        swlSuccess();        
-      }
-      else{
+        swlSuccess();
+      } else {
         swlError();
       }
-    }else{
-      setValid(false);     
-      
+    } else {
+      setValid(false);
     }
   };
-
 
   /**
    * Actualizar el nombre según se actualice el TextField
@@ -88,23 +81,36 @@ const FileReader = ({
   };
 
   /**
-   * Popup temporal de SweetAlert con mensaje exitoso
+   * Modal con mensaje de exito y actualizacion
+   * del Sidebar
    */
   function swlSuccess() {
     setTimeout(setLoader(false), 3000);
     onClose();
     setReloadSidebar(true);
-    ModalMessage("¡Arquitectura creada!", "Se ha creado una nueva arquitectura", "success", false, 5000);
+    ModalMessage(
+      "¡Arquitectura creada!",
+      "Se ha creado una nueva arquitectura",
+      "success",
+      false,
+      5000
+    );
     setReloadSidebar(false);
   }
 
-    /**
-   * Popup temporal de SweetAlert con mensaje de falla
+  /**
+   * Modal con mensaje de error
    */
   function swlError() {
     setTimeout(setLoader(false), 3000);
     onClose();
-    ModalMessage("¡Hubo un error!", "No se ha creado una nueva arquitectura", "error", false, 5500);
+    ModalMessage(
+      "¡Hubo un error!",
+      "No se ha creado una nueva arquitectura",
+      "error",
+      false,
+      5500
+    );
   }
 
   return (
@@ -116,41 +122,52 @@ const FileReader = ({
         onClose={onClose}
       >
         <div className={classes.paper}>
-        {loader ? <Loader /> : 
-        <>
-          <h2 className={classes.h1}>Agregar {type}</h2>
-          <TextField
-            required
-            id="outlined-basic"
-            label="Nombre"
-            value={name}
-            onChange={handleChange}
-            variant="outlined"
-          />
-          {!valid ? <div className={classes.validation}>* El nombre de la arquitectura es obligatorio </div> : null}
-          <Dropzone
-            onChangeStatus={handleChangeStatus}
-            onSubmit={handleSubmit}
-            styles={{ dropzone: { maxHeight: 200, maxWidth: 400 } }}
-            accept="text/xml"
-            inputContent={(files, extra) =>
-              extra.reject
-                ? "Solo cargar archivos .xml"
-                : "Agrega archivos o hacer clic para buscar"
-            }
-            styles={{
-              dropzoneReject: { borderColor: "red", backgroundColor: "#DAA" },
-              inputLabel: (files, extra) =>
-                extra.reject ? { color: "red" } : {},
-            }}
-          />
-          </>}
+          {loader ? (
+            <Loader />
+          ) : (
+            <>
+              <h2 className={classes.h1}>Agregar {type}</h2>
+              <TextField
+                required
+                id="outlined-basic"
+                label="Nombre"
+                value={name}
+                onChange={handleChange}
+                variant="outlined"
+              />
+              {!valid ? (
+                <div className={classes.validacion}>
+                  * El nombre de la arquitectura es obligatorio{" "}
+                </div>
+              ) : null}
+              <Dropzone
+                onChangeStatus={handleChangeStatus}
+                onSubmit={handleSubmit}
+                styles={{ dropzone: { maxHeight: 200, maxWidth: 400 } }}
+                accept="text/xml"
+                inputContent={(files, extra) =>
+                  extra.reject
+                    ? "Solo cargar archivos .xml"
+                    : "Agrega archivos o hacer clic para buscar"
+                }
+                styles={{
+                  dropzoneReject: {
+                    borderColor: "red",
+                    backgroundColor: "#DAA",
+                  },
+                  inputLabel: (files, extra) =>
+                    extra.reject ? { color: "red" } : {},
+                }}
+              />
+            </>
+          )}
         </div>
       </Modal>
     </div>
   );
-}
+};
 
+/** Creacion de capa de estilos para el componente */
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
@@ -159,7 +176,7 @@ const useStyles = makeStyles((theme) => ({
     width: "60%",
     minHeight: 300,
     maxHeight: 600,
-    overflow: 'auto',
+    overflow: "auto",
     border: "none",
     borderRadius: 5,
     background: "var(--background)",
@@ -173,12 +190,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontFamily: "var(font-family-content)",
   },
-  validation: {
+  validacion: {
     color: "var(--error)",
     fontSize: 13,
-    margin: 5
-  }
+    margin: 5,
+  },
 }));
-
 
 export default FileReader;
