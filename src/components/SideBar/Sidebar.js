@@ -5,6 +5,7 @@ import "./Sidebar.css";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
 import { manageCreateVersion } from "../../helpers/versions/versions";
+import { manageCreateProject } from "../../helpers/projects/projects"
 import { postProject } from "../../api/projects/projects";
 
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
@@ -71,7 +72,7 @@ const Sidebar = ({
           size="small"
           variant="outlined"
           className={classes.button}
-          onClick={() => postProject(user, "Proyectico")} //Esta es la función a llamar con el modal del nombre
+          onClick={() => manageCreateProject(user)}
         >
           Agregar Proyecto
         </Button>
