@@ -6,7 +6,8 @@ import Sidebar from "../../components/SideBar/Sidebar";
 import Swal from "sweetalert2";
 
 import AppContext from "../../auth/context/context";
-import { googleAuth, getProjects } from "../../firebase/googleAuth";
+import { googleAuth } from "../../firebase/googleAuth";
+import { postLogin } from "../../api/login/login";
 
 
 /** Componente que representa la página
@@ -59,7 +60,7 @@ function Home() {
    * Actualizar arreglo de proyectos
    */
   const getProject = async () => {
-    let elements = await getProjects(user, setUser);
+    let elements = await postLogin(user, setUser);
     setDrawerItems(elements);
     setLoad(false);
   };
