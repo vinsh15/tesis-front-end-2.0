@@ -5,10 +5,11 @@ import Swal from "sweetalert2";
  * @param {String} title Mensaje del modal
  * @param {String} icon Ícono a mostrar
  */
-const ModalResponse = (title, icon) => {
+const ModalResponse = (title, text, icon) => {
     Swal.fire({
       title: title,
       icon: icon,
+      text: text,
       showConfirmButton: false,
       timer: 4000,
     });
