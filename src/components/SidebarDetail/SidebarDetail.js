@@ -15,7 +15,6 @@ import TreeView from "@material-ui/lab/TreeView";
  */
 const SidebarDetail = ({
   projectIndex,
-  setItem,
   item,
 
 }) => {
@@ -33,7 +32,7 @@ const SidebarDetail = ({
   const handleSelect = (nodeName, arqIndex, verIndex) => {
     if (nodeName !== selected) {
       Swal.fire({
-        text: "¿Deseas mostrar " + nodeName + " ?",
+        text: "¿Deseas mostrar " + nodeName + "?",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "var(--success)",
@@ -43,7 +42,7 @@ const SidebarDetail = ({
         if (result.isConfirmed) {
           setSelected([nodeName, verIndex, arqIndex]);
           // setSelected(event.target.innerText);
-          setSelectedProject({
+          setSelectedProject({ 
             'versionName': nodeName,
             'projectIndex': projectIndex,
             'arcIndex': arqIndex,
@@ -77,11 +76,6 @@ const SidebarDetail = ({
     </>
   );
 
-  useEffect(() => {
-    if (selected) {
-      setItem(selected);
-    }
-  }, [selected]);
 
   return (
     <>

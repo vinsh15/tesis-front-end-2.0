@@ -24,7 +24,7 @@ const FileReader = ({
   const [name, setName] = useState("");
   const [valid, setValid] = useState(true);
   const [loader, setLoader] = useState(false);
-  const { user } = useContext(AppContext);
+  const { user, setReloadSidebar } = useContext(AppContext);
 
   const handleChangeStatus = ({ meta }, status) => {
     //console.log(status, meta)
@@ -93,7 +93,9 @@ const FileReader = ({
   function swlSuccess() {
     setTimeout(setLoader(false), 3000);
     onClose();
+    setReloadSidebar(true);
     ModalMessage("¡Arquitectura creada!", "Se ha creado una nueva arquitectura", "success", false, 5000);
+    setReloadSidebar(false);
   }
 
     /**

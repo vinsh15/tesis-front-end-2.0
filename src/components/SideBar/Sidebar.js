@@ -36,14 +36,12 @@ const Sidebar = ({
   loader,
   login,
   logout,
-  item,
-  items,
-  setItem
+  items
 }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(true);
-  const { user, selectedProject } = useContext(AppContext);
+  const { user, selectedProject, setReloadSidebar } = useContext(AppContext);
 
   /**
    * Creacion de barra superior del SideBar con informacion del usuario
@@ -111,7 +109,6 @@ const Sidebar = ({
                   key={item.name}
                   item={item}
                   projectIndex={index}
-                  setItem={setItem}
                 />
               );
             })}
@@ -162,16 +159,16 @@ const Sidebar = ({
           >
             <MenuIcon />
           </IconButton>
-          {item && item.length !== 0 ? (
+          {selectedProject ? (
             <>
-                <h1 className={classes.h1} style={{ marginLeft: "0" }}>
-                  {item[0]}
+                <h1 className={classes.h1} style={{ marginLeft: "0", minWidth:145 }}>
+                  {selectedProject.versionName}
                 </h1>
-                <div>
+                <div style={{ textAlign: "right" }}>
                   <NavbarItem
                     icon={<AddIcon />}
                     title={"Crear nueva versión"}
-                    onClick={() => manageCreateVersion(user, selectedProject)}
+                    onClick={() => manageCreateVersion(user, selectedProject, setReloadSidebar)}
                   />
                   <NavbarItem
                     icon={<EditIcon />}
@@ -283,7 +280,6 @@ const useStyles = makeStyles((theme) => ({
   h1: {
     color: "var(--background)",
     margin: "auto",
-    textAlign: "center",
     fontFamily: "var(font-family-content)",
   },
 
