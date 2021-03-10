@@ -9,7 +9,6 @@ import IconButton from "@material-ui/core/IconButton";
 /**
  * Componente que representa la barra inferior
  * del SideBar con boton logout
- * @returns {JSX} estructura de elementos en la barra inferior
  */
 const SidebarFooter = ({ logout }) => {
   const classes = useStyles();

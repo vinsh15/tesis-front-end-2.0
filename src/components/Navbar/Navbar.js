@@ -16,56 +16,57 @@ import Toolbar from "@material-ui/core/Toolbar";
 /**
  * Componente que representa la barra
  * superior de navegacion
- * @param {Boolean} open estado del Sidebar
- * @param {Function} setOpen actualizar el estado del Sidebar
- * @returns {JSX} estructura en detalle del Navbar
  */
-
 const Navbar = ({ open, setOpen }) => {
   const classes = useStyles();
   const theme = useTheme();
   const { user, selectedProject, setReloadSidebar } = useContext(AppContext);
 
   return (
-    <AppBar
-      position="fixed"
-      className={clsx(classes.appBar, {
-        [classes.appBarShift]: open,
-      })}
-    >
-      <Toolbar>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={() => setOpen(true)}
-          edge="start"
-          className={clsx(classes.menuButton, open && classes.hide)}
-        >
-          <MenuIcon />
-        </IconButton>
-        {selectedProject ? (
-          <>
-            <h1 className={classes.h1} style={{ marginLeft: 0, minWidth: 145 }}>
-              {selectedProject.versionName}
-            </h1>
-            <div style={{ textAlign: "right" }}>
-              <NavbarItem
-                icon={<AddIcon />}
-                title={"Crear nueva versión"}
-                onClick={() =>
-                  manageCreateVersion(user, selectedProject, setReloadSidebar)
-                }
-              />
-              <NavbarItem
-                icon={<EditIcon />}
-                title={"Agregar elementos"}
-                onClick={() => console.log("Agregar elementos")}
-              />
-            </div>
-          </>
-        ) : null}
-      </Toolbar>
-    </AppBar>
+    <>
+      <AppBar
+        position="fixed"
+        className={clsx(classes.appBar, {
+          [classes.appBarShift]: open,
+        })}
+      >
+        <Toolbar>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setOpen(true)}
+            edge="start"
+            className={clsx(classes.menuButton, open && classes.hide)}
+          >
+            <MenuIcon />
+          </IconButton>
+          {selectedProject ? (
+            <>
+              <h1
+                className={classes.h1}
+                style={{ marginLeft: 0, minWidth: 145 }}
+              >
+                {selectedProject.versionName}
+              </h1>
+              <div style={{ textAlign: "right" }}>
+                <NavbarItem
+                  icon={<AddIcon />}
+                  title={"Crear nueva versión"}
+                  onClick={() =>
+                    manageCreateVersion(user, selectedProject, setReloadSidebar)
+                  }
+                />
+                <NavbarItem
+                  icon={<EditIcon />}
+                  title={"Agregar elementos"}
+                  onClick={() => console.log("Agregar elementos")}
+                />
+              </div>
+            </>
+          ) : null}
+        </Toolbar>
+      </AppBar>
+    </>
   );
 };
 

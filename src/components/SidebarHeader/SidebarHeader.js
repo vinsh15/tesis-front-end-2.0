@@ -11,7 +11,6 @@ import IconButton from "@material-ui/core/IconButton";
 
 /**
  * Componente que representa barra superior del SideBar
- * @returns {JSX} estructura de elementos en la barra superior
  */
 const SidebarHeader = ({ setOpen }) => {
   const classes = useStyles();

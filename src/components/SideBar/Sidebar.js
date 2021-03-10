@@ -120,6 +120,8 @@ const useStyles = makeStyles((theme) => ({
   h1: {
     color: "var(--background)",
     margin: "auto",
+    textAlign: "center",
+    width: 200,
     fontFamily: "var(font-family-content)",
   },
 }));
