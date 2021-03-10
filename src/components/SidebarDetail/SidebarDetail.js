@@ -91,7 +91,8 @@ const SidebarDetail = ({
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}         
         >
-          {item.architectures.map((architecture, index) =>
+          {/* Aqúi hay que colocar cuando un proeycto no tiene arquitecturas  */}
+          {item.architectures?.map((architecture, index) =>
             renderTree(architecture, false, index, null)
           )}
         </TreeView>
