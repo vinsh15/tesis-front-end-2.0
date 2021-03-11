@@ -59,7 +59,7 @@ const Navbar = ({ open, setOpen }) => {
                 <NavbarItem
                   icon={<EditIcon />}
                   title={"Agregar elementos"}
-                  onClick={() => console.log("Agregar elementos")}
+                  onClick={() => console.log(selectedProject)}
                 />
               </div>
             </>

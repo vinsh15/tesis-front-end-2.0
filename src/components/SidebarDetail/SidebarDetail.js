@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Swal from "sweetalert2";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -27,8 +27,9 @@ const SidebarDetail = ({
    * @param {String} nodeName nombre de la versión
    * @param {Integer} arqIndex índice de la arquitectura seleccionada
    * @param {Integer} verIndex índice de la versión seleccionada
+   * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
-  const handleSelect = (nodeName, arqIndex, verIndex) => {
+  const handleSelect = (nodeName, arqIndex, verIndex, elems) => {
     if (nodeName !== selectedProject) {
       Swal.fire({
         text: "¿Deseas mostrar " + nodeName + "?",
@@ -44,6 +45,7 @@ const SidebarDetail = ({
             projectIndex: projectIndex,
             arcIndex: arqIndex,
             verIndex: verIndex,
+            elements: elems
           });
         }
       });
@@ -51,31 +53,31 @@ const SidebarDetail = ({
   };
 
   /**
-   * Función recursiva que agrega elementos al arbol como nodos
-   * @param {Array} node almacena el arreglo de proyectos correspondiente al usuario
-   * @returns {JSX} estructura de elementos en detalle
+   * 
+   * @param {JSON} nodes objeto que contiene toda la información sobre un nodo
+   * @param {Boolean} select si el elemento está o no seleccionado
+   * @param {Integer} arqIndex índice de la arquitectura en el arreglo
+   * @param {Integer} verIndex índice de la versión en el arreglo
+   * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
-  const renderTree = (nodes, select, arqIndex, verIndex) => (
-    
+  const renderTree = (nodes, select, arqIndex, verIndex, elems) => (
       <TreeItem
         key={nodes.name}
         nodeId={nodes.name}
         label={nodes.name}
         onLabelClick={
-          select ? () => handleSelect(nodes.name, arqIndex, verIndex) : null
+          select ? () => handleSelect(nodes.name, arqIndex, verIndex, elems) : null
         }
       >
         {Array.isArray(nodes.versions)
           ? nodes.versions.map((node, index) =>
-              renderTree(node, true, arqIndex, index)
+              renderTree(node, true, arqIndex, index, node.elements)
             )
           : null}
       </TreeItem>
-  
   );
 
   return (
-
       <AccordionDetails>
         <TreeView
           className={classes.root}
@@ -84,7 +86,7 @@ const SidebarDetail = ({
         >
           {/* Aqúi hay que colocar cuando un proeycto no tiene arquitecturas  */}
           {item.architectures?.map((architecture, index) =>
-            renderTree(architecture, false, index, null)
+            renderTree(architecture, false, index, null, null)
           )}
         </TreeView>
       </AccordionDetails>
