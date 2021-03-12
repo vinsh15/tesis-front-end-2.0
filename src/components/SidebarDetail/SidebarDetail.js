@@ -63,8 +63,8 @@ const SidebarDetail = ({
   const renderTree = (nodes, select, arqIndex, verIndex, elems) => (
       <TreeItem
         key={verIndex != null ? verIndex : arqIndex}
-        nodeId={node.name}
-        label={node.name}
+        nodeId={nodes.name}
+        label={nodes.name}
         onLabelClick={
           select ? () => handleSelect(nodes.name, arqIndex, verIndex, elems) : null
         }
