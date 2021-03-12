@@ -1,41 +1,49 @@
 .swal2-popup {
-    background: var(--background) !important;
-    width: auto !important;
+  background: var(--background) !important;
+  width: auto !important;
 }
 
-.swal2-content{
-    color: var(--primaryDark) !important;
-    font-size: 21px !important;
-    font-weight: 600 !important;
+.swal2-content {
+  color: var(--primaryDark) !important;
+  font-size: 21px !important;
+  font-weight: 600 !important;
+}
+/** Capa de estilo con CSS puro para modificarlas clases globales del componente */
+
+.content{
+  margin-left: 290px;
+  margin-top:80px;
+  width: 90%;
+  height: 100%;
 }
 
-.swal2-styled.swal2-confirm{
-    background-color: var(--background) !important;
-    border: 1px solid var(--primaryDark) !important;
-    color: var(--primaryDark) !important;
-    font-family: var(--font-family-content) !important;
+.swal2-styled.swal2-confirm {
+  background-color: var(--background) !important;
+  border: 1px solid var(--primaryDark) !important;
+  color: var(--primaryDark) !important;
+  font-family: var(--font-family-content) !important;
 }
 
-.swal2-styled.swal2-cancel{
-    background-color: var(--background) !important;
-    border: 1px solid var(--error) !important;
-    color: var(--error) !important;
-    font-family: var(--error) !important
+.swal2-styled.swal2-cancel {
+  background-color: var(--background) !important;
+  border: 1px solid var(--error) !important;
+  color: var(--error) !important;
+  font-family: var(--error) !important;
 }
 
 .swal2-input {
-    width: 90% !important;
-    border-radius: 5px;
-    padding: 18.5px 14px !important;
-    font-size: 17px !important;
+  width: 90% !important;
+  border-radius: 5px;
+  padding: 18.5px 14px !important;
+  font-size: 17px !important;
 }
 
 .swal2-input:hover {
-    border: 1px solid var(--type) !important;
-  }
+  border: 1px solid var(--type) !important;
+}
 
-  .swal2-validation-message {
-    background: none !important;
-    color: var(--error) !important;
-    font-size: 13px !important;
+.swal2-validation-message {
+  background: none !important;
+  color: var(--error) !important;
+  font-size: 13px !important;
 }

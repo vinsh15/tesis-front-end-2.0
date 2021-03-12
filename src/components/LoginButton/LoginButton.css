@@ -1,3 +1,5 @@
+/** Capa de estilo con CSS puro para crear boton segun estilos de marca Google */
+
 .google-button {
     height: 40px;
     width: 95%;
@@ -13,15 +15,18 @@
     transition-timing-function: ease-in-out;
     padding: 0;
 }
+
 .google-button:focus, .google-button:hover {
     box-shadow: 1px 4px 5px 1px rgba(0, 0, 0, 0.1);
 }
+
 .google-button:active {
     background-color: #e5e5e5;
     box-shadow: none;
     border: none;
     transition-duration: 10ms;
 }
+
 .google-button__icon {
     display: inline-block;
     vertical-align: middle;
@@ -30,9 +35,11 @@
     height: 18px;
     box-sizing: border-box;
 }
+
 .google-button__icon--plus {
     width: 27px;
 }
+
 .google-button__text {
     display: inline-block;
     vertical-align: middle;
