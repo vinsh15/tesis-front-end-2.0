@@ -1,7 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
-import './Home.css';
+import "./Home.css";
+import { makeStyles } from "@material-ui/core/styles";
+
+import clsx from "clsx";
 
 import Sidebar from "../../components/SideBar/Sidebar";
+import Content from "../../components/Content/Content";
 
 import Swal from "sweetalert2";
 
@@ -9,15 +13,22 @@ import AppContext from "../../auth/context/context";
 import { googleAuth } from "../../firebase/googleAuth";
 import { postLogin } from "../../api/login/login";
 
-
 /** Componente que representa la página
  *  principal de navegación
  */
 function Home() {
+  const classes = useStyles();
   const [drawerItems, setDrawerItems] = useState();
+  const [open, setOpen] = useState(true);
   const [load, setLoad] = useState(true);
-  const { user, setUser, reloadSidebar, selectedProject, setSelectedProject } = useContext(AppContext);
-  
+  const {
+    user,
+    setUser,
+    reloadSidebar,
+    selectedProject,
+    setSelectedProject,
+  } = useContext(AppContext);
+
   /**
    * Llamar a google auth para establecer ususario
    */
@@ -32,13 +43,13 @@ function Home() {
    */
   const logout = () => {
     Swal.fire({
-      text: '¿Seguro que deseas cerrar sesión?',
-      icon: 'warning',
+      text: "¿Seguro que deseas cerrar sesión?",
+      icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: 'var(--success)',
-      cancelButtonColor: 'var(--error)',
-      confirmButtonText: 'Si, seguro',
-      cancelButtonText: 'Cancelar'
+      confirmButtonColor: "var(--success)",
+      cancelButtonColor: "var(--error)",
+      confirmButtonText: "Si, seguro",
+      cancelButtonText: "Cancelar",
     }).then((result) => {
       if (result.isConfirmed) {
         setSelectedProject();
@@ -47,8 +58,7 @@ function Home() {
         setUser(null);
         setLoad(false);
       }
-      
-    })
+    });
   };
 
   /**
@@ -80,8 +90,8 @@ function Home() {
       setLoad(true);
       get();
     }
+    //console.log(selectedProject);
   }, [user, reloadSidebar]);
-
 
   return (
     <>
@@ -90,10 +100,42 @@ function Home() {
         login={changeState}
         logout={logout}
         loader={load}
+        open={open}
+        setOpen={setOpen}
       />
-      {selectedProject ? <h1 style={{ marginLeft: "40%" }}>{selectedProject.versionName}</h1> : null}
+      <main
+        className={clsx(classes.content, {
+          [classes.contentShift]: open,
+        })}
+      >
+        {" "}
+        {selectedProject ? (
+          <Content elements={selectedProject.elements} />
+        ) : null}
+      </main>
     </>
   );
 }
+
+/** Creacion de capa de estilos para el componente */
+const drawerWidth = 270;
+const useStyles = makeStyles((theme) => ({
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(2),
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: -drawerWidth,
+  },
+  contentShift: {
+    transition: theme.transitions.create("margin", {
+      easing: theme.transitions.easing.easeOut,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+    marginLeft: 270,
+  },
+}));
 
 export default Home;

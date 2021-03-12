@@ -4,6 +4,7 @@ import "./Sidebar.css";
 import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
 
+
 import AppContext from "../../auth/context/context";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Loader from "../Loader/Loader";
@@ -17,9 +18,9 @@ import SidebarItem from "../SidebarItem/SidebarItem";
  * Componente que representa la barra lateral
  * princial de navegacion
  */
-const Sidebar = ({ loader, login, logout, items }) => {
+const Sidebar = ({ loader, login, logout, items, open, setOpen }) => {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
+
   const { user } = useContext(AppContext);
 
   /**

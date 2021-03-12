@@ -28,7 +28,8 @@ const SidebarDetail = ({
    * @param {Integer} arqIndex índice de la arquitectura seleccionada
    * @param {Integer} verIndex índice de la versión seleccionada
    */
-  const handleSelect = (nodeName, arqIndex, verIndex) => {
+  const handleSelect = (nodeName, arqIndex, verIndex, elements) => {
+    
     if (nodeName !== selectedProject) {
       Swal.fire({
         text: "¿Deseas mostrar " + nodeName + "?",
@@ -44,6 +45,7 @@ const SidebarDetail = ({
             projectIndex: projectIndex,
             arcIndex: arqIndex,
             verIndex: verIndex,
+            elements: elements,
           });
         }
       });
@@ -58,11 +60,11 @@ const SidebarDetail = ({
   const renderTree = (node, select, arqIndex, verIndex) => (
     
       <TreeItem
-        key={node.name}
+        key={verIndex != null ? verIndex : arqIndex}
         nodeId={node.name}
         label={node.name}
         onLabelClick={
-          select ? () => handleSelect(node.name, arqIndex, verIndex) : null
+          select ? () => handleSelect(node.name, arqIndex, verIndex, node.elements) : null
         }
       >
         {Array.isArray(node.versions)
@@ -71,7 +73,7 @@ const SidebarDetail = ({
             )
           : null}
       </TreeItem>
-  
+ 
   );
 
   return (

@@ -1,0 +1,9 @@
+.component{
+    width: 100%;
+    min-width: 102vh;
+    height: 100vh ;
+}
+
+.component:grabbed {
+    background-color: red;
+}
