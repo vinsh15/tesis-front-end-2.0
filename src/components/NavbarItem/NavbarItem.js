@@ -1,9 +1,13 @@
 import React from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 import Button from "@material-ui/core/Button";
 
-/** Componente que representa la barra  de navegación */
+/** 
+ * Componente que representa un 
+ * elemento del Navbar 
+*/
 const NavbarItem = ({
   icon,
   title,
@@ -26,6 +30,7 @@ const NavbarItem = ({
   );
 }
 
+/** Creacion de capa de estilos para el componente */
 const useStyles = makeStyles((theme) => ({
   button: {
     minWidth: "9rem",

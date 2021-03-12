@@ -18,7 +18,7 @@ import IconButton from "@material-ui/core/IconButton";
 const SidebarHeader = ({ setOpen }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { user } = useContext(AppContext);
+  const { user, setReloadSidebar } = useContext(AppContext);
 
   return (
     <>
@@ -40,7 +40,7 @@ const SidebarHeader = ({ setOpen }) => {
         size="small" 
         variant="outlined" 
         className={classes.button}
-        onClick={() => manageCreateProject(user)}
+        onClick={() => manageCreateProject(user, setReloadSidebar)}
       >
         Agregar Proyecto
       </Button>

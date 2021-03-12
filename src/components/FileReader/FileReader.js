@@ -13,15 +13,11 @@ import Loader from "../Loader/Loader";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
 
-/** Componente que representa pop-up
- *  para añadir archivos
+/**
+ * Componente que representa pop-up
+ * para añadir archivos
  */
-const FileReader = ({
-  onClose,
-  open,
-  projectIndex,
-  type,
-}) => {
+const FileReader = ({ onClose, open, projectIndex, type }) => {
   const classes = useStyles();
   const [name, setName] = useState("");
   const [valid, setValid] = useState(true);
@@ -131,41 +127,52 @@ const FileReader = ({
         onClose={onClose}
       >
         <div className={classes.paper}>
-        {loader ? <Loader /> : 
-        <>
-          <h2 className={classes.h1}>Agregar {type}</h2>
-          <TextField
-            required
-            id="outlined-basic"
-            label="Nombre"
-            value={name}
-            onChange={handleChange}
-            variant="outlined"
-          />
-          {!valid ? <div className={classes.validation}>* El nombre de la arquitectura es obligatorio </div> : null}
-          <Dropzone
-            onChangeStatus={handleChangeStatus}
-            onSubmit={handleSubmit}
-            styles={{ dropzone: { maxHeight: 200, maxWidth: 400 } }}
-            accept="text/xml"
-            inputContent={(files, extra) =>
-              extra.reject
-                ? "Solo cargar archivos .xml"
-                : "Agrega archivos o hacer clic para buscar"
-            }
-            styles={{
-              dropzoneReject: { borderColor: "red", backgroundColor: "#DAA" },
-              inputLabel: (files, extra) =>
-                extra.reject ? { color: "red" } : {},
-            }}
-          />
-          </>}
+          {loader ? (
+            <Loader />
+          ) : (
+            <>
+              <h2 className={classes.h1}>Agregar {type}</h2>
+              <TextField
+                required
+                id="outlined-basic"
+                label="Nombre"
+                value={name}
+                onChange={handleChange}
+                variant="outlined"
+              />
+              {!valid ? (
+                <div className={classes.validacion}>
+                  * El nombre de la arquitectura es obligatorio{" "}
+                </div>
+              ) : null}
+              <Dropzone
+                onChangeStatus={handleChangeStatus}
+                onSubmit={handleSubmit}
+                styles={{ dropzone: { maxHeight: 200, maxWidth: 400 } }}
+                accept="text/xml"
+                inputContent={(files, extra) =>
+                  extra.reject
+                    ? "Solo cargar archivos .xml"
+                    : "Agrega archivos o hacer clic para buscar"
+                }
+                styles={{
+                  dropzoneReject: {
+                    borderColor: "red",
+                    backgroundColor: "#DAA",
+                  },
+                  inputLabel: (files, extra) =>
+                    extra.reject ? { color: "red" } : {},
+                }}
+              />
+            </>
+          )}
         </div>
       </Modal>
     </div>
   );
-}
+};
 
+/** Creacion de capa de estilos para el componente */
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
@@ -174,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
     width: "60%",
     minHeight: 300,
     maxHeight: 600,
-    overflow: 'auto',
+    overflow: "auto",
     border: "none",
     borderRadius: 5,
     background: "var(--background)",
@@ -188,12 +195,11 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     fontFamily: "var(font-family-content)",
   },
-  validation: {
+  validacion: {
     color: "var(--error)",
     fontSize: 13,
-    margin: 5
-  }
+    margin: 5,
+  },
 }));
-
 
 export default FileReader;
