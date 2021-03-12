@@ -2,13 +2,15 @@ import React, { useContext, useState } from "react";
 import "./FileReader.css";
 import "react-dropzone-uploader/dist/styles.css";
 
+import { makeStyles } from "@material-ui/core/styles";
+import ModalResponse from "../../components/ModalResponse/ModalResponse";
+import { submitArchitecture } from "../../helpers/architecture/architecture";
+import { submitElements } from "../../helpers/elements/elements";
+
 import AppContext from "../../auth/context/context";
 import Dropzone from "react-dropzone-uploader";
-import { makeStyles } from "@material-ui/core/styles";
 import Loader from "../Loader/Loader";
 import Modal from "@material-ui/core/Modal";
-import { postArchitecture } from "../../api/architecture/architecture";
-import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import TextField from "@material-ui/core/TextField";
 
 /** Componente que representa pop-up
@@ -24,59 +26,92 @@ const FileReader = ({
   const [name, setName] = useState("");
   const [valid, setValid] = useState(true);
   const [loader, setLoader] = useState(false);
-  const { user, setReloadSidebar } = useContext(AppContext);
+  const { user, setReloadSidebar, selectedProject } = useContext(AppContext);
+  var messages = {
+    "error": "",
+    "success": ""
+  };
 
   const handleChangeStatus = ({ meta }, status) => {
     //console.log(status, meta)
   };
 
-  /**
-   * Agrega el archivo al form-data y lo elimina del dropzone
-   * @param {File} file archivo XML
-   * @param {FormData} formData objeto form-data
-   */
-  const addFile = (file, formData) => {
-    formData.append("file", file.file, file.meta.name);
-    file.remove();
-  };
 
   /**
-   * Construir el form-data
-   * @param {Array} allFiles arreglo que contiene todos los archivos XML
-   */
-  const getFormData = (allFiles) => {
-    const formData = new FormData();
-    formData.append('uid', user.uid);
-    formData.append('name', name);
-    formData.append('index', projectIndex);
-    allFiles.forEach(file => {
-      addFile(file, formData);
-    })
-    return formData;
-  }
-
-  /**
-   * 
+   * Manejar acción en base al tipo de data a subir a 
+   * la base de datos
    * @param {Array} allFiles arreglo que contiene todos los archivos XML
    */
   const handleSubmit = async (allFiles) => {
-    setLoader(true);
     if(name !== ""){
-      const formData = getFormData(allFiles);
-      const response = await postArchitecture(formData);
-      if(response !== 'Error'){
-        setName("");
-        swlSuccess();        
+      setLoader(true);
+      var response;
+      switch (type.toLowerCase()) {
+        case 'arquitectura':
+          response = await manageArchitectureSubmit(allFiles);
+          break;
+        case 'elementos':
+          response = await manageElementsSubmit(allFiles);
+          break;
+        default:
+          break;
       }
-      else{
-        swlError();
-      }
+      manageResponse(response);
     }else{
       setValid(false);     
-      
     }
   };
 
+  /**
+   * Manejar los modals a mostrar en base a
+   * la respuesta obtenida de la API
+   * @param {JSON} response respuesta de la llamada a la API
+   */
+  const manageResponse = (response) => {
+    setTimeout(setLoader(false), 3000);
+    onClose();
+    if(type.toLowerCase() === 'arquitectura'){
+      setReloadSidebar(true);
+    }
+    if(response === 'Error'){
+      ModalResponse("¡Hubo un error!", messages.error, "error");
+    }
+    else{
+      ModalResponse("¡Éxito!", messages.success, "success")
+    }
+    if(type.toLowerCase() === 'arquitectura'){
+      setReloadSidebar(false);
+    }
+  }
+
+  /**
+   * Llamada a la API para agregar una nueva arquitectura
+   * @param {Array} allFiles arreglo que contiene todos los archivos XML
+   * @returns JSON de la respuesta de la API
+   */
+  const manageArchitectureSubmit = async (allFiles) => {
+    const response = await submitArchitecture(allFiles, user, name, projectIndex);
+    messages = {
+      "success": "Se ha creado una nueva arquitectura",
+      "error": "No se ha podido crear una nueva arquitectura"
+    };
+    return response;
+  }
+
+  /**
+   * Llamada a la API para agregar nuevos elementos a una
+   * versión de una arquitectura
+   * @param {Array} allFiles arreglo que contiene todos los archivos XML
+   * @returns JSON de la respuesta de la API
+   */
+  const manageElementsSubmit = async (allFiles) => {
+    const response = await submitElements(allFiles, user, selectedProject);
+    messages = {
+      "succes": "Se han agregado los nuevos elementos",
+      "error": "No se han podido agregar los nuevos elementos"
+    };
+    return response;
+  }
 
   /**
    * Actualizar el nombre según se actualice el TextField
@@ -86,26 +121,6 @@ const FileReader = ({
     setValid(true);
     setName(event.target.value);
   };
-
-  /**
-   * Popup temporal de SweetAlert con mensaje exitoso
-   */
-  function swlSuccess() {
-    setTimeout(setLoader(false), 3000);
-    onClose();
-    setReloadSidebar(true);
-    ModalMessage("¡Arquitectura creada!", "Se ha creado una nueva arquitectura", "success", false, 5000);
-    setReloadSidebar(false);
-  }
-
-    /**
-   * Popup temporal de SweetAlert con mensaje de falla
-   */
-  function swlError() {
-    setTimeout(setLoader(false), 3000);
-    onClose();
-    ModalMessage("¡Hubo un error!", "No se ha creado una nueva arquitectura", "error", false, 5500);
-  }
 
   return (
     <div>

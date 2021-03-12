@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "./SidebarItem.css";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -22,7 +22,7 @@ const SidebarItem = ({
   projectIndex
 }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   return (
     <div className={classes.root}>
@@ -52,6 +52,7 @@ const SidebarItem = ({
             open={open} 
             onClose={() => setOpen(false)} 
             projectIndex={projectIndex}
+            type={'Arquitectura'}
           />
         ) : null}
     </div>

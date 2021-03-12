@@ -10,6 +10,7 @@ import AppContext from "../../auth/context/context";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Modal from "../FileReader/FileReader";
 import NavbarItem from "../NavbarItem/NavbarItem";
 import Toolbar from "@material-ui/core/Toolbar";
 
@@ -21,6 +22,7 @@ const Navbar = ({ open, setOpen }) => {
   const classes = useStyles();
   const theme = useTheme();
   const { user, selectedProject, setReloadSidebar } = useContext(AppContext);
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
@@ -59,13 +61,21 @@ const Navbar = ({ open, setOpen }) => {
                 <NavbarItem
                   icon={<EditIcon />}
                   title={"Agregar elementos"}
-                  onClick={() => console.log(selectedProject)}
+                  onClick={() => setShowModal(true)}
                 />
               </div>
             </>
           ) : null}
         </Toolbar>
       </AppBar>
+      { showModal ? (
+          <Modal 
+            open={showModal} 
+            onClose={() => setShowModal(false)} 
+            projectIndex={selectedProject.projectIndex}
+            type={"Elementos"}
+          />
+      ) : null}
     </>
   );
 };
