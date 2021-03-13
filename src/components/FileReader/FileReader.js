@@ -9,6 +9,8 @@ import { submitElements } from "../../helpers/elements/elements";
 
 import AppContext from "../../auth/context/context";
 import Dropzone from "react-dropzone-uploader";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import IconButton from "@material-ui/core/IconButton";
 import Loader from "../Loader/Loader";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
@@ -24,37 +26,36 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
   const [loader, setLoader] = useState(false);
   const { user, setReloadSidebar, selectedProject } = useContext(AppContext);
   var messages = {
-    "error": "",
-    "success": ""
+    error: "",
+    success: "",
   };
 
   const handleChangeStatus = ({ meta }, status) => {
     //console.log(status, meta)
   };
 
-
   /**
-   * Manejar acción en base al tipo de data a subir a 
+   * Manejar acción en base al tipo de data a subir a
    * la base de datos
    * @param {Array} allFiles arreglo que contiene todos los archivos XML
    */
   const handleSubmit = async (allFiles) => {
-    if(name !== ""){
+    if (name !== "") {
       setLoader(true);
       var response;
       switch (type.toLowerCase()) {
-        case 'arquitectura':
+        case "arquitectura":
           response = await manageArchitectureSubmit(allFiles);
           break;
-        case 'elementos':
+        case "elementos":
           response = await manageElementsSubmit(allFiles);
           break;
         default:
           break;
       }
       manageResponse(response);
-    }else{
-      setValid(false);     
+    } else {
+      setValid(false);
     }
   };
 
@@ -66,19 +67,18 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
   const manageResponse = (response) => {
     setTimeout(setLoader(false), 3000);
     onClose();
-    if(type.toLowerCase() === 'arquitectura'){
+    if (type.toLowerCase() === "arquitectura") {
       setReloadSidebar(true);
     }
-    if(response === 'Error'){
+    if (response === "Error") {
       ModalResponse("¡Hubo un error!", messages.error, "error");
-    }
-    else{
+    } else {
       ModalResponse("¡Éxito!", messages.success, "success");
     }
-    if(type.toLowerCase() === 'arquitectura'){
+    if (type.toLowerCase() === "arquitectura") {
       setReloadSidebar(false);
     }
-  }
+  };
 
   /**
    * Llamada a la API para agregar una nueva arquitectura
@@ -86,13 +86,18 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
    * @returns JSON de la respuesta de la API
    */
   const manageArchitectureSubmit = async (allFiles) => {
-    const response = await submitArchitecture(allFiles, user, name, projectIndex);
+    const response = await submitArchitecture(
+      allFiles,
+      user,
+      name,
+      projectIndex
+    );
     messages = {
-      "success": "Se ha creado una nueva arquitectura",
-      "error": "No se ha podido crear una nueva arquitectura"
+      success: "Se ha creado una nueva arquitectura",
+      error: "No se ha podido crear una nueva arquitectura",
     };
     return response;
-  }
+  };
 
   /**
    * Llamada a la API para agregar nuevos elementos a una
@@ -103,11 +108,11 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
   const manageElementsSubmit = async (allFiles) => {
     const response = await submitElements(allFiles, user, selectedProject);
     messages = {
-      "success": "Se han agregado los nuevos elementos",
-      "error": "No se han podido agregar los nuevos elementos"
+      success: "Se han agregado los nuevos elementos",
+      error: "No se han podido agregar los nuevos elementos",
     };
     return response;
-  }
+  };
 
   /**
    * Actualizar el nombre según se actualice el TextField
@@ -131,7 +136,19 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
             <Loader />
           ) : (
             <>
-              <h2 className={classes.h1}>Agregar {type}</h2>
+              <div>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={onClose}
+                  className={classes.onClose}
+                  edge="start"
+                >
+                  <HighlightOffIcon />
+                </IconButton>
+                <h2 className={classes.h1}>Agregar {type}</h2>
+              </div>
+
               <TextField
                 required
                 id="outlined-basic"
@@ -199,6 +216,12 @@ const useStyles = makeStyles((theme) => ({
     color: "var(--error)",
     fontSize: 13,
     margin: 5,
+  },
+  onClose: {
+    position: "relative",
+    left: "97%",
+    top: "-20px",
+    color: "var(primaryDark)",
   },
 }));
 

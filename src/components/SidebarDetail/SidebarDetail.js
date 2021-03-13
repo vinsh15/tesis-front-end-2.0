@@ -6,8 +6,8 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AppContext from "../../auth/context/context";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import TreeItem from "@material-ui/lab/TreeItem";
-import TreeView from "@material-ui/lab/TreeView";
+import TreeItem from '@material-ui/lab/TreeItem';
+import TreeView from '@material-ui/lab/TreeView';
 
 /**
  * Componente que representa el contenido

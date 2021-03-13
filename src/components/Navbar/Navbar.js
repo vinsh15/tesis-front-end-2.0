@@ -34,7 +34,6 @@ const Navbar = ({ open, setOpen }) => {
       >
         <Toolbar>
           <IconButton
-            color="inherit"
             aria-label="open drawer"
             onClick={() => setOpen(true)}
             edge="start"
@@ -68,13 +67,13 @@ const Navbar = ({ open, setOpen }) => {
           ) : null}
         </Toolbar>
       </AppBar>
-      { showModal ? (
-          <Modal 
-            open={showModal} 
-            onClose={() => setShowModal(false)} 
-            projectIndex={selectedProject.projectIndex}
-            type={"Elementos"}
-          />
+      {showModal ? (
+        <Modal
+          open={showModal}
+          onClose={() => setShowModal(false)}
+          projectIndex={selectedProject.projectIndex}
+          type={"Elementos"}
+        />
       ) : null}
     </>
   );
