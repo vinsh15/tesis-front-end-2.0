@@ -118,7 +118,6 @@ function Home() {
 }
 
 /** Creacion de capa de estilos para el componente */
-const drawerWidth = 270;
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
@@ -127,7 +126,8 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    marginLeft: -drawerWidth,
+    marginLeft: -90,
+    marginTop: 64
   },
   contentShift: {
     transition: theme.transitions.create("margin", {

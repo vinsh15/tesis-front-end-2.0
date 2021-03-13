@@ -84,13 +84,12 @@ const SidebarDetail = ({
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
         >
-          {/* Aqúi hay que colocar cuando un proeycto no tiene arquitecturas  */}
-          {item.architectures?.map((architecture, index) =>
-            renderTree(architecture, false, index, null, null)
-          )}
+          {item.architectures ? (item.architectures.map((architecture, index) =>
+            renderTree(architecture, false, index, null, null))) :
+            <h3 style={{textAlign: 'justify'}}>Este proyecto no tiene arquitecturas</h3>
+          }
         </TreeView>
       </AccordionDetails>
-
   );
 };
 

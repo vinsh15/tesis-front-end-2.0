@@ -3,20 +3,20 @@ import "./Content.css";
 
 import AppContext from "../../auth/context/context";
 import CytoscapeComponent from "react-cytoscapejs";
+import Loader from "../Loader/Loader";
 
 /**
  * Componente que representa el contenido
  * de la arquitectura seleccionada
  */
-const Content = ({}) => {
+const Content = () => {
   const [elementos, setElementos] = useState();
-  const { selectedProject } = useContext(AppContext);  
+  const { selectedProject } = useContext(AppContext);
+  const [load, setLoad] = useState(false);
   let cyto;
 
   /** Creacion de capa de estilos para el grafo */
   var state = {
-    h: "80%",
-    w: "80%",
     layout: {
       name: "random",
       fit: true,
@@ -50,25 +50,42 @@ const Content = ({}) => {
     ],
   };
 
-/**
- * Crear referencia al elemento de Cytoscape y
- * actuar el tamaño viewport del grafo 
- * @param {CytoscapeComponent} cy referencia al componente
- */
+  /**
+   * Crear referencia al elemento de Cytoscape y
+   * actuar el tamaño viewport del grafo
+   * @param {CytoscapeComponent} cy referencia al componente
+   */
   function getCy(cy) {
     cyto = cy;
     cyto.resize();
+    cyto.on("select", "node", selectedNodeHandler);
     //cyto.style().selector("node").style("background-color", "magenta").update(); // indicate the end of your new stylesheet so that it can be updated on elements
   }
 
+  /**
+   * Manejador de evento al seleccionar nodo
+   * @param {Event} event referencia al componente
+   */
+  const selectedNodeHandler = (event) => {
+    //console.log(evt.data); // 'bar'
+    let target = event;
+    //console.log("select ", target);
+  };
+
   useEffect(() => {
     setElementos(selectedProject.elements);
-    //console.log(selectedProject, "elements static");
+    setLoad(true);
   }, [selectedProject]);
+
+  useEffect(() => {
+    setLoad(false);
+  }, [elementos]);
 
   return (
     <>
-      {elementos ? (
+      {load ? (
+        <Loader />
+      ) : elementos ? (
         <CytoscapeComponent
           id="component"
           zoom={0.5}
@@ -77,6 +94,7 @@ const Content = ({}) => {
           className="component"
           layout={state.layout}
           stylesheet={state.stylesheet}
+          pan={{ x: 100, y: 30 }}
           cy={(cy) => {
             getCy(cy);
           }}

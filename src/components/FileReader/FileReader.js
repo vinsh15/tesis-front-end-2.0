@@ -40,22 +40,25 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
    * @param {Array} allFiles arreglo que contiene todos los archivos XML
    */
   const handleSubmit = async (allFiles) => {
-    if (name !== "") {
-      setLoader(true);
-      var response;
-      switch (type.toLowerCase()) {
-        case "arquitectura":
+    var response;
+    switch (type.toLowerCase()) {
+      case "arquitectura":
+        if (name !== "") {
+          setLoader(true);
           response = await manageArchitectureSubmit(allFiles);
+          manageResponse(response);
           break;
-        case "elementos":
-          response = await manageElementsSubmit(allFiles);
+        } else {
+          setValid(false);
           break;
-        default:
-          break;
-      }
-      manageResponse(response);
-    } else {
-      setValid(false);
+        }
+      case "elementos":
+        setLoader(true);
+        response = await manageElementsSubmit(allFiles);
+        manageResponse(response);
+        break;
+      default:
+        break;
     }
   };
 
@@ -149,18 +152,22 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
                 <h2 className={classes.h1}>Agregar {type}</h2>
               </div>
 
-              <TextField
-                required
-                id="outlined-basic"
-                label="Nombre"
-                value={name}
-                onChange={handleChange}
-                variant="outlined"
-              />
-              {!valid ? (
-                <div className={classes.validacion}>
-                  * El nombre de la arquitectura es obligatorio{" "}
-                </div>
+              {type.toLowerCase() === "arquitectura" ? (
+                <>
+                  <TextField
+                    required
+                    id="outlined-basic"
+                    label="Nombre"
+                    value={name}
+                    onChange={handleChange}
+                    variant="outlined"
+                  />
+                  {!valid ? (
+                    <div className={classes.validacion}>
+                      * El nombre de la arquitectura es obligatorio{" "}
+                    </div>
+                  ) : null}
+                </>
               ) : null}
               <Dropzone
                 onChangeStatus={handleChangeStatus}
@@ -193,22 +200,31 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
 const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
-    top: "20%",
-    left: "20%",
+    top: "24%",
+    left: "23%",
     width: "60%",
     minHeight: 300,
     maxHeight: 600,
     overflow: "auto",
     border: "none",
-    borderRadius: 5,
+    borderRadius: 8,
     background: "var(--background)",
     boxShadow: theme.shadows[5],
-    padding: "32px 24px 20px",
+    padding: "1.25rem",
+    outline: "none",
+    animationDuration: '0.3s',
+    animationTimingFunction: 'ease',
+    animationDelay: '0s',
+    animationIterationCount: 1,
+    animationDirection: 'normal',
+    animationFillMode: 'none',
+    animationPlayState: 'running'
   },
   h1: {
     color: "var(--primaryDark)",
     margin: "auto",
     marginBottom: 35,
+    fontSize: '1.875rem',
     textAlign: "center",
     fontFamily: "var(font-family-content)",
   },
@@ -219,9 +235,12 @@ const useStyles = makeStyles((theme) => ({
   },
   onClose: {
     position: "relative",
-    left: "97%",
-    top: "-20px",
-    color: "var(primaryDark)",
+    left: "98%",
+    top: "-9px",
+    backgroundColor: "var(primaryDark)",
+    paddingTop: 0,
+    paddingRight: 0,
+    paddingBottom: 0
   },
 }));
 
