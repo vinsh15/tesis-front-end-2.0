@@ -73,7 +73,7 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
       ModalResponse("¡Hubo un error!", messages.error, "error");
     }
     else{
-      ModalResponse("¡Éxito!", messages.success, "success")
+      ModalResponse("¡Éxito!", messages.success, "success");
     }
     if(type.toLowerCase() === 'arquitectura'){
       setReloadSidebar(false);
@@ -103,7 +103,7 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
   const manageElementsSubmit = async (allFiles) => {
     const response = await submitElements(allFiles, user, selectedProject);
     messages = {
-      "succes": "Se han agregado los nuevos elementos",
+      "success": "Se han agregado los nuevos elementos",
       "error": "No se han podido agregar los nuevos elementos"
     };
     return response;
