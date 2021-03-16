@@ -3,7 +3,7 @@ const settings = {
         apiUrl: "https://prueba-backends.herokuapp.com",
     },
     production: {
-        apiUrl: ""
+        apiUrl: "https://tesis-back-end.herokuapp.com/"
     }
 }
 
