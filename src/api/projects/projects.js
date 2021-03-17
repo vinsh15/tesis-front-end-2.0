@@ -24,6 +24,12 @@ const postProject = async (user, projectName) => {
     }
 }
 
+/**
+ * Eliminar un proyecto de la base de datos
+ * @param {JSON} user Objeto con la información del usuario
+ * @param {Integer} index índice del proyecto
+ * @returns proyectos del usuario o error
+ */
 const deleteProject = async (user, index) => {
     const userInfo = {
         user_id: user.uid,
