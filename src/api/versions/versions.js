@@ -32,7 +32,7 @@ const postVersion = async (formData) => {
 const deleteVersion = async (user, projectIndex, arcIndex, verIndex) => {
     try {
         const userInfo = {
-            user_id: user.id,
+            user_id: user.uid,
             project_index: projectIndex,
             arc_index: arcIndex,
             ver_index: verIndex

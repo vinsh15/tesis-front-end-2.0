@@ -30,7 +30,7 @@ const postArchitecture = async (formData) => {
 const deleteArchitecture = async (user, projectIndex, archIndex) => {
     try {
         const userInfo = {
-            user_id: user.id,
+            user_id: user.uid,
             project_index: projectIndex,
             arch_index: archIndex
         };
