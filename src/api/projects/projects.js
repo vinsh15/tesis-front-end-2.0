@@ -11,12 +11,12 @@ const postProject = async (user, projectName) => {
     const userInfo = {
         user_id: user.uid,
         project_name: projectName
-    }
+    };
     const token = jwt(userInfo, 'secret');
     try {
         const response = await axios.post("/proyectos/", {
             token: token
-        })
+        });
         return response.data;
     }
     catch(error) {
@@ -24,6 +24,26 @@ const postProject = async (user, projectName) => {
     }
 }
 
+const deleteProject = async (user, index) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: index
+    };
+    const token = jwt(userInfo, 'secret');
+    try {
+        const response = await axios.delete("/proyectos", {
+            data: {
+                token: token
+            }
+        });
+        return response.data;
+    }
+    catch(error) {
+        return "Error";
+    }
+}   
+
 export {
     postProject,
+    deleteProject,
 }
