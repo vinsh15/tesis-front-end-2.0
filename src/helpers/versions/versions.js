@@ -1,11 +1,53 @@
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
+import { DeleteMessage } from "../../components/DeleteMessage/DeleteMessage";
+import { EditMessage } from "../../components/EditMessage/EditMessage";
 import Swal from "sweetalert2";
 import { postVersion } from "../../api/versions/versions";
+
 
 /**
  * 
  * @param {JSON} user objeto con información del usuario
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
+ * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
+ * @param {Function} setReloadSidebar funcion para actualizar estado del Sidebar
+ */
+ const manageDeleteVersion = async (user, selectedProject, setSelectedProject, setReloadSidebar) => {
+  let response = await DeleteMessage(selectedProject.versionName)
+  if(response){
+    setReloadSidebar(true);
+    setSelectedProject()
+    ModalMessage("¡Versión eliminada!", " ", "success", false, 4000);
+    setReloadSidebar(false);
+  }else{
+    ModalMessage("¡Hubo un error!", "No se ha eliminado la versión", "error", false, 5500);
+  }
+};
+
+/**
+ * 
+ * @param {JSON} user objeto con información del usuario
+ * @param {JSON} selectedProject objeto con información del proyecto seleccionado
+ * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
+ * @param {Function} setReloadSidebar funcion para actualizar estado del Sidebar
+ */
+ const manageEditVersion = async (user, selectedProject, setSelectedProject, setReloadSidebar) => {
+  let response = await EditMessage(selectedProject.versionName)
+  if(response !== ""){
+    setReloadSidebar(true);
+    console.log(response)
+    ModalMessage("¡Versión editada!", " ", "success", false, 4000);
+    setReloadSidebar(false);
+  }else{
+    ModalMessage("¡Hubo un error!", "No se ha editado la versión", "error", false, 5500);
+  }
+};
+
+/**
+ * 
+ * @param {JSON} user objeto con información del usuario
+ * @param {JSON} selectedProject objeto con información del proyecto seleccionado
+ * @param {Function} setReloadSidebar funcion para actualizar estado del Sideb
  */
 const manageCreateVersion = async (user, selectedProject, setReloadSidebar) => {
     await Swal.fire({
@@ -32,6 +74,7 @@ const manageCreateVersion = async (user, selectedProject, setReloadSidebar) => {
  * @param {String} versionName el nombre ingresado de la versión 
  * @param {JSON} user objeto con información del usuario
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
+ * @param {Function} setReloadSidebar funcion para actualizar estado del Sideb
  */
 const submitVersion = async (versionName, user, selectedProject, setReloadSidebar) => {
     const formData = getFormData(versionName, user, selectedProject);
@@ -65,4 +108,6 @@ const getFormData = (versionName, user, selectedProject) => {
 
 export {
     manageCreateVersion,
+    manageDeleteVersion, 
+    manageEditVersion
 }

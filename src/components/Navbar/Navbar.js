@@ -2,11 +2,16 @@ import React, { useContext, useState } from "react";
 import clsx from "clsx";
 
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { manageCreateVersion } from "../../helpers/versions/versions";
+import {
+  manageCreateVersion,
+  manageDeleteVersion,
+  manageEditVersion,
+} from "../../helpers/versions/versions";
 
 import AddIcon from "@material-ui/icons/AddOutlined";
 import AppBar from "@material-ui/core/AppBar";
 import AppContext from "../../auth/context/context";
+import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -21,9 +26,17 @@ import Toolbar from "@material-ui/core/Toolbar";
 const Navbar = ({ open, setOpen }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { user, selectedProject, setReloadSidebar } = useContext(AppContext);
+  const {
+    user,
+    selectedProject,
+    setSelectedProject,
+    setReloadSidebar,
+  } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
 
+  function editFunction() {
+    console.log("Edit Version");
+  }
   return (
     <>
       <AppBar
@@ -43,12 +56,42 @@ const Navbar = ({ open, setOpen }) => {
           </IconButton>
           {selectedProject ? (
             <>
-              <h1
-                className={classes.h1}
-                style={{ marginLeft: 0, minWidth: 145 }}
-              >
-                {selectedProject.versionName}
-              </h1>
+              <div className={classes.title}>
+                <h1
+                  className={classes.h1}
+                  style={{ marginLeft: 0, minWidth: 145 }}
+                >
+                  {selectedProject.versionName}
+                </h1>
+                <IconButton
+                  aria-label="open edit"
+                  className={classes.icon}
+                  onClick={() =>
+                    manageEditVersion(
+                      user,
+                      selectedProject,
+                      setSelectedProject,
+                      setReloadSidebar
+                    )
+                  }
+                >
+                  <EditIcon />
+                </IconButton>
+                <IconButton
+                  aria-label="open delete"
+                  className={classes.icon}
+                  onClick={() =>
+                    manageDeleteVersion(
+                      user,
+                      selectedProject,
+                      setSelectedProject,
+                      setReloadSidebar
+                    )
+                  }
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
               <div style={{ textAlign: "right" }}>
                 <NavbarItem
                   icon={<AddIcon />}
@@ -117,10 +160,26 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "var(--primaryDark)",
   },
 
+  title: {
+    display: "flex",
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "flex-start",
+    alignItems: "center",
+  },
+
   h1: {
     color: "var(--background)",
     margin: "auto",
     fontFamily: "var(font-family-content)",
+    display: "inline",
+    paddingRight: 16,
+  },
+
+  icon: {
+    color: "var(--background)",
+    paddingRight: 0,
+    paddingLeft: 5,
   },
 }));
 
