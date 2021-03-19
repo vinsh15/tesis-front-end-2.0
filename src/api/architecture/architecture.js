@@ -28,13 +28,13 @@ const postArchitecture = async (formData) => {
  * @returns proyectos del usuario o error
  */
 const deleteArchitecture = async (user, projectIndex, archIndex) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: projectIndex,
+        arch_index: archIndex
+    };
+    const token = jwt(userInfo, 'secret');
     try {
-        const userInfo = {
-            user_id: user.uid,
-            project_index: projectIndex,
-            arch_index: archIndex
-        };
-        const token = jwt(userInfo, 'secret');
         const response = await axios.delete(url, {
             data: {
                 token: token
@@ -46,7 +46,26 @@ const deleteArchitecture = async (user, projectIndex, archIndex) => {
     }
 }
 
+const putArchitecture = async (user, projectIndex, archIndex, name) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: projectIndex,
+        arch_index: archIndex,
+        arch_name: name
+    };
+    const token = jwt(userInfo, 'secret');
+    try {
+        const response = await axios.put(url, {
+            token: token
+        })
+        return response.data;
+    } catch (error) {
+        return "Error";
+    }
+}
+
 export {
-    deleteArchitecture,
     postArchitecture,
+    putArchitecture,
+    deleteArchitecture,
 }
