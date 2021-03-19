@@ -1,6 +1,8 @@
 import axios from "axios";
 import jwt from "jwt-encode";
 
+const url = "/proyectos/";
+
 /**
  * Agregar un nuevo proyecto a la base de datos
  * @param {JSON} user Objeto con la información del usuario
@@ -14,7 +16,7 @@ const postProject = async (user, projectName) => {
     };
     const token = jwt(userInfo, 'secret');
     try {
-        const response = await axios.post("/proyectos/", {
+        const response = await axios.post(url, {
             token: token
         });
         return response.data;
@@ -37,7 +39,7 @@ const deleteProject = async (user, index) => {
     };
     const token = jwt(userInfo, 'secret');
     try {
-        const response = await axios.delete("/proyectos", {
+        const response = await axios.delete(url, {
             data: {
                 token: token
             }
@@ -49,7 +51,32 @@ const deleteProject = async (user, index) => {
     }
 }   
 
+/**
+ * Editar el nombre de un proyecto en la base de datos
+ * @param {JSON} user Objeto con la información del usuario
+ * @param {Integer} index índice del proyecto
+ * @param {String} name nuevo nombre del proyecto
+ * @returns proyectos del usuario o error
+ */
+const putProject = async (user, index, name) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: index,
+        project_name: name
+    };
+    const token = jwt(userInfo, 'secret');
+    try {
+        const response = await axios.put(url, {
+            token: token
+        });
+        return response.data;
+    } catch (error) {
+        return "Error";
+    }
+}
+
 export {
     postProject,
+    putProject,
     deleteProject,
 }
