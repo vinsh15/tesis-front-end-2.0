@@ -25,16 +25,16 @@ const postArchitecture = async (formData) => {
  * @param {JSON} user Objeto con la información del usuario
  * @param {Integer} projectIndex índice del proyecto
  * @param {Integer} archIndex índice de la arquitectura
- * @returns proyectos del usuario o error
+ * @returns arquitecturas del usuario o error
  */
 const deleteArchitecture = async (user, projectIndex, archIndex) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: projectIndex,
+        arch_index: archIndex
+    };
+    const token = jwt(userInfo, 'secret');
     try {
-        const userInfo = {
-            user_id: user.uid,
-            project_index: projectIndex,
-            arch_index: archIndex
-        };
-        const token = jwt(userInfo, 'secret');
         const response = await axios.delete(url, {
             data: {
                 token: token
@@ -46,7 +46,34 @@ const deleteArchitecture = async (user, projectIndex, archIndex) => {
     }
 }
 
+/**
+ * Editar el nombre de una arquitectura en la base de datos
+ * @param {JSON} user Objeto con la información del usuario
+ * @param {Integer} projectIndex índice del proyecto
+ * @param {Integer} archIndex índice de la arquitectura
+ * @param {String} name nuevo nombre de la arquitectura 
+ * @returns arquitecturas del usuario o error
+ */
+const putArchitecture = async (user, projectIndex, archIndex, name) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: projectIndex,
+        arch_index: archIndex,
+        arch_name: name
+    };
+    const token = jwt(userInfo, 'secret');
+    try {
+        const response = await axios.put(url, {
+            token: token
+        })
+        return response.data;
+    } catch (error) {
+        return "Error";
+    }
+}
+
 export {
-    deleteArchitecture,
     postArchitecture,
+    putArchitecture,
+    deleteArchitecture,
 }

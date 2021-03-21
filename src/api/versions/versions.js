@@ -30,14 +30,14 @@ const postVersion = async (formData) => {
  *  del usuario o error
  */
 const deleteVersion = async (user, projectIndex, arcIndex, verIndex) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: projectIndex,
+        arc_index: arcIndex,
+        ver_index: verIndex
+    };
+    const token = jwt(userInfo, 'secret');
     try {
-        const userInfo = {
-            user_id: user.uid,
-            project_index: projectIndex,
-            arc_index: arcIndex,
-            ver_index: verIndex
-        };
-        const token = jwt(userInfo, 'secret');
         const response = await axios.delete(url, {
             data: {
                 token: token
@@ -50,7 +50,38 @@ const deleteVersion = async (user, projectIndex, arcIndex, verIndex) => {
     }
 }
 
+/**
+ * Editar el nombre de una versión en la base de datos
+ * @param {JSON} user objeto con la información del usuario
+ * @param {Integer} projectIndex índice del proyecto
+ * @param {Integer} arcIndex índice de la arquitectura
+ * @param {Integer} verIndex índice de la versión
+ * @param {String} name nuevo nombre de la versión
+ * @returns versiones de una arquitectura de un proyecto
+ * del usuario o error
+ */
+const putVersion = async (user, projectIndex, arcIndex, verIndex, name) => {
+    const userInfo = {
+        user_id: user.uid,
+        project_index: projectIndex,
+        arch_index: arcIndex,
+        ver_index: verIndex,
+        ver_name: name
+    };
+    const token = jwt(userInfo, 'secret');
+    try {
+        const response = await axios.put(url, {
+            token: token
+        });
+        return response.data;
+
+    } catch (error) {
+        return "Error";
+    }
+}
+
 export {
-    deleteVersion,
     postVersion,
+    putVersion,
+    deleteVersion,
 }
