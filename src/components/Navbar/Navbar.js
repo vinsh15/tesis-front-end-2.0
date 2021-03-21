@@ -12,6 +12,7 @@ import AddIcon from "@material-ui/icons/AddOutlined";
 import AppBar from "@material-ui/core/AppBar";
 import AppContext from "../../auth/context/context";
 import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import CreateIcon from '@material-ui/icons/CreateNewFolderOutlined';
 import EditIcon from "@material-ui/icons/EditOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -34,9 +35,6 @@ const Navbar = ({ open, setOpen }) => {
   } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
 
-  function editFunction() {
-    console.log("Edit Version");
-  }
   return (
     <>
       <AppBar
@@ -94,14 +92,14 @@ const Navbar = ({ open, setOpen }) => {
               </div>
               <div style={{ textAlign: "right" }}>
                 <NavbarItem
-                  icon={<AddIcon />}
+                  icon={<CreateIcon />}
                   title={"Crear nueva versión"}
                   onClick={() =>
                     manageCreateVersion(user, selectedProject, setReloadSidebar)
                   }
                 />
                 <NavbarItem
-                  icon={<EditIcon />}
+                  icon={<AddIcon />}
                   title={"Agregar elementos"}
                   onClick={() => setShowModal(true)}
                 />

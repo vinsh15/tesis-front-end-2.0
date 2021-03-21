@@ -105,6 +105,7 @@ const useStyles = makeStyles({
   accordion: {
     backgroundColor: "var(--background)",
   },
+  
   icon: {
     color: "var(--primaryDark)",
     paddingRight: 0,

@@ -6,18 +6,17 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AppContext from "../../auth/context/context";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import TreeItem from '@material-ui/lab/TreeItem';
-import TreeView from '@material-ui/lab/TreeView';
+import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
+import EditIcon from "@material-ui/icons/EditOutlined";
+import IconButton from "@material-ui/core/IconButton";
+import TreeItem from "@material-ui/lab/TreeItem";
+import TreeView from "@material-ui/lab/TreeView";
 
 /**
  * Componente que representa el contenido
  * del item añadido como proyecto en la barra lateral
  */
-const SidebarDetail = ({
-  projectIndex,
-  item,
-
-}) => {
+const SidebarDetail = ({ projectIndex, item }) => {
   const classes = useStyles();
   const { selectedProject, setSelectedProject } = useContext(AppContext);
 
@@ -45,7 +44,7 @@ const SidebarDetail = ({
             projectIndex: projectIndex,
             arcIndex: arqIndex,
             verIndex: verIndex,
-            elements: elems
+            elements: elems,
           });
         }
       });
@@ -53,7 +52,7 @@ const SidebarDetail = ({
   };
 
   /**
-   * 
+   *
    * @param {JSON} nodes objeto que contiene toda la información sobre un nodo
    * @param {Boolean} select si el elemento está o no seleccionado
    * @param {Integer} arqIndex índice de la arquitectura en el arreglo
@@ -61,35 +60,42 @@ const SidebarDetail = ({
    * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
   const renderTree = (nodes, select, arqIndex, verIndex, elems) => (
-      <TreeItem
-        key={verIndex != null ? verIndex : arqIndex}
-        nodeId={nodes.name}
-        label={nodes.name}
-        onLabelClick={
-          select ? () => handleSelect(nodes.name, arqIndex, verIndex, elems) : null
-        }
-      >
-        {Array.isArray(nodes.versions)
-          ? nodes.versions.map((node, index) =>
-              renderTree(node, true, arqIndex, index, node.elements)
-            )
-          : null}
-      </TreeItem>
+    <TreeItem
+      key={verIndex != null ? verIndex : arqIndex}
+      nodeId={nodes.name}
+      label={nodes.name}
+      onLabelClick={
+        select
+          ? () => handleSelect(nodes.name, arqIndex, verIndex, elems)
+          : null
+      }
+    >
+      {Array.isArray(nodes.versions)
+        ? nodes.versions.map((node, index) =>
+            renderTree(node, true, arqIndex, index, node.elements)
+          )
+        : null}
+    </TreeItem>
   );
 
   return (
-      <AccordionDetails>
-        <TreeView
-          className={classes.root}
-          defaultCollapseIcon={<ExpandMoreIcon />}
-          defaultExpandIcon={<ChevronRightIcon />}
-        >
-          {item.architectures ? (item.architectures.map((architecture, index) =>
-            renderTree(architecture, false, index, null, null))) :
-            <h3 style={{textAlign: 'justify'}}>Este proyecto no tiene arquitecturas</h3>
-          }
-        </TreeView>
-      </AccordionDetails>
+    <AccordionDetails>
+      <TreeView
+        className={classes.root}
+        defaultCollapseIcon={<ExpandMoreIcon />}
+        defaultExpandIcon={<ChevronRightIcon />}
+      >
+        {item.architectures ? (
+          item.architectures.map((architecture, index) =>
+            renderTree(architecture, false, index, null, null)
+          )
+        ) : (
+          <h3 style={{ textAlign: "justify" }}>
+            Este proyecto no tiene arquitecturas
+          </h3>
+        )}
+      </TreeView>
+    </AccordionDetails>
   );
 };
 
@@ -98,6 +104,15 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     maxWidth: 400,
+  },
+
+  icon: {
+    color: "var(--primaryDark)",
+    paddingRight: 0,
+    paddingLeft: 5,
+    paddingTop: 0,
+    paddingBottom: 0,
+    width: "1.5rem",
   },
 });
 
