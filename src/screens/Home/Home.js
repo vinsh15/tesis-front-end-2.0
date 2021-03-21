@@ -110,7 +110,7 @@ function Home() {
       >
         {" "}
         {selectedProject ? (
-          <Content elements={selectedProject.elements} />
+          <Content />
         ) : null}
       </main>
     </>

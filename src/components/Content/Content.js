@@ -15,7 +15,7 @@ const Content = () => {
   const [load, setLoad] = useState(false);
   let cyto;
 
-  /** Creacion de capa de estilos para el grafo */
+  /** Creacion de capa de estilos para el grafo segun Cytoscape */
   var state = {
     layout: {
       name: "random",
@@ -73,13 +73,16 @@ const Content = () => {
   };
 
   useEffect(() => {
-    setElementos(selectedProject.elements);
     setLoad(true);
+    setElementos(selectedProject.elements);
   }, [selectedProject]);
 
   useEffect(() => {
-    setLoad(false);
-  }, [elementos]);
+    if (load) {
+      setLoad(false);
+      console.log(elementos, selectedProject, "load");
+    }
+  }, [elementos, load]);
 
   return (
     <>
@@ -88,13 +91,13 @@ const Content = () => {
       ) : elementos ? (
         <CytoscapeComponent
           id="component"
-          zoom={0.5}
+          zoom={1}
           maxZoom={2}
           elements={CytoscapeComponent.normalizeElements(elementos)}
           className="component"
           layout={state.layout}
           stylesheet={state.stylesheet}
-          pan={{ x: 100, y: 30 }}
+          pan={{ x: 150, y: 30 }}
           cy={(cy) => {
             getCy(cy);
           }}

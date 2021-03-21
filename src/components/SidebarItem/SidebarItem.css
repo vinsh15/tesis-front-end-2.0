@@ -10,6 +10,5 @@
     background-color:var(--primaryDark) !important;
     opacity: 0.8 !important;
     width: 95%;
-    margin-left: 2.5% !important;
-    margin-bottom: 2.5% !important;
+    margin: 2.5% !important;
 }

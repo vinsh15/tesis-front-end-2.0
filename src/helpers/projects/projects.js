@@ -2,7 +2,9 @@ import Swal from "sweetalert2";
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import { DeleteMessage } from "../../components/DeleteMessage/DeleteMessage";
 import { EditMessage } from "../../components/EditMessage/EditMessage";
-import { postProject } from "../../api/projects/projects";
+import {     postProject,
+  putProject,
+  deleteProject, } from "../../api/projects/projects";
 import ModalResponse from "../../components/ModalResponse/ModalResponse";
 
 /**
@@ -22,18 +24,22 @@ const manageDeleteProject = async (
 ) => {
   let response = await DeleteMessage(name);
   if (response) {
-    setReloadSidebar(true);
-    setSelectedProject();
-    ModalMessage("¡Proyecto eliminado!", " ", "success", false, 4000);
-    setReloadSidebar(false);
-  } else {
-    ModalMessage(
-      "¡Hubo un error!",
-      "No se ha eliminado el proyecto",
-      "error",
-      false,
-      5500
-    );
+    let responseDelete = await deleteProject(user, projectIndex)
+    if( responseDelete !== "Error"){
+      setReloadSidebar(true);
+      setSelectedProject();
+      ModalMessage("¡Proyecto eliminado!", " ", "success", false, 4000);
+      setReloadSidebar(false);
+    } else {
+      ModalMessage(
+        "¡Hubo un error!",
+        "No se ha eliminado el proyecto",
+        "error",
+        false,
+        5500
+      );
+    }
+
   }
 };
 
@@ -54,19 +60,21 @@ const manageEditProject = async (
 ) => {
   let response = await EditMessage(name);
   if (response !== "") {
-    setReloadSidebar(true);
-    console.log(response);
-    ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
-    setReloadSidebar(false);
-  } else {
-    ModalMessage(
-      "¡Hubo un error!",
-      "No se ha editado el proyecto",
-      "error",
-      false,
-      5500
-    );
-  }
+    let responseEdit = await putProject(user, projectIndex, response);
+    if( responseEdit !== "Error"){
+      setReloadSidebar(true);
+      ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
+      setReloadSidebar(false);
+    }else {
+      ModalMessage(
+        "¡Hubo un error!",
+        "No se ha editado el proyecto",
+        "error",
+        false,
+        5500
+      );
+    }
+  } 
 };
 
 /**

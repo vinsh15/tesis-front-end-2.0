@@ -11,15 +11,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
-import Button from "@material-ui/core/Button";
-import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import EditIcon from "@material-ui/icons/EditOutlined";
-import IconButton from "@material-ui/core/IconButton";
 import Divider from "@material-ui/core/Divider";
+import IconButton from "@material-ui/core/IconButton";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Modal from "../FileReader/FileReader";
 import SidebarDetail from "../SidebarDetail/SidebarDetail";
 import Typography from "@material-ui/core/Typography";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 /** Componente que representa el item proyecto
  *  a ser añadido en el componente Sidebar
@@ -28,6 +28,16 @@ const SidebarItem = ({ item, projectIndex }) => {
   const classes = useStyles();
   const { user, setSelectedProject, setReloadSidebar } = useContext(AppContext);
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const openMenu = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <div className={classes.root}>
@@ -39,48 +49,88 @@ const SidebarItem = ({ item, projectIndex }) => {
           className={classes.summary}
         >
           <Typography style={{ minWidth: 151 }}>{item.name}</Typography>
-          <IconButton
-            aria-label="open edit"
-            className={classes.icon}
-            onClick={() =>
-              manageEditProject(
-                user,
-                item.name,
-                projectIndex,
-                setSelectedProject,
-                setReloadSidebar
-              )
-            }
-          >
-            <EditIcon className={classes.icon} />
-          </IconButton>
-          <IconButton
-            aria-label="open delete"
-            className={classes.icon}
-            onClick={() =>
-              manageDeleteProject(
-                user,
-                item.name,
-                projectIndex,
-                setSelectedProject,
-                setReloadSidebar
-              )
-            }
-          >
-            <DeleteIcon
-              className={classes.icon}
-              style={{ color: "var(--error)" }}
-            />
-          </IconButton>
         </AccordionSummary>
 
         <SidebarDetail item={item} projectIndex={projectIndex} />
 
         <Divider className="dividerItem" />
         <AccordionActions>
-          <Button size="small" variant="outlined" onClick={() => setOpen(true)}>
-            Agregar Arquitectura
-          </Button>
+          <div>
+            <IconButton
+              aria-label="more"
+              aria-controls="long-menu"
+              aria-haspopup="true"
+              onClick={handleClick}
+            >
+              <MoreVertIcon />
+            </IconButton>
+            <Menu
+              id="long-menu"
+              anchorEl={anchorEl}
+              keepMounted
+              open={openMenu}
+              onClose={handleClose}
+              PaperProps={{
+                style: {
+                  padding: 10,
+                },
+              }}
+            >
+              <MenuItem
+                onClick={() => {
+                  setOpen(true);
+                  handleClose();
+                }}
+              >
+                Agregar Arquitectura
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setOpen(true);
+                  handleClose();
+                }}
+              >
+                Editar Arquitectura
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  setOpen(true);
+                  handleClose();
+                }}
+              >
+                Eliminar Arquitectura
+              </MenuItem>
+              <Divider className="dividerItem" />
+              <MenuItem
+                onClick={() => {
+                  manageEditProject(
+                    user,
+                    item.name,
+                    projectIndex,
+                    setSelectedProject,
+                    setReloadSidebar
+                  );
+                  handleClose();
+                }}
+              >
+                Editar Proyecto
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  manageDeleteProject(
+                    user,
+                    item.name,
+                    projectIndex,
+                    setSelectedProject,
+                    setReloadSidebar
+                  );
+                  handleClose();
+                }}
+              >
+                Eliminar Proyecto
+              </MenuItem>
+            </Menu>
+          </div>
         </AccordionActions>
       </Accordion>
       {open ? (
@@ -104,15 +154,6 @@ const useStyles = makeStyles({
   },
   accordion: {
     backgroundColor: "var(--background)",
-  },
-  
-  icon: {
-    color: "var(--primaryDark)",
-    paddingRight: 0,
-    paddingLeft: 5,
-    paddingTop: 0,
-    paddingBottom: 0,
-    width: "1.5rem",
   },
 
   summary: {

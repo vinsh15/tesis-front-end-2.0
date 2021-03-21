@@ -104,16 +104,7 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     maxWidth: 400,
-  },
-
-  icon: {
-    color: "var(--primaryDark)",
-    paddingRight: 0,
-    paddingLeft: 5,
-    paddingTop: 0,
-    paddingBottom: 0,
-    width: "1.5rem",
-  },
+  }
 });
 
 export default SidebarDetail;
