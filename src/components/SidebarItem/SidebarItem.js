@@ -5,6 +5,10 @@ import {
   manageEditProject,
   manageDeleteProject,
 } from "../../helpers/projects/projects";
+import {
+  manageEditArchitecture,
+  manageDeleteArchitecture,
+} from "../../helpers/architecture/architecture";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -60,6 +64,7 @@ const SidebarItem = ({ item, projectIndex }) => {
               aria-label="more"
               aria-controls="long-menu"
               aria-haspopup="true"
+              style={{ transform: "rotate(90deg)" }}
               onClick={handleClick}
             >
               <MoreVertIcon />
@@ -86,7 +91,13 @@ const SidebarItem = ({ item, projectIndex }) => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  setOpen(true);
+                  manageEditArchitecture(
+                    user,
+                    projectIndex,
+                    item.architectures,
+                    setSelectedProject,
+                    setReloadSidebar
+                  );
                   handleClose();
                 }}
               >
@@ -94,7 +105,13 @@ const SidebarItem = ({ item, projectIndex }) => {
               </MenuItem>
               <MenuItem
                 onClick={() => {
-                  setOpen(true);
+                  manageDeleteArchitecture(
+                    user,
+                    projectIndex,
+                    item.architectures,
+                    setSelectedProject,
+                    setReloadSidebar
+                  );
                   handleClose();
                 }}
               >

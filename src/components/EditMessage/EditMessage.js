@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 const EditMessage = async (name) => {
   let value = "";
   await Swal.fire({
-    title: "Ingrese un nuevo nombre para " + name,
+    title: "Ingrese un nuevo nombre para '" + name + "'",
     input: "text",
     inputPlaceholder: "Nuevo nombre",
     showCancelButton: true,
@@ -15,7 +15,7 @@ const EditMessage = async (name) => {
     cancelButtonText: "Cancelar",
     inputValidator: (value) => {
       if (!value) {
-        return "El nombre es obligatorio";
+        return "¡El nombre es obligatorio!";
       }
     },
   }).then((result) => {

@@ -9,7 +9,8 @@ const DeleteMessage = async (
   ) => {
     let response = false;
     await Swal.fire({
-      text: "¿Seguro que deseas eliminar " + name + "?",
+      title: "¿Seguro que deseas eliminar '" + name + "'?",
+      text: "Una vez eliminado, no hay manera de recurperarlo",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "var(--success)",

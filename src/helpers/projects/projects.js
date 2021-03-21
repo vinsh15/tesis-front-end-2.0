@@ -2,9 +2,11 @@ import Swal from "sweetalert2";
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import { DeleteMessage } from "../../components/DeleteMessage/DeleteMessage";
 import { EditMessage } from "../../components/EditMessage/EditMessage";
-import {     postProject,
+import {
+  postProject,
   putProject,
-  deleteProject, } from "../../api/projects/projects";
+  deleteProject,
+} from "../../api/projects/projects";
 import ModalResponse from "../../components/ModalResponse/ModalResponse";
 
 /**
@@ -24,8 +26,8 @@ const manageDeleteProject = async (
 ) => {
   let response = await DeleteMessage(name);
   if (response) {
-    let responseDelete = await deleteProject(user, projectIndex)
-    if( responseDelete !== "Error"){
+    let responseDelete = await deleteProject(user, projectIndex);
+    if (responseDelete !== "Error") {
       setReloadSidebar(true);
       setSelectedProject();
       ModalMessage("¡Proyecto eliminado!", " ", "success", false, 4000);
@@ -39,7 +41,6 @@ const manageDeleteProject = async (
         5500
       );
     }
-
   }
 };
 
@@ -48,24 +49,22 @@ const manageDeleteProject = async (
  * @param {JSON} user objeto con información del usuario
  * @param {String} name nombre del proyecto seleccionado
  * @param {Integer} projectIndex indice del proyecto seleccionado
- * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
  * @param {Function} setReloadSidebar funcion para actualizar estado del Sidebar
  */
 const manageEditProject = async (
   user,
   name,
   projectIndex,
-  setSelectedProject,
   setReloadSidebar
 ) => {
   let response = await EditMessage(name);
   if (response !== "") {
     let responseEdit = await putProject(user, projectIndex, response);
-    if( responseEdit !== "Error"){
+    if (responseEdit !== "Error") {
       setReloadSidebar(true);
       ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
       setReloadSidebar(false);
-    }else {
+    } else {
       ModalMessage(
         "¡Hubo un error!",
         "No se ha editado el proyecto",
@@ -74,12 +73,13 @@ const manageEditProject = async (
         5500
       );
     }
-  } 
+  }
 };
 
 /**
  * Pop-up para pedir al usuario el nombre del nuevo proyecto
  * @param {JSON} user objeto con información del usuario
+ * @param {Function} setReloadSidebar funcion para actualizar estado del Sideba
  */
 const manageCreateProject = async (user, setReloadSidebar) => {
   await Swal.fire({
@@ -105,6 +105,7 @@ const manageCreateProject = async (user, setReloadSidebar) => {
  * Subir el nuevo proyecto a la base de datos
  * @param {JSON} user
  * @param {String} projectName nombre del nuevo proyecto
+ * @param {Function} setReloadSidebar funcion para actualizar estado del Sideba
  */
 const submitProject = async (user, projectName, setReloadSidebar) => {
   const response = await postProject(user, projectName);

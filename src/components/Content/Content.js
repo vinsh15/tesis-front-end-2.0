@@ -80,7 +80,6 @@ const Content = () => {
   useEffect(() => {
     if (load) {
       setLoad(false);
-      console.log(elementos, selectedProject, "load");
     }
   }, [elementos, load]);
 

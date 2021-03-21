@@ -9,7 +9,7 @@ import {
 } from "../../api/versions/versions";
 
 /**
- *
+ * Eliminar version
  * @param {JSON} user objeto con información del usuario
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
@@ -47,7 +47,7 @@ const manageDeleteVersion = async (
 };
 
 /**
- *
+ * Editar nombre de una version
  * @param {JSON} user objeto con información del usuario
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
@@ -61,8 +61,14 @@ const manageEditVersion = async (
 ) => {
   let response = await EditMessage(selectedProject.versionName);
   if (response !== "") {
-    let editResponse = await putVersion(user, selectedProject.projectIndex, selectedProject.arcIndex, selectedProject.verIndex, response);
-    if( editResponse !== "Error"){
+    let editResponse = await putVersion(
+      user,
+      selectedProject.projectIndex,
+      selectedProject.arcIndex,
+      selectedProject.verIndex,
+      response
+    );
+    if (editResponse !== "Error") {
       setReloadSidebar(true);
       setSelectedProject({
         versionName: response,
@@ -73,7 +79,7 @@ const manageEditVersion = async (
       });
       ModalMessage("¡Versión editada!", " ", "success", false, 4000);
       setReloadSidebar(false);
-    }else {
+    } else {
       ModalMessage(
         "¡Hubo un error!",
         "No se ha editado la versión",
@@ -82,11 +88,11 @@ const manageEditVersion = async (
         5500
       );
     }
-  } 
+  }
 };
 
 /**
- *
+ * Crear nueva version
  * @param {JSON} user objeto con información del usuario
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  * @param {Function} setReloadSidebar funcion para actualizar estado del Sideb
