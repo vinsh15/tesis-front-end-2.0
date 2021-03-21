@@ -6,9 +6,15 @@
     cursor: pointer !important;
 }
 
-.dividerItem{
+.MuiAccordionDetails-root {
+    padding-bottom: 0 !important;
+}
+
+.dividerMenu {
     background-color:var(--primaryDark) !important;
-    opacity: 0.8 !important;
+    opacity: 0.7 !important;
     width: 95%;
-    margin: 2.5% !important;
+    margin-left: 2.5% !important;
+    margin-bottom: 12px !important;
+    margin-top: 12px !important;
 }

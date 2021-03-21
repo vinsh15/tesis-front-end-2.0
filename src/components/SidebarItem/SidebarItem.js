@@ -57,7 +57,6 @@ const SidebarItem = ({ item, projectIndex }) => {
 
         <SidebarDetail item={item} projectIndex={projectIndex} />
 
-        <Divider className="dividerItem" />
         <AccordionActions>
           <div>
             <IconButton
@@ -117,7 +116,7 @@ const SidebarItem = ({ item, projectIndex }) => {
               >
                 Eliminar Arquitectura
               </MenuItem>
-              <Divider className="dividerItem" />
+              <Divider className="dividerMenu" />
               <MenuItem
                 onClick={() => {
                   manageEditProject(
