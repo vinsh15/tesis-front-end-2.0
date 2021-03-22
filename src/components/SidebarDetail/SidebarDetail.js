@@ -36,11 +36,12 @@ const SidebarDetail = ({ projectIndex, item }) => {
         confirmButtonText: "Si, seguro",
       }).then((result) => {
         if (result.isConfirmed) {
+          const ver_index = parseInt(verIndex.charAt(verIndex.length - 1));
           setSelectedProject({
             versionName: nodeName,
             projectIndex: projectIndex,
             arcIndex: arqIndex,
-            verIndex: verIndex,
+            verIndex: ver_index,
             elements: elems,
           });
         }
@@ -56,27 +57,27 @@ const SidebarDetail = ({ projectIndex, item }) => {
    * @param {Integer} verIndex índice de la versión en el arreglo
    * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
-  const renderTree = (nodes, select, arqIndex, verIndex, elems) => {
-    let nodeId = nodes.name + Math.random();
-    return (
-      <TreeItem
-        key={verIndex != null ? verIndex : arqIndex}
-        nodeId={nodeId}
-        label={nodes.name}
-        onLabelClick={
-          select
-            ? () => handleSelect(nodes.name, arqIndex, verIndex, elems)
-            : null
-        }
-      >
-        {Array.isArray(nodes.versions)
-          ? nodes.versions.map((node, index) =>
-              renderTree(node, true, arqIndex, index, node.elements)
-            )
-          : null}
-      </TreeItem>
-    );
-  };
+  const renderTree = (nodes, select, arqIndex, verIndex, elems) => (
+    <TreeItem
+      key={verIndex ? verIndex : arqIndex}
+      nodeId={verIndex ? verIndex : arqIndex}
+      label={nodes.name}
+      onLabelClick={
+        select
+          ? () => handleSelect(nodes.name, arqIndex, verIndex, elems)
+          : null
+      }
+    >
+      {Array.isArray(nodes.versions)
+        ? nodes.versions.map((node, index) =>
+            {
+              const ver_index = arqIndex + ":" + index;
+              return renderTree(node, true, arqIndex, ver_index , node.elements)
+            }
+          )
+        : null}
+    </TreeItem>
+  );
 
   return (
     <AccordionDetails>
