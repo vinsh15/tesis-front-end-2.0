@@ -39,11 +39,12 @@ const SidebarDetail = ({ projectIndex, item }) => {
         confirmButtonText: "Si, seguro",
       }).then((result) => {
         if (result.isConfirmed) {
+          const ver_index = parseInt(verIndex.charAt(verIndex.length - 1));
           setSelectedProject({
             versionName: nodeName,
             projectIndex: projectIndex,
             arcIndex: arqIndex,
-            verIndex: verIndex,
+            verIndex: ver_index,
             elements: elems,
           });
         }
@@ -61,8 +62,8 @@ const SidebarDetail = ({ projectIndex, item }) => {
    */
   const renderTree = (nodes, select, arqIndex, verIndex, elems) => (
     <TreeItem
-      key={verIndex != null ? verIndex : arqIndex}
-      nodeId={nodes.name}
+      key={verIndex ? verIndex : arqIndex}
+      nodeId={verIndex ? verIndex : arqIndex}
       label={nodes.name}
       onLabelClick={
         select
@@ -72,7 +73,10 @@ const SidebarDetail = ({ projectIndex, item }) => {
     >
       {Array.isArray(nodes.versions)
         ? nodes.versions.map((node, index) =>
-            renderTree(node, true, arqIndex, index, node.elements)
+            {
+              const ver_index = arqIndex + ":" + index;
+              return renderTree(node, true, arqIndex, ver_index , node.elements)
+            }
           )
         : null}
     </TreeItem>
