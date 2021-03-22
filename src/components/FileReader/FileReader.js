@@ -5,7 +5,7 @@ import "react-dropzone-uploader/dist/styles.css";
 import { makeStyles } from "@material-ui/core/styles";
 import ModalResponse from "../../components/ModalResponse/ModalResponse";
 import { submitArchitecture } from "../../helpers/architecture/architecture";
-import { submitElements } from "../../helpers/elements/elements";
+import { manageElementsSubmit } from "../../helpers/elements/elements";
 
 import AppContext from "../../auth/context/context";
 import Dropzone from "react-dropzone-uploader";
@@ -24,7 +24,7 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
   const [name, setName] = useState("");
   const [valid, setValid] = useState(true);
   const [loader, setLoader] = useState(false);
-  const { user, setReloadSidebar, selectedProject } = useContext(AppContext);
+  const { user, setReloadSidebar, selectedProject, setSelectedProject } = useContext(AppContext);
   var messages = {
     error: "",
     success: "",
@@ -41,6 +41,7 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
    */
   const handleSubmit = async (allFiles) => {
     var response;
+    setLoader(true);
     switch (type.toLowerCase()) {
       case "arquitectura":
         if (name !== "") {
@@ -54,8 +55,7 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
         }
       case "elementos":
         setLoader(true);
-        response = await manageElementsSubmit(allFiles);
-        manageResponse(response);
+        manageElementsSubmit(user, allFiles, selectedProject, setSelectedProject);               
         break;
       default:
         break;
@@ -68,19 +68,15 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
    * @param {JSON} response respuesta de la llamada a la API
    */
   const manageResponse = (response) => {
-    setTimeout(setLoader(false), 3000);
-    onClose();
-    if (type.toLowerCase() === "arquitectura") {
       setReloadSidebar(true);
-    }
+  
     if (response === "Error") {
       ModalResponse("¡Hubo un error!", messages.error, "error");
     } else {
       ModalResponse("¡Éxito!", messages.success, "success");
     }
-    if (type.toLowerCase() === "arquitectura") {
       setReloadSidebar(false);
-    }
+    
   };
 
   /**
@@ -102,20 +98,6 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
     return response;
   };
 
-  /**
-   * Llamada a la API para agregar nuevos elementos a una
-   * versión de una arquitectura
-   * @param {Array} allFiles arreglo que contiene todos los archivos XML
-   * @returns JSON de la respuesta de la API
-   */
-  const manageElementsSubmit = async (allFiles) => {
-    const response = await submitElements(allFiles, user, selectedProject);
-    messages = {
-      success: "Se han agregado los nuevos elementos",
-      error: "No se han podido agregar los nuevos elementos",
-    };
-    return response;
-  };
 
   /**
    * Actualizar el nombre según se actualice el TextField
@@ -125,6 +107,13 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
     setValid(true);
     setName(event.target.value);
   };
+
+  React.useEffect(() => {
+    if (loader) {
+      setTimeout(setLoader(false), 5000);
+      onClose();
+    }
+  }, [loader]);
 
   return (
     <div>

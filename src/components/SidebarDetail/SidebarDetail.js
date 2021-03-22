@@ -25,7 +25,8 @@ const SidebarDetail = ({ projectIndex, item }) => {
    * @param {Integer} verIndex índice de la versión seleccionada
    * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
-  const handleSelect = (nodeName, arqIndex, verIndex, elems) => {
+  const handleSelect = (nodeName, arqIndex, verIndex, elems, length) => {
+    
     if (nodeName !== selectedProject) {
       Swal.fire({
         text: "¿Deseas mostrar " + nodeName + "?",
@@ -43,6 +44,7 @@ const SidebarDetail = ({ projectIndex, item }) => {
             arcIndex: arqIndex,
             verIndex: ver_index,
             elements: elems,
+            versions: length
           });
         }
       });
@@ -57,14 +59,14 @@ const SidebarDetail = ({ projectIndex, item }) => {
    * @param {Integer} verIndex índice de la versión en el arreglo
    * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
-  const renderTree = (nodes, select, arqIndex, verIndex, elems) => (
+  const renderTree = (nodes, select, arqIndex, verIndex, elems, length) => (
     <TreeItem
       key={verIndex ? verIndex : arqIndex}
       nodeId={verIndex ? verIndex : arqIndex}
       label={nodes.name}
       onLabelClick={
         select
-          ? () => handleSelect(nodes.name, arqIndex, verIndex, elems)
+          ? () => handleSelect(nodes.name, arqIndex, verIndex, elems, length)
           : null
       }
     >
@@ -72,7 +74,7 @@ const SidebarDetail = ({ projectIndex, item }) => {
         ? nodes.versions.map((node, index) =>
             {
               const ver_index = arqIndex + ":" + index;
-              return renderTree(node, true, arqIndex, ver_index , node.elements)
+              return renderTree(node, true, arqIndex, ver_index , node.elements, length)
             }
           )
         : null}
@@ -88,7 +90,7 @@ const SidebarDetail = ({ projectIndex, item }) => {
       >
         {item.architectures ? (
           item.architectures.map((architecture, index) =>
-            renderTree(architecture, false, index, null, null)
+            renderTree(architecture, false, index, null, null, architecture.versions.length)
           )
         ) : (
           <h3 style={{ textAlign: "justify" }}>

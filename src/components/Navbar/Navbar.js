@@ -12,7 +12,7 @@ import AddIcon from "@material-ui/icons/AddOutlined";
 import AppBar from "@material-ui/core/AppBar";
 import AppContext from "../../auth/context/context";
 import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import CreateIcon from '@material-ui/icons/CreateNewFolderOutlined';
+import CreateIcon from "@material-ui/icons/CreateNewFolderOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -75,20 +75,22 @@ const Navbar = ({ open, setOpen }) => {
                 >
                   <EditIcon />
                 </IconButton>
-                <IconButton
-                  aria-label="open delete"
-                  className={classes.icon}
-                  onClick={() =>
-                    manageDeleteVersion(
-                      user,
-                      selectedProject,
-                      setSelectedProject,
-                      setReloadSidebar
-                    )
-                  }
-                >
-                  <DeleteIcon />
-                </IconButton>
+                {selectedProject.versions > 1 ? (
+                  <IconButton
+                    aria-label="open delete"
+                    className={classes.icon}
+                    onClick={() =>
+                      manageDeleteVersion(
+                        user,
+                        selectedProject,
+                        setSelectedProject,
+                        setReloadSidebar
+                      )
+                    }
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                ) : null}
               </div>
               <div style={{ textAlign: "right" }}>
                 <NavbarItem
@@ -145,7 +147,7 @@ const useStyles = makeStyles((theme) => ({
 
   menuButton: {
     marginRight: theme.spacing(2),
-    color: "var(--background)"
+    color: "var(--background)",
   },
 
   hide: {

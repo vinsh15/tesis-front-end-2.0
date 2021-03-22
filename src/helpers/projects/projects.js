@@ -7,7 +7,6 @@ import {
   putProject,
   deleteProject,
 } from "../../api/projects/projects";
-import ModalResponse from "../../components/ModalResponse/ModalResponse";
 
 /**
  *
@@ -62,7 +61,7 @@ const manageEditProject = async (
     let responseEdit = await putProject(user, projectIndex, response);
     if (responseEdit !== "Error") {
       setReloadSidebar(true);
-      console.log(setReloadSidebar)
+      console.log(setReloadSidebar);
       ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
       setReloadSidebar(false);
     } else {
@@ -106,20 +105,22 @@ const manageCreateProject = async (user, setReloadSidebar) => {
  * Subir el nuevo proyecto a la base de datos
  * @param {JSON} user
  * @param {String} projectName nombre del nuevo proyecto
- * @param {Function} setReloadSidebar funcion para actualizar estado del Sideba
+ * @param {Function} setReloadSidebar funcion para actualizar estado del Sidebar
  */
 const submitProject = async (user, projectName, setReloadSidebar) => {
   const response = await postProject(user, projectName);
   if (response !== "Error") {
     setReloadSidebar(true);
-    ModalResponse(
-      "¡Nuevo proyecto creado!",
-      "El proyecto fue creado con éxito",
-      "success"
-    );
+    ModalMessage("¡Nuevo proyecto creado!", " ", "success", false, 4000);
     setReloadSidebar(false);
   } else {
-    ModalResponse("¡Hubo un error!", "El proyecto no fue creado", "error");
+    ModalMessage(
+      "¡Hubo un error!",
+      "No se ha creado el proyecto",
+      "error",
+      false,
+      5500
+    );
   }
 };
 
