@@ -6,9 +6,6 @@ import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AppContext from "../../auth/context/context";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
-import EditIcon from "@material-ui/icons/EditOutlined";
-import IconButton from "@material-ui/core/IconButton";
 import TreeItem from "@material-ui/lab/TreeItem";
 import TreeView from "@material-ui/lab/TreeView";
 
@@ -59,24 +56,27 @@ const SidebarDetail = ({ projectIndex, item }) => {
    * @param {Integer} verIndex índice de la versión en el arreglo
    * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
-  const renderTree = (nodes, select, arqIndex, verIndex, elems) => (
-    <TreeItem
-      key={verIndex != null ? verIndex : arqIndex}
-      nodeId={nodes.name}
-      label={nodes.name}
-      onLabelClick={
-        select
-          ? () => handleSelect(nodes.name, arqIndex, verIndex, elems)
-          : null
-      }
-    >
-      {Array.isArray(nodes.versions)
-        ? nodes.versions.map((node, index) =>
-            renderTree(node, true, arqIndex, index, node.elements)
-          )
-        : null}
-    </TreeItem>
-  );
+  const renderTree = (nodes, select, arqIndex, verIndex, elems) => {
+    let nodeId = nodes.name + Math.random();
+    return (
+      <TreeItem
+        key={verIndex != null ? verIndex : arqIndex}
+        nodeId={nodeId}
+        label={nodes.name}
+        onLabelClick={
+          select
+            ? () => handleSelect(nodes.name, arqIndex, verIndex, elems)
+            : null
+        }
+      >
+        {Array.isArray(nodes.versions)
+          ? nodes.versions.map((node, index) =>
+              renderTree(node, true, arqIndex, index, node.elements)
+            )
+          : null}
+      </TreeItem>
+    );
+  };
 
   return (
     <AccordionDetails>
@@ -104,7 +104,7 @@ const useStyles = makeStyles({
   root: {
     flexGrow: 1,
     maxWidth: 400,
-  }
+  },
 });
 
 export default SidebarDetail;

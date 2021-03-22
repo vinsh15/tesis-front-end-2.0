@@ -123,7 +123,6 @@ const SidebarItem = ({ item, projectIndex }) => {
                     user,
                     item.name,
                     projectIndex,
-                    setSelectedProject,
                     setReloadSidebar
                   );
                   handleClose();

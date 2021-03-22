@@ -62,6 +62,7 @@ const manageEditProject = async (
     let responseEdit = await putProject(user, projectIndex, response);
     if (responseEdit !== "Error") {
       setReloadSidebar(true);
+      console.log(setReloadSidebar)
       ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
       setReloadSidebar(false);
     } else {

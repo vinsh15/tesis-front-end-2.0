@@ -73,7 +73,7 @@ const manageEditVersion = async (
       setSelectedProject({
         versionName: response,
         projectIndex: selectedProject.projectIndex,
-        arcIndex: selectedProject.arqIndex,
+        arcIndex: selectedProject.arcIndex,
         verIndex: selectedProject.verIndex,
         elements: selectedProject.elements,
       });
