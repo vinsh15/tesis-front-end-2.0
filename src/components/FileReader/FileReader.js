@@ -24,7 +24,12 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
   const [name, setName] = useState("");
   const [valid, setValid] = useState(true);
   const [loader, setLoader] = useState(false);
-  const { user, setReloadSidebar, selectedProject, setSelectedProject } = useContext(AppContext);
+  const {
+    user,
+    setReloadSidebar,
+    selectedProject,
+    setSelectedProject,
+  } = useContext(AppContext);
   var messages = {
     error: "",
     success: "",
@@ -55,7 +60,12 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
         }
       case "elementos":
         setLoader(true);
-        manageElementsSubmit(user, allFiles, selectedProject, setSelectedProject);               
+        manageElementsSubmit(
+          user,
+          allFiles,
+          selectedProject,
+          setSelectedProject
+        );
         break;
       default:
         break;
@@ -68,15 +78,13 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
    * @param {JSON} response respuesta de la llamada a la API
    */
   const manageResponse = (response) => {
-      setReloadSidebar(true);
-  
+    setReloadSidebar(true);
     if (response === "Error") {
       ModalResponse("¡Hubo un error!", messages.error, "error");
     } else {
       ModalResponse("¡Éxito!", messages.success, "success");
     }
-      setReloadSidebar(false);
-    
+    setReloadSidebar(false);
   };
 
   /**
@@ -97,7 +105,6 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
     };
     return response;
   };
-
 
   /**
    * Actualizar el nombre según se actualice el TextField
@@ -201,19 +208,19 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: theme.shadows[5],
     padding: "1.25rem",
     outline: "none",
-    animationDuration: '0.3s',
-    animationTimingFunction: 'ease',
-    animationDelay: '0s',
+    animationDuration: "0.3s",
+    animationTimingFunction: "ease",
+    animationDelay: "0s",
     animationIterationCount: 1,
-    animationDirection: 'normal',
-    animationFillMode: 'none',
-    animationPlayState: 'running'
+    animationDirection: "normal",
+    animationFillMode: "none",
+    animationPlayState: "running",
   },
   h1: {
     color: "var(--primaryDark)",
     margin: "auto",
     marginBottom: 35,
-    fontSize: '1.875rem',
+    fontSize: "1.875rem",
     textAlign: "center",
     fontFamily: "var(font-family-content)",
   },
@@ -229,7 +236,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "var(primaryDark)",
     paddingTop: 0,
     paddingRight: 0,
-    paddingBottom: 0
+    paddingBottom: 0,
   },
 }));
 
