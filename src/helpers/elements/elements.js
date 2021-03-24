@@ -20,12 +20,8 @@ const manageResponse = (response, selectedProject, setSelectedProject) => {
     );
   } else {
     setSelectedProject({
-      versionName: selectedProject.versionName,
-      projectIndex: selectedProject.projectIndex,
-      arcIndex: selectedProject.arcIndex,
-      verIndex: selectedProject.verIndex,
-      elements: response,
-      versions: selectedProject.versions
+      ...selectedProject,
+      elements: response
     });
     ModalMessage(
       "¡Elementos agregados con exito!",

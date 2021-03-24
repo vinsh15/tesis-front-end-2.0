@@ -71,12 +71,8 @@ const manageEditVersion = async (
     if (editResponse !== "Error") {
       setReloadSidebar(true);
       setSelectedProject({
-        versionName: response,
-        projectIndex: selectedProject.projectIndex,
-        arcIndex: selectedProject.arcIndex,
-        verIndex: selectedProject.verIndex,
-        elements: selectedProject.elements,
-        versions: selectedProject.versions
+        ...selectedProject,
+        versionName: response
       });
       ModalMessage("¡Versión editada!", " ", "success", false, 4000);
       setReloadSidebar(false);

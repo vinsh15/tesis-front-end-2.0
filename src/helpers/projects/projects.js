@@ -9,7 +9,7 @@ import {
 } from "../../api/projects/projects";
 
 /**
- *
+ * Eliminar un proyecto
  * @param {JSON} user objeto con información del usuario
  * @param {String} name nombre del proyecto seleccionado
  * @param {Integer} projectIndex indice del proyecto seleccionado
@@ -44,7 +44,7 @@ const manageDeleteProject = async (
 };
 
 /**
- *
+ * Editar el nombre de un proyecto
  * @param {JSON} user objeto con información del usuario
  * @param {String} name nombre del proyecto seleccionado
  * @param {Integer} projectIndex indice del proyecto seleccionado
@@ -61,7 +61,7 @@ const manageEditProject = async (
     let responseEdit = await putProject(user, projectIndex, response);
     if (responseEdit !== "Error") {
       setReloadSidebar(true);
-      console.log(setReloadSidebar);
+      //console.log(setReloadSidebar);
       ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
       setReloadSidebar(false);
     } else {
