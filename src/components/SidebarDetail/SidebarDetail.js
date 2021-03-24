@@ -62,7 +62,7 @@ const SidebarDetail = ({ projectIndex, item }) => {
   const renderTree = (nodes, select, arqIndex, verIndex, elems, length) => (
     <TreeItem
       key={verIndex ? verIndex : arqIndex}
-      nodeId={verIndex ? verIndex : arqIndex}
+      nodeId={verIndex ? String(verIndex) : String(arqIndex)}
       label={nodes.name}
       onLabelClick={
         select
