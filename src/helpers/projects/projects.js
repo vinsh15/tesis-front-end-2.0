@@ -25,12 +25,11 @@ const manageDeleteProject = async (
 ) => {
   let response = await DeleteMessage(name);
   if (response) {
-    let responseDelete = await deleteProject(user, projectIndex);
+    let responseDelete = await deleteProject(user, projectIndex, setReloadSidebar);
+    setReloadSidebar(false);
     if (responseDelete !== "Error") {
-      setReloadSidebar(true);
       setSelectedProject();
       ModalMessage("¡Proyecto eliminado!", " ", "success", false, 4000);
-      setReloadSidebar(false);
     } else {
       ModalMessage(
         "¡Hubo un error!",
@@ -58,12 +57,12 @@ const manageEditProject = async (
 ) => {
   let response = await EditMessage(name);
   if (response !== "") {
-    let responseEdit = await putProject(user, projectIndex, response);
+    let responseEdit = await putProject(user, projectIndex, response, setReloadSidebar);
+    setReloadSidebar(false);
     if (responseEdit !== "Error") {
-      setReloadSidebar(true);
       //console.log(setReloadSidebar);
       ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
-      setReloadSidebar(false);
+
     } else {
       ModalMessage(
         "¡Hubo un error!",
@@ -108,11 +107,12 @@ const manageCreateProject = async (user, setReloadSidebar) => {
  * @param {Function} setReloadSidebar funcion para actualizar estado del Sidebar
  */
 const submitProject = async (user, projectName, setReloadSidebar) => {
-  const response = await postProject(user, projectName);
+  const response = await postProject(user, projectName, setReloadSidebar);
+  setReloadSidebar(false);
   if (response !== "Error") {
-    setReloadSidebar(true);
+    
     ModalMessage("¡Nuevo proyecto creado!", " ", "success", false, 4000);
-    setReloadSidebar(false);
+    
   } else {
     ModalMessage(
       "¡Hubo un error!",

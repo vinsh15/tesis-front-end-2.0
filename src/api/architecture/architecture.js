@@ -16,6 +16,7 @@ const postArchitecture = async (formData) => {
         return response.data;
     }
     catch(error){
+        console.log(error.response.status)
         return "Error";
     }
 }
@@ -27,13 +28,14 @@ const postArchitecture = async (formData) => {
  * @param {Integer} archIndex índice de la arquitectura
  * @returns arquitecturas del usuario o error
  */
-const deleteArchitecture = async (user, projectIndex, archIndex) => {
+const deleteArchitecture = async (user, projectIndex, archIndex, setReloadSidebar) => {
     const userInfo = {
         user_id: user.uid,
         project_index: projectIndex,
         arch_index: archIndex
     };
     const token = jwt(userInfo, 'secret');
+    setReloadSidebar(true);
     try {
         const response = await axios.delete(url, {
             data: {
@@ -54,7 +56,7 @@ const deleteArchitecture = async (user, projectIndex, archIndex) => {
  * @param {String} name nuevo nombre de la arquitectura 
  * @returns arquitecturas del usuario o error
  */
-const putArchitecture = async (user, projectIndex, archIndex, name) => {
+const putArchitecture = async (user, projectIndex, archIndex, name, setReloadSidebar) => {
     const userInfo = {
         user_id: user.uid,
         project_index: projectIndex,
@@ -62,6 +64,7 @@ const putArchitecture = async (user, projectIndex, archIndex, name) => {
         arch_name: name
     };
     const token = jwt(userInfo, 'secret');
+    setReloadSidebar(true);
     try {
         const response = await axios.put(url, {
             token: token

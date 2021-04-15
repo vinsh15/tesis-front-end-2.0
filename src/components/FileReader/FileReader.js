@@ -64,7 +64,8 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
           user,
           allFiles,
           selectedProject,
-          setSelectedProject
+          setSelectedProject,
+          setReloadSidebar
         );
         break;
       default:

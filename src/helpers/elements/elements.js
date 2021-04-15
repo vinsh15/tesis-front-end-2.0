@@ -9,7 +9,8 @@ import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
  */
-const manageResponse = (response, selectedProject, setSelectedProject) => {
+const manageResponse = (response, selectedProject, setSelectedProject, setReloadSidebar) => {
+  setReloadSidebar(true);
   if (response === "Error") {
     ModalMessage(
       "¡Hubo un error!",
@@ -44,11 +45,12 @@ const manageElementsSubmit = async (
   user,
   allFiles,
   selectedProject,
-  setSelectedProject
+  setSelectedProject,
+  setReloadSidebar
 ) => {
+  setReloadSidebar(true);
   const response = await submitElements(allFiles, user, selectedProject);
-
-  manageResponse(response, selectedProject, setSelectedProject);
+  manageResponse(response, selectedProject, setSelectedProject, setReloadSidebar);
 };
 
 /**

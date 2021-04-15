@@ -89,6 +89,7 @@ const SidebarItem = ({ item, projectIndex }) => {
                 Agregar Arquitectura
               </MenuItem>
               <MenuItem
+                disabled={item.architectures ? false : true}
                 onClick={() => {
                   manageEditArchitecture(
                     user,
@@ -103,6 +104,7 @@ const SidebarItem = ({ item, projectIndex }) => {
                 Editar Arquitectura
               </MenuItem>
               <MenuItem
+                disabled={item.architectures ? false : true}
                 onClick={() => {
                   manageDeleteArchitecture(
                     user,

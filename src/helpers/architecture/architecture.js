@@ -34,14 +34,16 @@ const manageDeleteArchitecture = async (
       let responseDelete = await deleteArchitecture(
         user,
         projectIndex,
-        architecture
+        architecture,
+        setReloadSidebar
       );
       if (responseDelete !== "Error") {
-        setReloadSidebar(true);
+        setReloadSidebar(false);
         setSelectedProject();
         ModalMessage("¡Arquitectura eliminada!", " ", "success", false, 4000);
-        setReloadSidebar(false);
+        
       } else {
+        setReloadSidebar(false);
         ModalMessage(
           "¡Hubo un error!",
           "No se ha eliminado la arquitectura",
@@ -81,14 +83,16 @@ const manageEditArchitecture = async (
         user,
         projectIndex,
         architecture,
-        response
+        response,
+        setReloadSidebar
       );
       if (responseEdit !== "Error") {
-        setReloadSidebar(true);
+        setReloadSidebar(false);
         setSelectedProject();
         ModalMessage("¡Arquitectura editada!", " ", "success", false, 4000);
-        setReloadSidebar(false);
+        
       } else {
+        setReloadSidebar(false);
         ModalMessage(
           "¡Hubo un error!",
           "No se ha editado la arquitectura",

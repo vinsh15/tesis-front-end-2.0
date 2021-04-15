@@ -27,14 +27,15 @@ const manageDeleteVersion = async (
       user,
       selectedProject.projectIndex,
       selectedProject.arcIndex,
-      selectedProject.verIndex
+      selectedProject.verIndex,
+      setReloadSidebar
     );
     if (deleteResponse !== "Error") {
-      setReloadSidebar(true);
+      setReloadSidebar(false);
       setSelectedProject();
       ModalMessage("¡Versión eliminada!", " ", "success", false, 4000);
-      setReloadSidebar(false);
     } else {
+      setReloadSidebar(false);
       ModalMessage(
         "¡Hubo un error!",
         "No se ha eliminado la versión",
@@ -66,17 +67,19 @@ const manageEditVersion = async (
       selectedProject.projectIndex,
       selectedProject.arcIndex,
       selectedProject.verIndex,
-      response
+      response,
+      setReloadSidebar
     );
     if (editResponse !== "Error") {
-      setReloadSidebar(true);
+      setReloadSidebar(false);
       setSelectedProject({
         ...selectedProject,
         versionName: response
       });
       ModalMessage("¡Versión editada!", " ", "success", false, 4000);
-      setReloadSidebar(false);
+  
     } else {
+      setReloadSidebar(false);
       ModalMessage(
         "¡Hubo un error!",
         "No se ha editado la versión",
