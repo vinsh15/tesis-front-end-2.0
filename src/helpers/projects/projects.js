@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { manageErrors } from "../errors/errors";
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import { DeleteMessage } from "../../components/DeleteMessage/DeleteMessage";
 import { EditMessage } from "../../components/EditMessage/EditMessage";
@@ -27,17 +28,11 @@ const manageDeleteProject = async (
   if (response) {
     let responseDelete = await deleteProject(user, projectIndex, setReloadSidebar);
     setReloadSidebar(false);
-    if (responseDelete !== "Error") {
+    if (!Number.isInteger(responseDelete)) {
       setSelectedProject();
       ModalMessage("¡Proyecto eliminado!", " ", "success", false, 4000);
     } else {
-      ModalMessage(
-        "¡Hubo un error!",
-        "No se ha eliminado el proyecto",
-        "error",
-        false,
-        5500
-      );
+      manageErrors(responseDelete)
     }
   }
 };
@@ -59,18 +54,10 @@ const manageEditProject = async (
   if (response !== "") {
     let responseEdit = await putProject(user, projectIndex, response, setReloadSidebar);
     setReloadSidebar(false);
-    if (responseEdit !== "Error") {
-      //console.log(setReloadSidebar);
+    if (!Number.isInteger(responseEdit)) {
       ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
-
     } else {
-      ModalMessage(
-        "¡Hubo un error!",
-        "No se ha editado el proyecto",
-        "error",
-        false,
-        5500
-      );
+      manageErrors(responseEdit)
     }
   }
 };
@@ -109,18 +96,10 @@ const manageCreateProject = async (user, setReloadSidebar) => {
 const submitProject = async (user, projectName, setReloadSidebar) => {
   const response = await postProject(user, projectName, setReloadSidebar);
   setReloadSidebar(false);
-  if (response !== "Error") {
-    
-    ModalMessage("¡Nuevo proyecto creado!", " ", "success", false, 4000);
-    
+  if (!Number.isInteger(response)) { 
+    ModalMessage("¡Nuevo proyecto creado!", " ", "success", false, 4000);  
   } else {
-    ModalMessage(
-      "¡Hubo un error!",
-      "No se ha creado el proyecto",
-      "error",
-      false,
-      5500
-    );
+    manageErrors(response)
   }
 };
 

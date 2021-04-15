@@ -1,5 +1,5 @@
 import { postElements } from "../../api/elements/elements";
-
+import { manageErrors } from "../errors/errors";
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 
 /**
@@ -11,14 +11,8 @@ import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
  */
 const manageResponse = (response, selectedProject, setSelectedProject, setReloadSidebar) => {
   setReloadSidebar(true);
-  if (response === "Error") {
-    ModalMessage(
-      "¡Hubo un error!",
-      "No se han agregado los elementos",
-      "error",
-      false,
-      5500
-    );
+  if (Number.isInteger(response)) {
+    manageErrors(response)
   } else {
     setSelectedProject({
       ...selectedProject,

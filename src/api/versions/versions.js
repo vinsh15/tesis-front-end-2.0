@@ -7,7 +7,8 @@ const url = "/version/";
  * Agregar una nueva versión a la base de datos del usuario
  * @param {FormData} formData objeto form-data con la información de la arquitectura
  */
-const postVersion = async (formData) => {
+const postVersion = async (formData, setReloadSidebar) => {
+    setReloadSidebar(true);
     try {
         const response = await axios.post(url, formData,
         {
@@ -16,7 +17,7 @@ const postVersion = async (formData) => {
         return response.data;
     }
     catch(error){
-        return "Error";
+        return error.response.status;
     }
 }
 
@@ -47,7 +48,7 @@ const deleteVersion = async (user, projectIndex, arcIndex, verIndex, setReloadSi
         return response.data;
 
     } catch (error) {
-        return "Error";
+        return error.response.status;
     }
 }
 
@@ -78,7 +79,7 @@ const putVersion = async (user, projectIndex, arcIndex, verIndex, name, setReloa
         return response.data;
 
     } catch (error) {
-        return "Error";
+        return error.response.status;
     }
 }
 

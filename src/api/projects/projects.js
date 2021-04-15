@@ -23,7 +23,7 @@ const postProject = async (user, projectName, setReloadSidebar) => {
         return response.data;
     }
     catch(error) {
-        return "Error";
+        return error.response.status;
     }
 }
 
@@ -49,7 +49,7 @@ const deleteProject = async (user, index, setReloadSidebar) => {
         return response.data;
     }
     catch(error) {
-        return "Error";
+        return error.response.status;
     }
 }   
 
@@ -74,7 +74,7 @@ const putProject = async (user, index, name, setReloadSidebar) => {
         });
         return response.data;
     } catch (error) {
-        return "Error";
+        return error.response.status;
     }
 }
 
