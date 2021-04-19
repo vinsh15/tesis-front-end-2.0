@@ -3,7 +3,7 @@ import "./FileReader.css";
 import "react-dropzone-uploader/dist/styles.css";
 
 import { makeStyles } from "@material-ui/core/styles";
-import ModalResponse from "../../components/ModalResponse/ModalResponse";
+import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import { submitArchitecture } from "../../helpers/architecture/architecture";
 import { manageElementsSubmit } from "../../helpers/elements/elements";
 
@@ -14,6 +14,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Loader from "../Loader/Loader";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
+import { manageErrors } from "../../helpers/errors/errors";
 
 /**
  * Componente que representa pop-up
@@ -64,7 +65,8 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
           user,
           allFiles,
           selectedProject,
-          setSelectedProject
+          setSelectedProject,
+          setReloadSidebar
         );
         break;
       default:
@@ -78,13 +80,12 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
    * @param {JSON} response respuesta de la llamada a la API
    */
   const manageResponse = (response) => {
-    setReloadSidebar(true);
-    if (response === "Error") {
-      ModalResponse("¡Hubo un error!", messages.error, "error");
-    } else {
-      ModalResponse("¡Éxito!", messages.success, "success");
-    }
     setReloadSidebar(false);
+    if (Number.isInteger(response)) {
+      manageErrors(response)
+    } else {
+      ModalMessage("¡Arquitectura creada!", " ", "success", false, 4000);
+    }
   };
 
   /**
@@ -97,7 +98,8 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
       allFiles,
       user,
       name,
-      projectIndex
+      projectIndex,
+      setReloadSidebar
     );
     messages = {
       success: "Se ha creado una nueva arquitectura",

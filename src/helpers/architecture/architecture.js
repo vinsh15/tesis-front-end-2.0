@@ -7,6 +7,7 @@ import {
   deleteArchitecture,
 } from "../../api/architecture/architecture";
 import { SelectMessage } from "../../components/SelectMessage/SelectMessage";
+import { manageErrors } from "../errors/errors";
 
 /**
  * Eliminar arquitectura
@@ -34,21 +35,15 @@ const manageDeleteArchitecture = async (
       let responseDelete = await deleteArchitecture(
         user,
         projectIndex,
-        architecture
+        architecture,
+        setReloadSidebar
       );
-      if (responseDelete !== "Error") {
-        setReloadSidebar(true);
+      setReloadSidebar(false);
+      if (!Number.isInteger(responseDelete)) {
         setSelectedProject();
-        ModalMessage("¡Arquitectura eliminada!", " ", "success", false, 4000);
-        setReloadSidebar(false);
+        ModalMessage("¡Arquitectura eliminada!", " ", "success", false, 4000);        
       } else {
-        ModalMessage(
-          "¡Hubo un error!",
-          "No se ha eliminado la arquitectura",
-          "error",
-          false,
-          5500
-        );
+        manageErrors(responseDelete)
       }
     }
   }
@@ -81,21 +76,15 @@ const manageEditArchitecture = async (
         user,
         projectIndex,
         architecture,
-        response
+        response,
+        setReloadSidebar
       );
-      if (responseEdit !== "Error") {
-        setReloadSidebar(true);
+      setReloadSidebar(false);
+      if (!Number.isInteger(responseEdit)) { 
         setSelectedProject();
-        ModalMessage("¡Arquitectura editada!", " ", "success", false, 4000);
-        setReloadSidebar(false);
+        ModalMessage("¡Arquitectura editada!", " ", "success", false, 4000);  
       } else {
-        ModalMessage(
-          "¡Hubo un error!",
-          "No se ha editado la arquitectura",
-          "error",
-          false,
-          5500
-        );
+        manageErrors(responseEdit)
       }
     }
   }
@@ -108,9 +97,10 @@ const manageEditArchitecture = async (
  * @param {String} name nombre del nuevo proyecto
  * @param {Integer} projectIndex índice del proyecto
  */
-const submitArchitecture = async (files, user, name, projectIndex) => {
+const submitArchitecture = async (files, user, name, projectIndex, setReloadSidebar) => {
   const formData = getFormData(files, user, name, projectIndex);
-  const response = await postArchitecture(formData);
+  setReloadSidebar(true);
+  const response = await postArchitecture(formData, setReloadSidebar);
   return response;
 };
 

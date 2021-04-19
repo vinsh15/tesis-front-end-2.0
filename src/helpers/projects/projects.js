@@ -1,4 +1,5 @@
 import Swal from "sweetalert2";
+import { manageErrors } from "../errors/errors";
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 import { DeleteMessage } from "../../components/DeleteMessage/DeleteMessage";
 import { EditMessage } from "../../components/EditMessage/EditMessage";
@@ -25,20 +26,13 @@ const manageDeleteProject = async (
 ) => {
   let response = await DeleteMessage(name);
   if (response) {
-    let responseDelete = await deleteProject(user, projectIndex);
-    if (responseDelete !== "Error") {
-      setReloadSidebar(true);
+    let responseDelete = await deleteProject(user, projectIndex, setReloadSidebar);
+    setReloadSidebar(false);
+    if (!Number.isInteger(responseDelete)) {
       setSelectedProject();
       ModalMessage("¡Proyecto eliminado!", " ", "success", false, 4000);
-      setReloadSidebar(false);
     } else {
-      ModalMessage(
-        "¡Hubo un error!",
-        "No se ha eliminado el proyecto",
-        "error",
-        false,
-        5500
-      );
+      manageErrors(responseDelete)
     }
   }
 };
@@ -58,20 +52,12 @@ const manageEditProject = async (
 ) => {
   let response = await EditMessage(name);
   if (response !== "") {
-    let responseEdit = await putProject(user, projectIndex, response);
-    if (responseEdit !== "Error") {
-      setReloadSidebar(true);
-      //console.log(setReloadSidebar);
+    let responseEdit = await putProject(user, projectIndex, response, setReloadSidebar);
+    setReloadSidebar(false);
+    if (!Number.isInteger(responseEdit)) {
       ModalMessage("¡Proyecto editado!", " ", "success", false, 4000);
-      setReloadSidebar(false);
     } else {
-      ModalMessage(
-        "¡Hubo un error!",
-        "No se ha editado el proyecto",
-        "error",
-        false,
-        5500
-      );
+      manageErrors(responseEdit)
     }
   }
 };
@@ -108,19 +94,12 @@ const manageCreateProject = async (user, setReloadSidebar) => {
  * @param {Function} setReloadSidebar funcion para actualizar estado del Sidebar
  */
 const submitProject = async (user, projectName, setReloadSidebar) => {
-  const response = await postProject(user, projectName);
-  if (response !== "Error") {
-    setReloadSidebar(true);
-    ModalMessage("¡Nuevo proyecto creado!", " ", "success", false, 4000);
-    setReloadSidebar(false);
+  const response = await postProject(user, projectName, setReloadSidebar);
+  setReloadSidebar(false);
+  if (!Number.isInteger(response)) { 
+    ModalMessage("¡Nuevo proyecto creado!", " ", "success", false, 4000);  
   } else {
-    ModalMessage(
-      "¡Hubo un error!",
-      "No se ha creado el proyecto",
-      "error",
-      false,
-      5500
-    );
+    manageErrors(response)
   }
 };
 

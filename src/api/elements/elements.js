@@ -14,7 +14,7 @@ const postElements = async (formData) => {
         return response.data;
     }
     catch(error){
-        return "Error";
+        return error.response.status;
     }
 }
 

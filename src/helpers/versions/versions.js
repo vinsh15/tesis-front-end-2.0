@@ -7,6 +7,7 @@ import {
   putVersion,
   deleteVersion,
 } from "../../api/versions/versions";
+import { manageErrors } from "../errors/errors";
 
 /**
  * Eliminar version
@@ -23,25 +24,19 @@ const manageDeleteVersion = async (
 ) => {
   let response = await DeleteMessage(selectedProject.versionName);
   if (response) {
-    let deleteResponse = await deleteVersion(
+    let responseDelete = await deleteVersion(
       user,
       selectedProject.projectIndex,
       selectedProject.arcIndex,
-      selectedProject.verIndex
+      selectedProject.verIndex,
+      setReloadSidebar
     );
-    if (deleteResponse !== "Error") {
-      setReloadSidebar(true);
+    setReloadSidebar(false);
+    if (!Number.isInteger(responseDelete)) {
       setSelectedProject();
       ModalMessage("¡Versión eliminada!", " ", "success", false, 4000);
-      setReloadSidebar(false);
     } else {
-      ModalMessage(
-        "¡Hubo un error!",
-        "No se ha eliminado la versión",
-        "error",
-        false,
-        5500
-      );
+      manageErrors(responseDelete)
     }
   }
 };
@@ -61,29 +56,23 @@ const manageEditVersion = async (
 ) => {
   let response = await EditMessage(selectedProject.versionName);
   if (response !== "") {
-    let editResponse = await putVersion(
+    let responseEdit = await putVersion(
       user,
       selectedProject.projectIndex,
       selectedProject.arcIndex,
       selectedProject.verIndex,
-      response
+      response,
+      setReloadSidebar
     );
-    if (editResponse !== "Error") {
-      setReloadSidebar(true);
+    if (!Number.isInteger(responseEdit)) {
+      setReloadSidebar(false);
       setSelectedProject({
         ...selectedProject,
         versionName: response
       });
       ModalMessage("¡Versión editada!", " ", "success", false, 4000);
-      setReloadSidebar(false);
     } else {
-      ModalMessage(
-        "¡Hubo un error!",
-        "No se ha editado la versión",
-        "error",
-        false,
-        5500
-      );
+      manageErrors(responseEdit)
     }
   }
 };
@@ -128,9 +117,9 @@ const submitVersion = async (
   setReloadSidebar
 ) => {
   const formData = getFormData(versionName, user, selectedProject);
-  const response = await postVersion(formData);
-  if (response !== "Error") {
-    setReloadSidebar(true);
+  const response = await postVersion(formData, setReloadSidebar);
+  setReloadSidebar(false);
+  if (!Number.isInteger(response)) {
     ModalMessage(
       "¡Nueva versión creada!",
       "Se ha agregado una nueva versión a la arquitectura",
@@ -138,15 +127,8 @@ const submitVersion = async (
       false,
       5000
     );
-    setReloadSidebar(false);
   } else {
-    ModalMessage(
-      "¡Hubo un error!",
-      "No se ha creado una nueva versión",
-      "error",
-      false,
-      5500
-    );
+    manageErrors(response)
   }
 };
 
@@ -166,4 +148,4 @@ const getFormData = (versionName, user, selectedProject) => {
   return formData;
 };
 
-export { manageCreateVersion, manageDeleteVersion, manageEditVersion };
+export { manageCreateVersion, manageDeleteVersion, manageEditVersion }

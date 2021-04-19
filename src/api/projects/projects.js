@@ -9,12 +9,13 @@ const url = "/proyectos/";
  * @param {String} projectName nombre del proyecto creado
  * @returns {Array} proyectos del usuario o error
  */
-const postProject = async (user, projectName) => {
+const postProject = async (user, projectName, setReloadSidebar) => {
     const userInfo = {
         user_id: user.uid,
         project_name: projectName
     };
     const token = jwt(userInfo, 'secret');
+    setReloadSidebar(true);
     try {
         const response = await axios.post(url, {
             token: token
@@ -22,7 +23,7 @@ const postProject = async (user, projectName) => {
         return response.data;
     }
     catch(error) {
-        return "Error";
+        return error.response.status;
     }
 }
 
@@ -32,12 +33,13 @@ const postProject = async (user, projectName) => {
  * @param {Integer} index índice del proyecto
  * @returns proyectos del usuario o error
  */
-const deleteProject = async (user, index) => {
+const deleteProject = async (user, index, setReloadSidebar) => {
     const userInfo = {
         user_id: user.uid,
         project_index: index
     };
     const token = jwt(userInfo, 'secret');
+    setReloadSidebar(true);
     try {
         const response = await axios.delete(url, {
             data: {
@@ -47,7 +49,7 @@ const deleteProject = async (user, index) => {
         return response.data;
     }
     catch(error) {
-        return "Error";
+        return error.response.status;
     }
 }   
 
@@ -58,20 +60,21 @@ const deleteProject = async (user, index) => {
  * @param {String} name nuevo nombre del proyecto
  * @returns proyectos del usuario o error
  */
-const putProject = async (user, index, name) => {
+const putProject = async (user, index, name, setReloadSidebar) => {
     const userInfo = {
         user_id: user.uid,
         project_index: index,
         project_name: name
     };
     const token = jwt(userInfo, 'secret');
+    setReloadSidebar(true);
     try {
         const response = await axios.put(url, {
             token: token
         });
         return response.data;
     } catch (error) {
-        return "Error";
+        return error.response.status;
     }
 }
 

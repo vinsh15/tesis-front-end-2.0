@@ -7,7 +7,8 @@ const url = "/version/";
  * Agregar una nueva versión a la base de datos del usuario
  * @param {FormData} formData objeto form-data con la información de la arquitectura
  */
-const postVersion = async (formData) => {
+const postVersion = async (formData, setReloadSidebar) => {
+    setReloadSidebar(true);
     try {
         const response = await axios.post(url, formData,
         {
@@ -16,7 +17,7 @@ const postVersion = async (formData) => {
         return response.data;
     }
     catch(error){
-        return "Error";
+        return error.response.status;
     }
 }
 
@@ -29,7 +30,7 @@ const postVersion = async (formData) => {
  * @returns versiones de una arquitectura de un proyecto
  *  del usuario o error
  */
-const deleteVersion = async (user, projectIndex, arcIndex, verIndex) => {
+const deleteVersion = async (user, projectIndex, arcIndex, verIndex, setReloadSidebar) => {
     const userInfo = {
         user_id: user.uid,
         project_index: projectIndex,
@@ -37,6 +38,7 @@ const deleteVersion = async (user, projectIndex, arcIndex, verIndex) => {
         ver_index: verIndex
     };
     const token = jwt(userInfo, 'secret');
+    setReloadSidebar(true)
     try {
         const response = await axios.delete(url, {
             data: {
@@ -46,7 +48,7 @@ const deleteVersion = async (user, projectIndex, arcIndex, verIndex) => {
         return response.data;
 
     } catch (error) {
-        return "Error";
+        return error.response.status;
     }
 }
 
@@ -60,7 +62,7 @@ const deleteVersion = async (user, projectIndex, arcIndex, verIndex) => {
  * @returns versiones de una arquitectura de un proyecto
  * del usuario o error
  */
-const putVersion = async (user, projectIndex, arcIndex, verIndex, name) => {
+const putVersion = async (user, projectIndex, arcIndex, verIndex, name, setReloadSidebar) => {
     const userInfo = {
         user_id: user.uid,
         project_index: projectIndex,
@@ -69,6 +71,7 @@ const putVersion = async (user, projectIndex, arcIndex, verIndex, name) => {
         ver_name: name
     };
     const token = jwt(userInfo, 'secret');
+    setReloadSidebar(true);
     try {
         const response = await axios.put(url, {
             token: token
@@ -76,7 +79,7 @@ const putVersion = async (user, projectIndex, arcIndex, verIndex, name) => {
         return response.data;
 
     } catch (error) {
-        return "Error";
+        return error.response.status;
     }
 }
 

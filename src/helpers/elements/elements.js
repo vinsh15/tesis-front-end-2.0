@@ -1,5 +1,5 @@
 import { postElements } from "../../api/elements/elements";
-
+import { manageErrors } from "../errors/errors";
 import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 
 /**
@@ -9,15 +9,10 @@ import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
  */
-const manageResponse = (response, selectedProject, setSelectedProject) => {
-  if (response === "Error") {
-    ModalMessage(
-      "¡Hubo un error!",
-      "No se han agregado los elementos",
-      "error",
-      false,
-      5500
-    );
+const manageResponse = (response, selectedProject, setSelectedProject, setReloadSidebar) => {
+  setReloadSidebar(true);
+  if (Number.isInteger(response)) {
+    manageErrors(response)
   } else {
     setSelectedProject({
       ...selectedProject,
@@ -44,11 +39,12 @@ const manageElementsSubmit = async (
   user,
   allFiles,
   selectedProject,
-  setSelectedProject
+  setSelectedProject,
+  setReloadSidebar
 ) => {
+  setReloadSidebar(true);
   const response = await submitElements(allFiles, user, selectedProject);
-
-  manageResponse(response, selectedProject, setSelectedProject);
+  manageResponse(response, selectedProject, setSelectedProject, setReloadSidebar);
 };
 
 /**
