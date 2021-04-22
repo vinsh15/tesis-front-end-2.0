@@ -10,7 +10,7 @@ import firebaseConfig from "./firebase/firebase-config";
 import settings from "./config/settings/settings";
 
 axios.defaults.baseURL = settings.apiUrl;
-axios.defaults.timeout = 10000;
+// axios.defaults.timeout = 10000;
 
 ReactDOM.render(
   <React.StrictMode>

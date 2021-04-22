@@ -81,7 +81,6 @@ const manageEditArchitecture = async (
       );
       setReloadSidebar(false);
       if (!Number.isInteger(responseEdit)) { 
-        setSelectedProject();
         ModalMessage("¡Arquitectura editada!", " ", "success", false, 4000);  
       } else {
         manageErrors(responseEdit)
