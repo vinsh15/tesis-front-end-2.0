@@ -46,7 +46,7 @@
   font-family: var(--font-family-content) !important;
   font-size: 1rem !important;
   background-color: transparent !important;
-  color: var(--PrimaryDark) !important;
+  color: var(--primaryDark) !important;
   padding: 10px 15px !important;
   line-height: 1rem !important;
   font-weight: 500 !important;
@@ -59,7 +59,7 @@
   font-family: var(--font-family-content) !important;
   font-size: 1rem !important;
   background-color: transparent !important;
-  color: var(--PrimaryDark) !important;
+  color: var(--primaryDark) !important;
   padding: 5px 10px !important;
   border: 1px solid var(--primaryDark) !important
 }
