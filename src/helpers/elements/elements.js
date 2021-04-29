@@ -9,15 +9,16 @@ import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
  * @param {JSON} selectedProject objeto con información del proyecto seleccionado
  * @param {Function} setSelectedProject funcion para actualizar proyecto seleccionado
  */
-const manageResponse = (response, selectedProject, setSelectedProject, setReloadSidebar) => {
-  setReloadSidebar(false);
+const manageResponse = (response, selectedProject, setSelectedProject, setReloadSidebar) => {  
   if (Number.isInteger(response)) {
+    setReloadSidebar(false);
     manageErrors(response)
   } else {
     setSelectedProject({
       ...selectedProject,
-      elements: response.elements
+      elements: response
     });
+    setReloadSidebar(false);
     ModalMessage(
       "¡Elementos agregados con exito!",
       " ",

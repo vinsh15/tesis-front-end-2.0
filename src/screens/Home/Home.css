@@ -12,6 +12,18 @@
   font-weight: 600 !important;
 }
 
+.MuiDrawer-paperAnchorBottom {
+  left: auto !important;
+}
+
+.MuiTab-textColorPrimary.Mui-selected {
+  color: var(--primaryDark) !important;
+}
+
+.PrivateTabIndicator-colorPrimary-36 {
+  background-color: var(--primaryDark) !important;
+}
+
 .content{
   margin-left: 290px;
   margin-top:80px;

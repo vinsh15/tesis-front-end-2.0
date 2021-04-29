@@ -20,20 +20,19 @@ const Content = () => {
     layout: {
       name: "random",
       fit: true,
-      padding: 20,
+      padding: 30,
       avoidOverlap: true,
       nodeDimensionsIncludeLabels: true,
-      avoidOverlapPadding: 10,
+      avoidOverlapPadding: 150,
     },
     stylesheet: [
       {
         selector: "node",
         style: {
           content: "data(id)",
-          width: 6,
-          height: 6,
-
-          "background-color": "#a65ba6",
+          width: 10,
+          height: 10,
+          "background-color": "#18202C",
         },
       },
       {
@@ -57,18 +56,48 @@ const Content = () => {
    */
   function getCy(cy) {
     cyto = cy;
-    cyto.resize();
+    cyto.fit();
     cyto.on("select", "node", selectedNodeHandler);
+    cyto.on("unselect", "node", unselectNodeHandler);
     //cyto.style().selector("node").style("background-color", "magenta").update(); // indicate the end of your new stylesheet so that it can be updated on elements
   }
 
   /**
    * Manejador de evento al seleccionar nodo
-   * @param {Event} event referencia al componente
+   * @param {Event} event referencia al elemento
    */
-  const selectedNodeHandler = (event) => {
+  const selectedNodeHandler = (evt) => {
     //console.log(evt.data); // 'bar'
-    let target = event;
+    console.log();
+    cyto.getElementById("BehaviorRegistry").animate(
+      {
+        style: {
+          "background-color": "#ffc74d",
+        },
+      },
+      {
+        duration: 100,
+      }
+    );
+    //console.log("select ", target);
+  };
+
+  /**
+   * Manejador de evento dejar de seleccionar nodo
+   * @param {Event} event referencia al elemento
+   */
+  const unselectNodeHandler = (evt) => {
+    //console.log(evt.data); // 'bar'
+    cyto.getElementById("BehaviorRegistry").animate(
+      {
+        style: {
+          "background-color": "#18202C",
+        },
+      },
+      {
+        duration: 100,
+      }
+    );
     //console.log("select ", target);
   };
 

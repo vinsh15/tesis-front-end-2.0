@@ -6,6 +6,7 @@ import clsx from "clsx";
 
 import Sidebar from "../../components/SideBar/Sidebar";
 import Content from "../../components/Content/Content";
+import Table from "../../components/Table/Table";
 
 import Swal from "sweetalert2";
 
@@ -90,7 +91,6 @@ function Home() {
       setLoad(true);
       get();
     }
-    //console.log(selectedProject);
   }, [user, reloadSidebar]);
 
   return (
@@ -108,9 +108,11 @@ function Home() {
           [classes.contentShift]: open,
         })}
       >
-        {" "}
         {selectedProject ? (
-          <Content />
+          <div>
+            <Content />
+            <Table />
+          </div>
         ) : null}
       </main>
     </>
@@ -121,13 +123,14 @@ function Home() {
 const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
-    padding: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
     transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    overflow: 'auto',
     marginLeft: -90,
-    marginTop: 64
+    marginTop: 90,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {
