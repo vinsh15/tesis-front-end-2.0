@@ -26,7 +26,7 @@ function TabPanel(props) {
     >
       {value === index && (
         <Box p={2}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -93,7 +93,7 @@ function TableItem() {
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 550,
+    width: 'auto',
   },
 }));
 

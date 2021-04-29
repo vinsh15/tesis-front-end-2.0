@@ -1,27 +1,32 @@
-import * as React from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import React, { useContext, useState, useEffect } from "react";
 
-const columns = [
-  { field: 'source', headerName: 'Source', width: 150 },
-  { field: 'target', headerName: 'Target', width: 150 },
-  { field: 'relation', headerName: 'Relation', width: 150 }
+import AppContext from "../../../auth/context/context";
 
-];
-
-const rows = [
-  { id: 1, source: 'Jon', target: 'Lannister', relation: 'Extends'},
-  { id: 2, source: 'Lannister', target: 'Stark', relation: 'Extends'},
-  { id: 3, source: 'Lannister', target: 'Stark Junior', relation: 'Extends'},
-  { id: 4, source: 'Stark', target: 'Mari', relation: 'Extends'},
-  { id: 5, source: 'Targaryen', target: 'Lannister', relation: 'Extends'},
-  { id: 6, source: 'Melisandre', target: 'Stark', relation: 'Implements'},
-  { id: 7, source: 'Clifford', target: 'Lannister', relation: 'Implements'}
-];
+import { DataGrid } from "@material-ui/data-grid";
+import Loader from "../../Loader/Loader";
 
 function EdgesTable() {
+  const { selectedProject } = useContext(AppContext);
+  let [loader, setLoader] = useState(true);
+  let rows = [];
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "source", headerName: "Source", width: 200 },
+    { field: "target", headerName: "Target", width: 200 },
+    { field: "relation", headerName: "Relation", width: 130 },
+  ];
+
+  selectedProject.elements.edges.map((x, index) => {
+    rows.push({'id': index, 'source': x.data.source, 'target': x.data.target, 'relation': x.scratch.relation});
+  });
+
+  useEffect(() => {
+    setLoader(false);
+  }, [selectedProject.elements]);
+
   return (
     <div style={{ height: 400, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pageSize={10} />
+      {!loader ? <DataGrid rows={rows} columns={columns} pageSize={10} /> : <Loader />}
     </div>
   );
 };

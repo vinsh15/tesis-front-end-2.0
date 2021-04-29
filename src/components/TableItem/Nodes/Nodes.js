@@ -1,30 +1,41 @@
-import * as React from 'react';
-import { DataGrid } from '@material-ui/data-grid';
+import React, { useContext, useState, useEffect } from "react";
 
-const columns = [
-  { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'name', headerName: 'Nombre', width: 130 }
+import AppContext from "../../../auth/context/context";
 
-];
-
-const rows = [
-  { id: 1, name: 'Jon'},
-  { id: 2, name: 'Lannister'},
-  { id: 3, name: 'Lannister'},
-  { id: 4, name: 'Stark'},
-  { id: 5, name: 'Targaryen'},
-  { id: 6, name: 'Melisandre'},
-  { id: 7, name: 'Clifford'},
-  { id: 8, name: 'Frances'},
-  { id: 9, name: 'Roxie'},
-];
+import { DataGrid } from "@material-ui/data-grid";
+import Loader from "../../Loader/Loader";
 
 function NodesTable() {
+  const { selectedProject } = useContext(AppContext);
+  let [loader, setLoader] = useState(true);
+  let rows = [];
+  const columns = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "name", headerName: "Nombre", width: 250 },
+  ];
+
+  selectedProject.elements.nodes.map((x, index) => {
+    rows.push({'id': index, 'name': x.data.name});
+  });
+
+  useEffect(() => {
+    setLoader(false);
+  }, [selectedProject.elements]);
+
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      <DataGrid rows={rows} columns={columns} pageSize={10} checkboxSelection />
+    <div style={{ height: 400, width: "100%" }}>
+      {!loader ? (
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          pageSize={10}
+          checkboxSelection
+        />
+      ) : (
+        <Loader />
+      )}
     </div>
   );
-};
+}
 
 export default NodesTable;

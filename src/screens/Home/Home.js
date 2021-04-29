@@ -91,7 +91,6 @@ function Home() {
       setLoad(true);
       get();
     }
-    console.log(selectedProject);
   }, [user, reloadSidebar]);
 
   return (
@@ -131,7 +130,7 @@ const useStyles = makeStyles((theme) => ({
     }),
     overflow: 'auto',
     marginLeft: -90,
-    marginTop: 64,
+    marginTop: 90,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {

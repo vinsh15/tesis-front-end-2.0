@@ -1,5 +1,4 @@
 .component{
-    width: 100%;
-    min-width: 102vh;
-    height: 91vh ;
+    width: calc(100vw - 310px);
+    height: calc(100vh - 92px) ;
 }
