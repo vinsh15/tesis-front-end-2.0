@@ -15,6 +15,7 @@ function App() {
   const [user, setUser] = useState();
   const [selectedProject, setSelectedProject] = useState();
   const [reloadSidebar, setReloadSidebar] = useState(false);
+  const [cy, setCy] = useState();
   /**
    * Restaurar usuario si ya se ha iniciado sesión
    */
@@ -30,7 +31,12 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <AppContext.Provider value={{ user, setUser, selectedProject, setSelectedProject, reloadSidebar, setReloadSidebar }}>
+      <AppContext.Provider value={{ 
+          user, setUser, 
+          selectedProject, setSelectedProject, 
+          reloadSidebar, setReloadSidebar,
+          cy, setCy
+        }}>
         <Router>
           <Switch>
             <Route path="/" component={Home} />

@@ -11,7 +11,7 @@ import Loader from "../Loader/Loader";
  */
 const Content = () => {
   const [elementos, setElementos] = useState();
-  const { selectedProject } = useContext(AppContext);
+  const { selectedProject, setCy } = useContext(AppContext);
   const [load, setLoad] = useState(false);
   let cyto;
 
@@ -99,6 +99,7 @@ const Content = () => {
           pan={{ x: 150, y: 30 }}
           cy={(cy) => {
             getCy(cy);
+            setCy(cy);
           }}
         />
       ) : null}
