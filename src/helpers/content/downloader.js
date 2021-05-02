@@ -22,6 +22,6 @@ const downloadGraph = (type, cy, name) => {
     saveAs(uri, fileName);
 }
 
-export default {
-    downloadGraph,
+export {
+    downloadGraph
 }

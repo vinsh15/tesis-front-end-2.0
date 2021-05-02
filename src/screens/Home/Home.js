@@ -128,9 +128,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-    overflow: 'auto',
-    marginLeft: -90,
-    marginTop: 90,
+    marginTop: 70,
   },
   contentShift: {
     transition: theme.transitions.create("margin", {

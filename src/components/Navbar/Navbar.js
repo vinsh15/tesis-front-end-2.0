@@ -7,6 +7,7 @@ import {
   manageDeleteVersion,
   manageEditVersion,
 } from "../../helpers/versions/versions";
+import { downloadGraph } from "../../helpers/content/downloader";
 
 import AddIcon from "@material-ui/icons/AddOutlined";
 import AppBar from "@material-ui/core/AppBar";
@@ -14,8 +15,11 @@ import AppContext from "../../auth/context/context";
 import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import CreateIcon from "@material-ui/icons/CreateNewFolderOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
+import GetAppIcon from "@material-ui/icons/GetApp";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "../FileReader/FileReader";
 import NavbarItem from "../NavbarItem/NavbarItem";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -32,9 +36,18 @@ const Navbar = ({ open, setOpen }) => {
     selectedProject,
     setSelectedProject,
     setReloadSidebar,
+    cy
   } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
       <AppBar
@@ -94,14 +107,41 @@ const Navbar = ({ open, setOpen }) => {
               </div>
               <div style={{ textAlign: "right" }}>
                 <NavbarItem
+                  icon={<GetAppIcon />}
+                  title={"Descargar"}
+                  aria_controls={"simple-menu"}
+                  aria_haspopup={"true"}
+                  onClick={handleClick}
+                />
+                <Menu
+                  id="simple-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                  PaperProps={{
+                    style: {
+                      padding: 10,
+                    },
+                  }}
+                >
+                  <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>Descargar PDF</MenuItem>
+                  <MenuItem onClick={() => downloadGraph("jpg", cy, "prueba")}>Descargar JPG</MenuItem>
+                  <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>Descargar PNG</MenuItem>
+                </Menu>
+                <NavbarItem
                   icon={<CreateIcon />}
                   title={"Crear nueva versión"}
+                  aria_controls={"simple-menu"}
+                  aria_haspopup={"false"}
                   onClick={() =>
                     manageCreateVersion(user, selectedProject, setReloadSidebar)
                   }
                 />
                 <NavbarItem
                   icon={<AddIcon />}
+                  aria_controls={"simple-menu"}
+                  aria_haspopup={"false"}
                   title={"Agregar elementos"}
                   onClick={() => setShowModal(true)}
                 />
@@ -175,6 +215,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "var(font-family-content)",
     display: "inline",
     paddingRight: 16,
+    fontSize: 24
   },
 
   icon: {

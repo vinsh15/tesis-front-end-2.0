@@ -1,6 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import "./Content.css";
 
+import { makeStyles } from "@material-ui/core/styles";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
+import IconButton from "@material-ui/core/IconButton";
+
+import Swal from "sweetalert2";
+
 import AppContext from "../../auth/context/context";
 import CytoscapeComponent from "react-cytoscapejs";
 import Loader from "../Loader/Loader";
@@ -10,8 +16,9 @@ import Loader from "../Loader/Loader";
  * de la arquitectura seleccionada
  */
 const Content = () => {
+  const classes = useStyles();
   const [elementos, setElementos] = useState();
-  const { selectedProject, setCy } = useContext(AppContext);
+  const { selectedProject, setSelectedProject, setCy } = useContext(AppContext);
   const [load, setLoad] = useState(false);
   let cyto;
 
@@ -50,6 +57,26 @@ const Content = () => {
   };
 
   /**
+   * Cerrar proyecto seleccionado
+   * @param {CytoscapeComponent} cy referencia al componente
+   */
+  function onClose() {
+    Swal.fire({
+      text: "¿Seguro que deseas cerrar sesión?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "var(--success)",
+      cancelButtonColor: "var(--error)",
+      confirmButtonText: "Si, seguro",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setSelectedProject();
+      }
+    });
+  }
+
+  /**
    * Crear referencia al elemento de Cytoscape y
    * actuar el tamaño viewport del grafo
    * @param {CytoscapeComponent} cy referencia al componente
@@ -69,7 +96,7 @@ const Content = () => {
   const selectedNodeHandler = (evt) => {
     //console.log(evt.data); // 'bar'
     console.log();
-    cyto.getElementById("BehaviorRegistry").animate(
+    cyto.getElementById("Behavior").animate(
       {
         style: {
           "background-color": "#ffc74d",
@@ -88,7 +115,7 @@ const Content = () => {
    */
   const unselectNodeHandler = (evt) => {
     //console.log(evt.data); // 'bar'
-    cyto.getElementById("BehaviorRegistry").animate(
+    cyto.getElementById("Behavior").animate(
       {
         style: {
           "background-color": "#18202C",
@@ -117,23 +144,44 @@ const Content = () => {
       {load ? (
         <Loader />
       ) : elementos ? (
-        <CytoscapeComponent
-          id="component"
-          zoom={1}
-          maxZoom={2}
-          elements={CytoscapeComponent.normalizeElements(elementos)}
-          className="component"
-          layout={state.layout}
-          stylesheet={state.stylesheet}
-          pan={{ x: 150, y: 30 }}
-          cy={(cy) => {
-            getCy(cy);
-            setCy(cy);
-          }}
-        />
+        <div>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            className={classes.onClose}
+            onClick={onClose}
+            edge="start"
+          >
+            <HighlightOffIcon />
+          </IconButton>
+          <CytoscapeComponent
+            id="component"
+            zoom={1}
+            maxZoom={2}
+            elements={CytoscapeComponent.normalizeElements(elementos)}
+            className="component"
+            layout={state.layout}
+            stylesheet={state.stylesheet}
+            pan={{ x: 150, y: 30 }}
+            cy={(cy) => {
+              getCy(cy);
+              setCy(cy);
+            }}
+          />
+        </div>
       ) : null}
     </>
   );
 };
+
+/** Creacion de capa de estilos para el componente */
+const useStyles = makeStyles((theme) => ({
+  onClose: {
+    position: "absolute",
+    right: "18px",
+    top: "70px",
+    zIndex: 3,
+  },
+}));
 
 export default Content;
