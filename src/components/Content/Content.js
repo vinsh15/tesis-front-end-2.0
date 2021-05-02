@@ -94,8 +94,6 @@ const Content = () => {
    * @param {Event} event referencia al elemento
    */
   const selectedNodeHandler = (evt) => {
-    //console.log(evt.data); // 'bar'
-    console.log();
     cyto.getElementById("Behavior").animate(
       {
         style: {
