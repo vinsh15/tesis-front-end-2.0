@@ -5,7 +5,11 @@ import AppContext from "../../../auth/context/context";
 import { DataGrid } from "@material-ui/data-grid";
 import Loader from "../../Loader/Loader";
 
-function NodesTable() {
+/**
+ * Componente que representa 
+ * la tabla de nodos del proyecto selecionado
+ */
+const NodesTable = () => {
   const { selectedProject } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
   let rows = [];

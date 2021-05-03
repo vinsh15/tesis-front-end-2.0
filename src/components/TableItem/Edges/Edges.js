@@ -5,7 +5,11 @@ import AppContext from "../../../auth/context/context";
 import { DataGrid } from "@material-ui/data-grid";
 import Loader from "../../Loader/Loader";
 
-function EdgesTable() {
+/**
+ * Componente que representa
+ * la tabla de aristas del proyecto selecionado
+ */
+const EdgesTable = () => {
   const { selectedProject } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
   let rows = [];
@@ -17,7 +21,12 @@ function EdgesTable() {
   ];
 
   selectedProject.elements.edges.map((x, index) => {
-    rows.push({'id': index, 'source': x.data.source, 'target': x.data.target, 'relation': x.scratch.relation});
+    rows.push({
+      id: index,
+      source: x.data.source,
+      target: x.data.target,
+      relation: x.scratch.relation,
+    });
   });
 
   useEffect(() => {
@@ -25,8 +34,12 @@ function EdgesTable() {
   }, [selectedProject.elements]);
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      {!loader ? <DataGrid rows={rows} columns={columns} pageSize={10} /> : <Loader />}
+    <div style={{ height: 400, width: "100%" }}>
+      {!loader ? (
+        <DataGrid rows={rows} columns={columns} pageSize={10} />
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 };

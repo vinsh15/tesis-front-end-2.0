@@ -8,11 +8,14 @@ import AppBar from "@material-ui/core/AppBar";
 import Box from "@material-ui/core/Box";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
-import Typography from "@material-ui/core/Typography";
 
 import NodesTable from "./Nodes/Nodes";
 import EdgesTable from "./Edges/Edges";
 
+/**
+ * Componente que representa al contenedor
+ * de cada panel en las tabs
+ */
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -24,11 +27,7 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && (
-        <Box p={2}>
-          {children}
-        </Box>
-      )}
+      {value === index && <Box p={2}>{children}</Box>}
     </div>
   );
 }
@@ -39,6 +38,10 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
+/**
+ * Manejador de props para cada tab
+ * @param {int} index tab actual seleccionada
+ */
 function a11yProps(index) {
   return {
     id: `full-width-tab-${index}`,
@@ -46,15 +49,31 @@ function a11yProps(index) {
   };
 }
 
-function TableItem() {
+/**
+ * Componente que representa
+ * al contenedor de las tablas
+ * para manejo de nodos y aristas
+ */
+const TableItem = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
+  /**
+   * Manejador de eventos sobre
+   * cambios en tabs
+   * @param {Event} event 
+   * @param {int} newValue nuevo indice
+   */
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
+  /**
+   * Manejador de eventos sobre
+   * cambios en el indice de las tabs
+   * @param {int} index nuevo indice
+   */
   const handleChangeIndex = (index) => {
     setValue(index);
   };
@@ -88,12 +107,13 @@ function TableItem() {
       </SwipeableViews>
     </div>
   );
-}
+};
 
+/** Creacion de capa de estilos para el componente */
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width: 'auto',
+    width: "auto",
   },
 }));
 

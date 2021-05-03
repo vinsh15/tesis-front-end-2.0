@@ -58,11 +58,10 @@ const Content = () => {
 
   /**
    * Cerrar proyecto seleccionado
-   * @param {CytoscapeComponent} cy referencia al componente
    */
-  function onClose() {
+   const onClose = () => {
     Swal.fire({
-      text: "¿Seguro que deseas cerrar sesión?",
+      text: "¿Seguro que deseas cerrar " + selectedProject.versionName + "?",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "var(--success)",
@@ -77,11 +76,12 @@ const Content = () => {
   }
 
   /**
-   * Crear referencia al elemento de Cytoscape y
-   * actuar el tamaño viewport del grafo
+   * Crear referencia al elemento de Cytoscape,
+   * actuar el tamaño viewport del grafo,
+   * establecer funcionalidad sobre nodos y arcos
    * @param {CytoscapeComponent} cy referencia al componente
    */
-  function getCy(cy) {
+  const getCy = (cy) => {
     cyto = cy;
     cyto.fit();
     cyto.on("select", "node", selectedNodeHandler);
@@ -108,7 +108,7 @@ const Content = () => {
   };
 
   /**
-   * Manejador de evento dejar de seleccionar nodo
+   * Manejador de evento al dejar de seleccionar nodo
    * @param {Event} event referencia al elemento
    */
   const unselectNodeHandler = (evt) => {

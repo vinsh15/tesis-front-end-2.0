@@ -9,17 +9,21 @@ import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import MenuIcon from "@material-ui/icons/Menu";
 
-function Table() {
+/**
+ * Componente que representa 
+ * al contenedor de tabs con tablas
+ * del proyecto selecionado
+ */
+const Table = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setOpen(false);
+  /**
+   * Cambiar estado del drawer
+   */
+  const handleDrawer = () => {
+    setOpen(!open);
   };
 
   return (
@@ -27,7 +31,7 @@ function Table() {
       <IconButton
         color="inherit"
         aria-label="open drawer"
-        onClick={handleDrawerOpen}
+        onClick={handleDrawer}
         edge="start"
         className={clsx(classes.menuButton, open && classes.hide)}
       >
@@ -44,7 +48,7 @@ function Table() {
         }}
       >
         <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawer}>
             <KeyboardArrowDownIcon />
           </IconButton>
         </div>
@@ -55,8 +59,8 @@ function Table() {
   )
 };
 
+/** Creacion de capa de estilos para el componente */
 const drawerWidth = 550;
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
