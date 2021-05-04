@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import AppContext from "../../auth/context/context";
 import CytoscapeComponent from "react-cytoscapejs";
 import Loader from "../Loader/Loader";
+import nodesHelper from "../../helpers/nodes/nodes";
 
 /**
  * Componente que representa el contenido
@@ -18,7 +19,7 @@ import Loader from "../Loader/Loader";
 const Content = () => {
   const classes = useStyles();
   const [elementos, setElementos] = useState();
-  const { selectedProject, setSelectedProject, setCy } = useContext(AppContext);
+  const { selectedProject, setSelectedProject, setCy, selectedNodes, setSelectedNodes } = useContext(AppContext);
   const [load, setLoad] = useState(false);
   let cyto;
 
@@ -94,7 +95,9 @@ const Content = () => {
    * @param {Event} event referencia al elemento
    */
   const selectedNodeHandler = (evt) => {
-    cyto.getElementById("Behavior").animate(
+    const nodeId = evt['target']['_private']['data'].id;
+    nodesHelper.addNode(nodeId, selectedNodes, setSelectedNodes);
+    cyto.getElementById(nodeId).animate(
       {
         style: {
           "background-color": "#ffc74d",
@@ -104,7 +107,6 @@ const Content = () => {
         duration: 100,
       }
     );
-    //console.log("select ", target);
   };
 
   /**
@@ -112,8 +114,9 @@ const Content = () => {
    * @param {Event} event referencia al elemento
    */
   const unselectNodeHandler = (evt) => {
-    //console.log(evt.data); // 'bar'
-    cyto.getElementById("Behavior").animate(
+    const nodeId = evt['target']['_private']['data'].id;
+    nodesHelper.removeNode(nodeId, selectedNodes, setSelectedNodes);
+    cyto.getElementById(nodeId).animate(
       {
         style: {
           "background-color": "#18202C",
@@ -123,7 +126,6 @@ const Content = () => {
         duration: 100,
       }
     );
-    //console.log("select ", target);
   };
 
   useEffect(() => {
