@@ -94,7 +94,7 @@ const Content = () => {
    * @param {Event} event referencia al elemento
    */
   const selectedNodeHandler = (evt) => {
-    cyto.getElementById("Behavior").animate(
+    cyto.getElementById("BehaviorRegistry").animate(
       {
         style: {
           "background-color": "#ffc74d",
@@ -113,7 +113,7 @@ const Content = () => {
    */
   const unselectNodeHandler = (evt) => {
     //console.log(evt.data); // 'bar'
-    cyto.getElementById("Behavior").animate(
+    cyto.getElementById("BehaviorRegistry").animate(
       {
         style: {
           "background-color": "#18202C",
@@ -154,7 +154,7 @@ const Content = () => {
           </IconButton>
           <CytoscapeComponent
             id="component"
-            zoom={1}
+            zoom={0.5}
             maxZoom={2}
             elements={CytoscapeComponent.normalizeElements(elementos)}
             className="component"
