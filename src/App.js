@@ -14,6 +14,7 @@ import AppContext from "./auth/context/context";
 function App() {
   const [user, setUser] = useState();
   const [selectedProject, setSelectedProject] = useState();
+  const [selectedNodes, setSelectedNodes] = useState(new Set());
   const [reloadSidebar, setReloadSidebar] = useState(false);
   const [cy, setCy] = useState();
   /**
@@ -33,7 +34,8 @@ function App() {
       <GlobalStyle />
       <AppContext.Provider value={{ 
           user, setUser, 
-          selectedProject, setSelectedProject, 
+          selectedProject, setSelectedProject,
+          selectedNodes, setSelectedNodes, 
           reloadSidebar, setReloadSidebar,
           cy, setCy
         }}>

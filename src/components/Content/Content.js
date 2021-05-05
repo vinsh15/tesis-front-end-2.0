@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import AppContext from "../../auth/context/context";
 import CytoscapeComponent from "react-cytoscapejs";
 import Loader from "../Loader/Loader";
+import nodesHelper from "../../helpers/nodes/nodes";
 
 /**
  * Componente que representa el contenido
@@ -18,7 +19,7 @@ import Loader from "../Loader/Loader";
 const Content = () => {
   const classes = useStyles();
   const [elementos, setElementos] = useState();
-  const { selectedProject, setSelectedProject, setCy } = useContext(AppContext);
+  const { selectedProject, setSelectedProject, setCy, selectedNodes, setSelectedNodes } = useContext(AppContext);
   const [load, setLoad] = useState(false);
   let cyto;
 
@@ -130,7 +131,6 @@ const Content = () => {
         duration: 100,
       }
     );
-    //console.log("select ", target);
   };
 
   useEffect(() => {
