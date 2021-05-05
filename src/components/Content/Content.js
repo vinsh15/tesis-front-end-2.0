@@ -25,7 +25,7 @@ const Content = () => {
   /** Creacion de capa de estilos para el grafo segun Cytoscape */
   var state = {
     layout: {
-      name: "random",
+      name: 'circle',
       fit: true,
       padding: 30,
       avoidOverlap: true,
@@ -37,8 +37,10 @@ const Content = () => {
         selector: "node",
         style: {
           content: "data(id)",
-          width: 10,
-          height: 10,
+          'text-valign': 'center',
+          width: 150,
+          color: 'white',
+          height: 100,
           "background-color": "#18202C",
         },
       },
@@ -83,7 +85,7 @@ const Content = () => {
    */
   const getCy = (cy) => {
     cyto = cy;
-    cyto.fit();
+    //cyto.fit();
     cyto.on("select", "node", selectedNodeHandler);
     cyto.on("unselect", "node", unselectNodeHandler);
     //cyto.style().selector("node").style("background-color", "magenta").update(); // indicate the end of your new stylesheet so that it can be updated on elements
@@ -94,17 +96,19 @@ const Content = () => {
    * @param {Event} event referencia al elemento
    */
   const selectedNodeHandler = (evt) => {
-    cyto.getElementById("BehaviorRegistry").animate(
-      {
-        style: {
-          "background-color": "#ffc74d",
-        },
-      },
-      {
-        duration: 100,
+    
+    const nodeId = evt['target']['_private']['data'].id;
+    nodesHelper.addNode(nodeId, selectedNodes, setSelectedNodes);
+    console.log("hola")
+    cyto.animate({
+      fit: {
+        eles: cyto.getElementById(nodeId),
+        padding: 20
       }
-    );
-    //console.log("select ", target);
+    }, {
+      duration: 1000
+    });
+    evt.preventDefault();
   };
 
   /**
@@ -112,8 +116,11 @@ const Content = () => {
    * @param {Event} event referencia al elemento
    */
   const unselectNodeHandler = (evt) => {
-    //console.log(evt.data); // 'bar'
-    cyto.getElementById("BehaviorRegistry").animate(
+    const nodeId = evt['target']['_private']['data'].id;
+    nodesHelper.removeNode(nodeId, selectedNodes, setSelectedNodes);
+    cyto.getElementById(nodeId).stop();
+    console.log("aa")
+    cyto.getElementById(nodeId).animate(
       {
         style: {
           "background-color": "#18202C",
