@@ -12,6 +12,7 @@ const addNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) => 
     setSelectedNodes(temp);
     setSelectionModel([...temp]);
     changeNodeColor(cy, id, 'add');
+    console.log(temp);
 }
 
 /**
@@ -28,6 +29,7 @@ const removeNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) 
     setSelectedNodes(temp);
     setSelectionModel([...temp]);
     changeNodeColor(cy, id, 'remove');
+    console.log(temp);
 }
 
 /**
@@ -42,9 +44,11 @@ const removeNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) 
 const manageCellClick = (nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
     if(selectedNodes.has(nodeId)){
         removeNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+        cy.getElementById(nodeId)['_private']['selected'] = false;
     }
     else{
         addNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+        cy.getElementById(nodeId)['_private']['selected'] = true;
     }
 }
 
