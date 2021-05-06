@@ -11,8 +11,12 @@ import nodeHelper from "../../../helpers/nodes/nodes";
  * la tabla de nodos del proyecto selecionado
  */
 const NodesTable = () => {
-  const { selectedProject, selectedNodes, setSelectedNodes,
-  selectionModel, setSelectionModel, cy } = useContext(AppContext);
+  const { 
+    selectedProject, 
+    selectedNodes, setSelectedNodes,
+    selectionModel, setSelectionModel, 
+    cy 
+  } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
   let rows = [];
   const columns = [
