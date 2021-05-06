@@ -4,13 +4,15 @@ import AppContext from "../../../auth/context/context";
 
 import { DataGrid } from "@material-ui/data-grid";
 import Loader from "../../Loader/Loader";
+import nodeHelper from "../../../helpers/nodes/nodes";
 
 /**
  * Componente que representa 
  * la tabla de nodos del proyecto selecionado
  */
 const NodesTable = () => {
-  const { selectedProject } = useContext(AppContext);
+  const { selectedProject, selectedNodes, setSelectedNodes,
+  selectionModel, setSelectionModel } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
   let rows = [];
   const columns = [
@@ -19,7 +21,7 @@ const NodesTable = () => {
   ];
 
   selectedProject.elements.nodes.map((x, index) => {
-    rows.push({'id': index, 'name': x.data.name});
+    rows.push({id: x.data.id, 'name': x.data.name});
   });
 
   useEffect(() => {
@@ -30,10 +32,22 @@ const NodesTable = () => {
     <div style={{ height: 400, width: "100%" }}>
       {!loader ? (
         <DataGrid
+          id={Math.random()}
           rows={rows}
           columns={columns}
           pageSize={10}
           checkboxSelection
+          // onSelectionModelChange={newSelection => {
+          //   // setSelectedNodes(newSelection.selectionModel);
+          //   // nodeHelper.addNodeArray(newSelection.selectionModel, selectedNodes, setSelectedNodes);
+          //   // console.log(newSelection);
+          //   // console.log(newSelection.selectionModel);
+          //   nodeHelper.manageCellClick(newSelection.selectionModel, selectedNodes, setSelectedNodes, setSelectionModel)
+          // }}
+          // // onCellClick={params => {
+          // //   nodeHelper.manageCellClick(params.row.id, selectedNodes, setSelectedNodes, setSelectionModel);
+          // // }}
+          selectionModel={selectionModel}
         />
       ) : (
         <Loader />
