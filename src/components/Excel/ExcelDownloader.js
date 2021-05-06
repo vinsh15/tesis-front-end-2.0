@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactExport from 'react-export-excel';
 
+import MenuItem from "@material-ui/core/MenuItem";
+
 const ExcelFile = ReactExport.ExcelFile;
 const ExcelSheet = ReactExport.ExcelFile.ExcelSheet;
 const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
@@ -67,10 +69,11 @@ function Excel({
     return (
         <ExcelFile 
             filename={fileName}
+            element={<MenuItem>Descargar Excel</MenuItem>}
         >
             { setSheet() }
         </ExcelFile>
     )
 }
 
-export default Excel
+export default Excel;

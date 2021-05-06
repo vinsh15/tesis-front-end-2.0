@@ -37,7 +37,7 @@ function App() {
           selectedProject, setSelectedProject,
           selectedNodes, setSelectedNodes, 
           reloadSidebar, setReloadSidebar,
-          cy, setCy
+          cy, setCy,
         }}>
         <Router>
           <Switch>

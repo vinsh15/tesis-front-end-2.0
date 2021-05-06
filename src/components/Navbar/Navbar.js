@@ -24,6 +24,8 @@ import Modal from "../FileReader/FileReader";
 import NavbarItem from "../NavbarItem/NavbarItem";
 import Toolbar from "@material-ui/core/Toolbar";
 
+import Excel from "../Excel/ExcelDownloader";
+
 /**
  * Componente que representa la barra
  * superior de navegacion
@@ -125,7 +127,7 @@ const Navbar = ({ open, setOpen }) => {
                     },
                   }}
                 >
-                  <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>Descargar PDF</MenuItem>
+                  <Excel type="nodes" data={[{id: "hola", name: "mari"}]} fileName="hola"/>
                   <MenuItem onClick={() => downloadGraph("jpg", cy, "prueba")}>Descargar JPG</MenuItem>
                   <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>Descargar PNG</MenuItem>
                 </Menu>
