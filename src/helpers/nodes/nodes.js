@@ -12,7 +12,6 @@ const addNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) => 
     setSelectedNodes(temp);
     setSelectionModel([...temp]);
     changeNodeColor(cy, id, 'add');
-    console.log(temp);
 }
 
 /**
@@ -29,7 +28,6 @@ const removeNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) 
     setSelectedNodes(temp);
     setSelectionModel([...temp]);
     changeNodeColor(cy, id, 'remove');
-    console.log(temp);
 }
 
 /**
