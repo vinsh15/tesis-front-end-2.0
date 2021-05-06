@@ -44,6 +44,11 @@ const NodesTable = () => {
           onCellClick={params => {
             nodeHelper.manageCellClick(params.row.id, selectedNodes, setSelectedNodes, cy, setSelectionModel);
           }}
+          onColumnHeaderClick={param => {
+            if(param.field === '__check__'){
+              nodeHelper.manageCheckSelection(selectedNodes, setSelectedNodes, cy, setSelectionModel);
+            }
+          }}
           selectionModel={selectionModel}
         />
       ) : (
