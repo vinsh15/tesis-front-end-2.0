@@ -23,7 +23,6 @@ const Content = () => {
   const [checked, setChecked] = React.useState(false);
   const [elementos, setElementos] = useState();
   const [load, setLoad] = useState(false);
-  let cyto;
   const {
     selectedProject,
     setSelectedProject,
@@ -31,8 +30,6 @@ const Content = () => {
     setCy,
     selectedNodes,
     setSelectedNodes,
-    count,
-    setCount
   } = useContext(AppContext);
 
   var edgeLabels = {
@@ -92,14 +89,12 @@ const Content = () => {
     ],
   };
 
-  const toggleChecked = () => {
-    setChecked(prev => !prev);
-  };
-
-  const setEdgesLabel = () => {  
-    
+  /**
+   * Mostrar u ocultar el nombre de las
+   * relaciones entre los nodos
+   */
+  const setEdgesLabel = () => {   
     if (!checked) {
-      console.log("no flag")
       cy
         .style()
         .selector("edge")
@@ -107,7 +102,6 @@ const Content = () => {
           content: edgeLabels.off.content,
         })
     } else {
-      console.log("si flag")
       cy
         .style()
         .selector("edge")
@@ -138,20 +132,6 @@ const Content = () => {
   };
 
   /**
-   * Crear referencia al elemento de Cytoscape,
-   * actuar el tamaño viewport del grafo,
-   * establecer funcionalidad sobre nodos y arcos
-   * @param {CytoscapeComponent} cy referencia al componente
-   */
-  const getCy = (cy) => {
-    cyto = cy;
-    //cyto.fit();
-          
-    //setEdgesLabel(false, cyto);
-    //cyto.style().selector("node").style("background-color", "magenta").update(); // indicate the end of your new stylesheet so that it can be updated on elements
-  };
-
-  /**
    * Manejador de evento al seleccionar nodo
    * @param {Event} event referencia al elemento
    */
@@ -173,7 +153,7 @@ const Content = () => {
     cy.animate(
       {
         fit: {
-          eles: cyto.getElementById(nodeId),
+          eles: cy.getElementById(nodeId),
           padding: 30,
         },
       },
@@ -208,20 +188,13 @@ const Content = () => {
 
    useEffect(() => {
      if(cy){
-       
-      console.log("la locura jeje")
-      
         cy.on("select", "node", selectedNodeHandler);
         cy.on("unselect", "node", unselectNodeHandler);
-      
-      
-      
      }
   }, [cy]);
 
   useEffect(() => {
     if(cy){
-         
      setEdgesLabel();
     }
  }, [checked, cy]);
@@ -246,8 +219,7 @@ const Content = () => {
         <div>
         <div className={classes.onClose}>
         <FormControlLabel
-            control={<Switch checked={checked} onChange={toggleChecked} />}
-            
+            control={<Switch checked={checked} onChange={() => setChecked(prev => !prev)} />}
             labelPlacement="start"
             style={{marginRight: 5}}
           />
@@ -271,7 +243,6 @@ const Content = () => {
             stylesheet={state.stylesheet}
             pan={{ x: 150, y: 30 }}
             cy={(cyt) => {
-              cyto = cyt;
               setCy(cyt);      
             }}
           />
