@@ -17,6 +17,7 @@ function App() {
   const [selectedNodes, setSelectedNodes] = useState(new Set());
   const [reloadSidebar, setReloadSidebar] = useState(false);
   const [cy, setCy] = useState();
+  const [count, setCount] = useState(false);
   /**
    * Restaurar usuario si ya se ha iniciado sesión
    */
@@ -37,7 +38,8 @@ function App() {
           selectedProject, setSelectedProject,
           selectedNodes, setSelectedNodes, 
           reloadSidebar, setReloadSidebar,
-          cy, setCy
+          cy, setCy,
+          count, setCount
         }}>
         <Router>
           <Switch>

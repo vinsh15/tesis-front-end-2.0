@@ -4,6 +4,8 @@ import "./Content.css";
 import { makeStyles } from "@material-ui/core/styles";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import IconButton from "@material-ui/core/IconButton";
+import Switch from "@material-ui/core/Switch";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import Swal from "sweetalert2";
 
@@ -18,15 +20,34 @@ import nodesHelper from "../../helpers/nodes/nodes";
  */
 const Content = () => {
   const classes = useStyles();
+  const [checked, setChecked] = React.useState(false);
   const [elementos, setElementos] = useState();
-  const { selectedProject, setSelectedProject, setCy, selectedNodes, setSelectedNodes } = useContext(AppContext);
   const [load, setLoad] = useState(false);
   let cyto;
+  const {
+    selectedProject,
+    setSelectedProject,
+    cy,
+    setCy,
+    selectedNodes,
+    setSelectedNodes,
+    count,
+    setCount
+  } = useContext(AppContext);
+
+  var edgeLabels = {
+    on: {
+      content: "data(id)",
+    },
+    off: {
+      content: "",
+    },
+  };
 
   /** Creacion de capa de estilos para el grafo segun Cytoscape */
   var state = {
     layout: {
-      name: 'circle',
+      name: "circle",
       fit: true,
       padding: 30,
       avoidOverlap: true,
@@ -38,31 +59,68 @@ const Content = () => {
         selector: "node",
         style: {
           content: "data(id)",
-          'text-valign': 'center',
-          width: 150,
-          color: 'white',
-          height: 100,
+          "font-size": 20,
+          shape: "round-rectangle",
+          "text-wrap": "wrap",
+          "text-max-width": 80,
+          "text-valign": "center",
+          color: "#fff",
+          "text-outline-color": "#18202C",
+          width: 270,
+          color: "white",
+          height: 40,
           "background-color": "#18202C",
         },
       },
       {
         selector: "edge",
         style: {
-          width: 3,
-          content: "data(id)",
+          width: 4,
+          "font-size": 20,
           "curve-style": "bezier",
-          "target-arrow-shape": "triangle",
-          "line-color": "#ddd",
+          "edge-text-rotation": "autorotate",
+          "target-arrow-shape": "triangle-tee",
+          "text-valign": "top",
+          "text-halign": "center",
+          color: "#fff",
+          "text-outline-color": "#18202C",
+          "text-outline-width": 3,
+          "line-color": "#18202C",
           "target-arrow-color": "#18202C",
         },
       },
     ],
   };
 
+  const toggleChecked = () => {
+    setChecked(prev => !prev);
+  };
+
+  const setEdgesLabel = () => {  
+    
+    if (!checked) {
+      console.log("no flag")
+      cy
+        .style()
+        .selector("edge")
+        .style({
+          content: edgeLabels.off.content,
+        })
+    } else {
+      console.log("si flag")
+      cy
+        .style()
+        .selector("edge")
+        .style({
+          content: edgeLabels.on.content,
+        })
+    }
+  };
+
   /**
    * Cerrar proyecto seleccionado
    */
-   const onClose = () => {
+  const onClose = () => {
     Swal.fire({
       text: "¿Seguro que deseas cerrar " + selectedProject.versionName + "?",
       icon: "warning",
@@ -74,9 +132,10 @@ const Content = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setSelectedProject();
+        setChecked(false);
       }
     });
-  }
+  };
 
   /**
    * Crear referencia al elemento de Cytoscape,
@@ -87,28 +146,41 @@ const Content = () => {
   const getCy = (cy) => {
     cyto = cy;
     //cyto.fit();
-    cyto.on("select", "node", selectedNodeHandler);
-    cyto.on("unselect", "node", unselectNodeHandler);
+          
+    //setEdgesLabel(false, cyto);
     //cyto.style().selector("node").style("background-color", "magenta").update(); // indicate the end of your new stylesheet so that it can be updated on elements
-  }
+  };
 
   /**
    * Manejador de evento al seleccionar nodo
    * @param {Event} event referencia al elemento
    */
   const selectedNodeHandler = (evt) => {
-    
-    const nodeId = evt['target']['_private']['data'].id;
+    const nodeId = evt["target"]["_private"]["data"].id;
     nodesHelper.addNode(nodeId, selectedNodes, setSelectedNodes);
-    console.log("hola")
-    cyto.animate({
-      fit: {
-        eles: cyto.getElementById(nodeId),
-        padding: 20
+    console.log("hola");
+    cy.getElementById(nodeId).stop();
+    cy.getElementById(nodeId).animate(
+      {
+        style: {
+          "background-color": "#ffc74d",
+        },
+      },
+      {
+        duration: 0,
       }
-    }, {
-      duration: 1000
-    });
+    );
+    cy.animate(
+      {
+        fit: {
+          eles: cyto.getElementById(nodeId),
+          padding: 30,
+        },
+      },
+      {
+        duration: 100,
+      }
+    );
     evt.preventDefault();
   };
 
@@ -117,21 +189,42 @@ const Content = () => {
    * @param {Event} event referencia al elemento
    */
   const unselectNodeHandler = (evt) => {
-    const nodeId = evt['target']['_private']['data'].id;
+    const nodeId = evt["target"]["_private"]["data"].id;
     nodesHelper.removeNode(nodeId, selectedNodes, setSelectedNodes);
-    cyto.getElementById(nodeId).stop();
-    console.log("aa")
-    cyto.getElementById(nodeId).animate(
+    cy.getElementById(nodeId).stop();
+    console.log("aa");
+    cy.fit();
+    cy.getElementById(nodeId).animate(
       {
         style: {
           "background-color": "#18202C",
         },
       },
       {
-        duration: 100,
+        duration: 0,
       }
     );
   };
+
+   useEffect(() => {
+     if(cy){
+       
+      console.log("la locura jeje")
+      
+        cy.on("select", "node", selectedNodeHandler);
+        cy.on("unselect", "node", unselectNodeHandler);
+      
+      
+      
+     }
+  }, [cy]);
+
+  useEffect(() => {
+    if(cy){
+         
+     setEdgesLabel();
+    }
+ }, [checked, cy]);
 
   useEffect(() => {
     setLoad(true);
@@ -141,6 +234,7 @@ const Content = () => {
   useEffect(() => {
     if (load) {
       setLoad(false);
+      setChecked(false)
     }
   }, [elementos, load]);
 
@@ -150,15 +244,23 @@ const Content = () => {
         <Loader />
       ) : elementos ? (
         <div>
+        <div className={classes.onClose}>
+        <FormControlLabel
+            control={<Switch checked={checked} onChange={toggleChecked} />}
+            
+            labelPlacement="start"
+            style={{marginRight: 5}}
+          />
           <IconButton
             color="inherit"
             aria-label="open drawer"
-            className={classes.onClose}
+            
             onClick={onClose}
             edge="start"
           >
             <HighlightOffIcon />
-          </IconButton>
+          </IconButton></div>
+          
           <CytoscapeComponent
             id="component"
             zoom={0.5}
@@ -168,9 +270,9 @@ const Content = () => {
             layout={state.layout}
             stylesheet={state.stylesheet}
             pan={{ x: 150, y: 30 }}
-            cy={(cy) => {
-              getCy(cy);
-              setCy(cy);
+            cy={(cyt) => {
+              cyto = cyt;
+              setCy(cyt);      
             }}
           />
         </div>
@@ -184,7 +286,7 @@ const useStyles = makeStyles((theme) => ({
   onClose: {
     position: "absolute",
     right: "18px",
-    top: "70px",
+    top: "75px",
     zIndex: 3,
   },
 }));

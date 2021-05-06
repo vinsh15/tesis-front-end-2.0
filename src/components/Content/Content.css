@@ -2,3 +2,19 @@
     width: 100%;
     height: calc(100vh - 70px) ;
 }
+
+.MuiSwitch-colorSecondary.Mui-checked {
+    color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.MuiSwitch-track {
+    background-color: rgba(0, 0, 0, 0.54) !important;
+}
+
+.MuiCheckbox-colorPrimary.Mui-checked {
+    color: rgba(0, 0, 0, 0.54) !important; 
+}
+
+.PrivateTabIndicator-colorPrimary-37 {
+    background-color: rgba(0, 0, 0, 0.54) !important;
+}
