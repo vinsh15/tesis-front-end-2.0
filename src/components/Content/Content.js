@@ -162,6 +162,7 @@ const Content = () => {
     const nodeId = evt["target"]["_private"]["data"].id;
     // cy.fit();
     nodesHelper.removeNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    nodesHelper.repaintEdges(selectedNodes, cy);
   };
 
    useEffect(() => {
