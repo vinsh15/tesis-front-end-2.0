@@ -73,10 +73,10 @@ const Content = () => {
       {
         selector: "edge",
         style: {
+          content: checked ? edgeLabels.on.content :  edgeLabels.off.content, 
           width: 4,
           "font-size": 20,
           "curve-style": "bezier",
-          content: edgeLabels.on.content,
           "edge-text-rotation": "autorotate",
           "target-arrow-shape": "triangle-tee",
           "text-valign": "top",
@@ -103,7 +103,6 @@ const Content = () => {
         .style({
           content: edgeLabels.off.content,
         })
-        .update()
     } else {
       cy
         .style()
@@ -111,7 +110,6 @@ const Content = () => {
         .style({
           content: edgeLabels.on.content,
         })
-        .update()
     }
   };
 
