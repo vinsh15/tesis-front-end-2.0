@@ -14,7 +14,6 @@ const addNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) => 
     changeNodeColor(cy, id, 'add');
     const edges = getEdges(cy, id);
     changeEdgesColor(cy, edges, 'add');
-    console.log(temp);
 }
 
 /**
@@ -109,15 +108,10 @@ const changeEdgesColor = (cy, edges, type) => {
  */
 const changeEdgeColor = (cy, edgeId, type) => {
   const backgroundColor = type === 'remove' ? "#18202C" : "#ffc74d";
-    cy.getElementById(edgeId).animate(
+    cy.getElementById(edgeId).style(
       {
-        style: {
-          "line-color": backgroundColor,
-        },
+        "line-color": backgroundColor,
       },
-      {
-        duration: 0,
-      }
     );
 }
 
@@ -131,7 +125,7 @@ const changeEdgeColor = (cy, edgeId, type) => {
 const manageCheckSelection = (selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
   const nodes = cy.filter('nodes');
   if(selectedNodes.size > 0){
-    removeAllNodes(nodes, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    removeAllNodes(selectedNodes, setSelectedNodes, cy, setSelectionModel);
   }
   else{
     addAllNodes(nodes, selectedNodes, setSelectedNodes, cy, setSelectionModel);
@@ -140,17 +134,15 @@ const manageCheckSelection = (selectedNodes, setSelectedNodes, cy, setSelectionM
 
 /**
  * Deseleccionar todos los nodos 
- * @param {Array} nodeArray Arreglo de nodos
  * @param {Set} selectedNodes Nodos globalmente seleccionados
  * @param {Function} setSelectedNodes Función para setear los nodos seleccionados
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {Function} setSelectionModel Función para setear el selection model
  */
-const removeAllNodes = (nodeArray, selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
-  nodeArray.forEach(node => {
-    const nodeId = node['_private']['data'].id;
-    removeNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
-    cy.getElementById(nodeId)['_private']['selected'] = false;
+const removeAllNodes = (selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
+  selectedNodes.forEach(node => {
+    removeNode(node, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    cy.getElementById(node)['_private']['selected'] = false;
   });
 }
 
