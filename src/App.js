@@ -15,6 +15,7 @@ function App() {
   const [user, setUser] = useState();
   const [selectedProject, setSelectedProject] = useState();
   const [selectedNodes, setSelectedNodes] = useState(new Set());
+  const [selectionModel, setSelectionModel] = useState([]);
   const [reloadSidebar, setReloadSidebar] = useState(false);
   const [cy, setCy] = useState();
   /**
@@ -37,6 +38,7 @@ function App() {
           selectedProject, setSelectedProject,
           selectedNodes, setSelectedNodes, 
           reloadSidebar, setReloadSidebar,
+          selectionModel, setSelectionModel,
           cy, setCy,
         }}>
         <Router>
