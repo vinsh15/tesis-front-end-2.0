@@ -30,6 +30,7 @@ const Content = () => {
     setCy,
     selectedNodes,
     setSelectedNodes,
+    setSelectionModel,
   } = useContext(AppContext);
 
   var edgeLabels = {
@@ -75,6 +76,7 @@ const Content = () => {
           width: 4,
           "font-size": 20,
           "curve-style": "bezier",
+          content: edgeLabels.on.content,
           "edge-text-rotation": "autorotate",
           "target-arrow-shape": "triangle-tee",
           "text-valign": "top",
@@ -101,6 +103,7 @@ const Content = () => {
         .style({
           content: edgeLabels.off.content,
         })
+        .update()
     } else {
       cy
         .style()
@@ -108,6 +111,7 @@ const Content = () => {
         .style({
           content: edgeLabels.on.content,
         })
+        .update()
     }
   };
 
@@ -135,32 +139,20 @@ const Content = () => {
    * Manejador de evento al seleccionar nodo
    * @param {Event} event referencia al elemento
    */
-  const selectedNodeHandler = (evt) => {
+  const selectNodeHandler = (evt) => {
     const nodeId = evt["target"]["_private"]["data"].id;
-    nodesHelper.addNode(nodeId, selectedNodes, setSelectedNodes);
-    console.log("hola");
-    cy.getElementById(nodeId).stop();
-    cy.getElementById(nodeId).animate(
-      {
-        style: {
-          "background-color": "#ffc74d",
-        },
-      },
-      {
-        duration: 0,
-      }
-    );
-    cy.animate(
-      {
-        fit: {
-          eles: cy.getElementById(nodeId),
-          padding: 30,
-        },
-      },
-      {
-        duration: 100,
-      }
-    );
+    nodesHelper.addNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    // cy.animate(
+    //   {
+    //     fit: {
+    //       eles: cy.getElementById(nodeId),
+    //       padding: 30,
+    //     },
+    //   },
+    //   {
+    //     duration: 100,
+    //   }
+    // );
     evt.preventDefault();
   };
 
@@ -170,26 +162,16 @@ const Content = () => {
    */
   const unselectNodeHandler = (evt) => {
     const nodeId = evt["target"]["_private"]["data"].id;
-    nodesHelper.removeNode(nodeId, selectedNodes, setSelectedNodes);
-    cy.getElementById(nodeId).stop();
-    console.log("aa");
-    cy.fit();
-    cy.getElementById(nodeId).animate(
-      {
-        style: {
-          "background-color": "#18202C",
-        },
-      },
-      {
-        duration: 0,
-      }
-    );
+    // cy.fit();
+    nodesHelper.removeNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
   };
 
    useEffect(() => {
      if(cy){
-        cy.on("select", "node", selectedNodeHandler);
+        cy.on("select", "node", selectNodeHandler);
         cy.on("unselect", "node", unselectNodeHandler);
+        setSelectionModel([]);
+        setSelectedNodes(new Set());
      }
   }, [cy]);
 
