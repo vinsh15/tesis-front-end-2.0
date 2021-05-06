@@ -12,6 +12,8 @@ const addNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) => 
     setSelectedNodes(temp);
     setSelectionModel([...temp]);
     changeNodeColor(cy, id, 'add');
+    const edges = getEdges(cy, id);
+    changeEdgesColor(cy, edges, 'add');
 }
 
 /**
@@ -28,6 +30,8 @@ const removeNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) 
     setSelectedNodes(temp);
     setSelectionModel([...temp]);
     changeNodeColor(cy, id, 'remove');
+    const edges = getEdges(cy, id);
+    changeEdgesColor(cy, edges, 'remove');
 }
 
 /**
@@ -62,6 +66,51 @@ const changeNodeColor = (cy, nodeId, type) => {
       {
         style: {
           "background-color": backgroundColor,
+        },
+      },
+      {
+        duration: 0,
+      }
+    );
+}
+
+/**
+ * Obtener todas las aristas de 
+ * un nodo
+ * @param {Ref} cy Referencia a objeto cytoscape
+ * @param {String} nodeId ID del nodo
+ * @returns arreglo de objetos con info de aristas
+ */
+const getEdges = (cy, nodeId) => {
+  return cy.getElementById(nodeId).connectedEdges();
+}
+
+/**
+ * Manejar el cambio de color de todas las aristas
+ * de un nodo
+ * @param {Ref} cy Referencia a objeto cytoscape
+ * @param {Array} edges Arreglo de objetos con info de aristas
+ * @param {String} type Selección/Deselección del nodo
+ */
+const changeEdgesColor = (cy, edges, type) => {
+  edges.forEach(edge => {
+    const edgeId = edge['_private']['data'].id;
+    changeEdgeColor(cy, edgeId, type);
+  })
+}
+
+/**
+ * Cambiar el color de una arista
+ * @param {Ref} cy Referencia a objeto cytoscape
+ * @param {String} edgeId ID de la arista
+ * @param {String} type Selección/Deselección del nodo
+ */
+const changeEdgeColor = (cy, edgeId, type) => {
+  const backgroundColor = type === 'remove' ? "#18202C" : "#ffc74d";
+    cy.getElementById(edgeId).animate(
+      {
+        style: {
+          "line-color": backgroundColor,
         },
       },
       {
