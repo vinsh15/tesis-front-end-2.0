@@ -12,7 +12,7 @@ import nodeHelper from "../../../helpers/nodes/nodes";
  */
 const NodesTable = () => {
   const { selectedProject, selectedNodes, setSelectedNodes,
-  selectionModel, setSelectionModel } = useContext(AppContext);
+  selectionModel, setSelectionModel, cy } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
   let rows = [];
   const columns = [
@@ -37,16 +37,9 @@ const NodesTable = () => {
           columns={columns}
           pageSize={10}
           checkboxSelection
-          // onSelectionModelChange={newSelection => {
-          //   // setSelectedNodes(newSelection.selectionModel);
-          //   // nodeHelper.addNodeArray(newSelection.selectionModel, selectedNodes, setSelectedNodes);
-          //   // console.log(newSelection);
-          //   // console.log(newSelection.selectionModel);
-          //   nodeHelper.manageCellClick(newSelection.selectionModel, selectedNodes, setSelectedNodes, setSelectionModel)
-          // }}
-          // // onCellClick={params => {
-          // //   nodeHelper.manageCellClick(params.row.id, selectedNodes, setSelectedNodes, setSelectionModel);
-          // // }}
+          onCellClick={params => {
+            nodeHelper.manageCellClick(params.row.id, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+          }}
           selectionModel={selectionModel}
         />
       ) : (
