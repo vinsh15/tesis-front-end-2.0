@@ -127,8 +127,7 @@ const Navbar = ({ open, setOpen }) => {
                     },
                   }}
                 >
-                  <Excel 
-                    type="nodes"
+                  <Excel
                     fileName={selectedProject.versionName}
                     nodesData={nodeHelper.getNodeData(selectedProject)}  
                     relationsData={nodeHelper.getRelationData(selectedProject)}
