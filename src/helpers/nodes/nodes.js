@@ -191,7 +191,7 @@ const getNodeData = (selectedProject) => {
  * @returns Arreglo de objetos de tipo aristas
  */
 const getRelationData = (selectedProject) => {
-  return selectedProject.elements.edges.map((edge, index) => {
+  return selectedProject.elements.edges?.map((edge, index) => {
     return {
       id: index,
       source: edge.data.source,
