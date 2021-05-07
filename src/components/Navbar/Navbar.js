@@ -15,16 +15,18 @@ import AppContext from "../../auth/context/context";
 import DeleteIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import CreateIcon from "@material-ui/icons/CreateNewFolderOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
+import Excel from "../Excel/ExcelDownloader";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Modal from "../FileReader/FileReader";
-import NavbarItem from "../NavbarItem/NavbarItem";
+import nodeHelper from "../../helpers/nodes/nodes";
 import Toolbar from "@material-ui/core/Toolbar";
+import NavbarItem from "../NavbarItem/NavbarItem";
 
-import Excel from "../Excel/ExcelDownloader";
+
 
 /**
  * Componente que representa la barra
@@ -32,16 +34,14 @@ import Excel from "../Excel/ExcelDownloader";
  */
 const Navbar = ({ open, setOpen }) => {
   const classes = useStyles();
-  const theme = useTheme();
   const {
     user,
-    selectedProject,
-    setSelectedProject,
+    selectedProject, setSelectedProject,
     setReloadSidebar,
     cy
   } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -127,7 +127,12 @@ const Navbar = ({ open, setOpen }) => {
                     },
                   }}
                 >
-                  <Excel type="nodes" data={[{id: "hola", name: "mari"}]} fileName="hola"/>
+                  <Excel 
+                    type="nodes"
+                    fileName={selectedProject.versionName}
+                    nodesData={nodeHelper.getNodeData(selectedProject)}  
+                    relationsData={nodeHelper.getRelationData(selectedProject)}
+                  />
                   <MenuItem onClick={() => downloadGraph("jpg", cy, "prueba")}>Descargar JPG</MenuItem>
                   <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>Descargar PNG</MenuItem>
                 </Menu>
