@@ -31,7 +31,7 @@ const LoginButton = ({ login }) => {
           />
         </svg>
       </span>
-      <span className="google-button__text">Sign in with Google</span>
+      <span className="google-button__text">Iniciar Sesión con Google</span>
     </button>
   );
 };
