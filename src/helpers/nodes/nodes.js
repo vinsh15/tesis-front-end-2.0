@@ -174,10 +174,55 @@ const repaintEdges = (selectedNodes, cy) => {
   })
 }
 
+/**
+ * Conseguir todos los nodos del proyecto 
+ * actualmente abierto
+ * @param {JSON} selectedProject Objeto con información del proyecto actual
+ * @returns Arreglo de objetos de tipo nodo
+ */
+const getNodeData = (selectedProject) => {
+  return selectedProject.elements.nodes.map((node, index) => ({id: index, name: node.data.name}))
+}
+
+/**
+ * Conseguir todas las relaciones existentes
+ * del proyecto actualmente abierto
+ * @param {JSON} selectedProject Objeto con información del proyecto actual
+ * @returns Arreglo de objetos de tipo aristas
+ */
+const getRelationData = (selectedProject) => {
+  return selectedProject.elements.edges.map((edge, index) => {
+    return {
+      id: index,
+      source: edge.data.source,
+      target: edge.data.target,
+      relation: getRelationType(edge.scratch.relation),
+    }
+  });
+}
+
+/**
+ * Obtener el nombre de una relación
+ * @param {String} relation Tipo de relación
+ * @returns Nombre de la relación
+ */
+const getRelationType = (relation) => {
+  switch (relation) {
+    case 'implements':
+      return 'Implementación'
+    case 'extends':
+      return 'Extensión'
+    default:
+      break;
+  }
+}
+
 export default {
     addNode,
     manageCellClick,
     manageCheckSelection,
+    getNodeData,
+    getRelationData,
     removeNode,
     repaintEdges,
 }
