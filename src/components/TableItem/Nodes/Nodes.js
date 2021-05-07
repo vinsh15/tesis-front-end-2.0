@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
+import { DataGrid } from "@material-ui/data-grid";
+
 
 import AppContext from "../../../auth/context/context";
-
-import { DataGrid } from "@material-ui/data-grid";
 import Loader from "../../Loader/Loader";
 import nodeHelper from "../../../helpers/nodes/nodes";
 
@@ -18,15 +18,14 @@ const NodesTable = () => {
     cy 
   } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
-  let rows = [];
+  let rows = selectedProject.elements.nodes.map(node => {
+    return {id: node.data.id, name: node.data.name};
+  });
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Nombre", width: 250 },
   ];
 
-  selectedProject.elements.nodes.map((x, index) => {
-    rows.push({id: x.data.id, 'name': x.data.name});
-  });
 
   useEffect(() => {
     setLoader(false);
@@ -36,7 +35,6 @@ const NodesTable = () => {
     <div style={{ height: 400, width: "100%" }}>
       {!loader ? (
         <DataGrid
-          id={Math.random()}
           rows={rows}
           columns={columns}
           pageSize={10}
