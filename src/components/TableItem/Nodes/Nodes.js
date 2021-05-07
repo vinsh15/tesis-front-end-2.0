@@ -22,7 +22,6 @@ const NodesTable = () => {
     return {id: node.data.id, name: node.data.name};
   });
   const columns = [
-    { field: "id", headerName: "ID", width: 70 },
     { field: "name", headerName: "Nombre", width: 250 },
   ];
 
@@ -40,7 +39,7 @@ const NodesTable = () => {
           pageSize={10}
           checkboxSelection
           onCellClick={params => {
-            nodeHelper.manageCellClick(params.row.id, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+            nodeHelper.manageCellClick(params.row.name, selectedNodes, setSelectedNodes, cy, setSelectionModel);
           }}
           onColumnHeaderClick={param => {
             if(param.field === '__check__'){
