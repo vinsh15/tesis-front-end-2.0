@@ -1,16 +1,15 @@
 import React, { useContext } from "react";
+
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-
-import { manageCreateProject } from "../../helpers/projects/projects"
-
-
 import AccountIcon from "@material-ui/icons/AccountCircleOutlined";
-import AppContext from "../../auth/context/context";
 import Button from "@material-ui/core/Button";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
+
+import { manageCreateProject } from "../../helpers/projects/projects"
+import AppContext from "../../auth/context/context";
 
 /**
  * Componente que representa barra superior del SideBar

@@ -2,12 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import "./Content.css";
 
 import { makeStyles } from "@material-ui/core/styles";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import IconButton from "@material-ui/core/IconButton";
-import Switch from "@material-ui/core/Switch";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-
 import Swal from "sweetalert2";
+import Switch from "@material-ui/core/Switch";
 
 import AppContext from "../../auth/context/context";
 import CytoscapeComponent from "react-cytoscapejs";
@@ -20,16 +19,13 @@ import nodesHelper from "../../helpers/nodes/nodes";
  */
 const Content = () => {
   const classes = useStyles();
-  const [checked, setChecked] = React.useState(false);
+  const [checked, setChecked] = useState(false);
   const [elementos, setElementos] = useState();
   const [load, setLoad] = useState(false);
   const {
-    selectedProject,
-    setSelectedProject,
-    cy,
-    setCy,
-    selectedNodes,
-    setSelectedNodes,
+    selectedProject, setSelectedProject,
+    cy, setCy,
+    selectedNodes, setSelectedNodes,
     setSelectionModel,
   } = useContext(AppContext);
 
@@ -96,21 +92,12 @@ const Content = () => {
    * relaciones entre los nodos
    */
   const setEdgesLabel = () => {   
-    if (!checked) {
-      cy
-        .style()
-        .selector("edge")
-        .style({
-          content: edgeLabels.off.content,
-        })
-    } else {
-      cy
-        .style()
-        .selector("edge")
-        .style({
-          content: edgeLabels.on.content,
-        })
-    }
+    cy
+      .style()
+      .selector('edge')
+      .style({
+        content: checked ? edgeLabels.on.content : edgeLabels.off.content
+      })
   };
 
   /**
@@ -205,27 +192,26 @@ const Content = () => {
             style={{marginRight: 5}}
           />
           <IconButton
-            color="inherit"
             aria-label="open drawer"
-            
-            onClick={onClose}
+            color="inherit"
             edge="start"
+            onClick={onClose}
           >
             <HighlightOffIcon />
-          </IconButton></div>
-          
+          </IconButton>
+        </div>  
           <CytoscapeComponent
-            id="component"
-            zoom={0.5}
-            maxZoom={2}
-            elements={CytoscapeComponent.normalizeElements(elementos)}
             className="component"
-            layout={state.layout}
-            stylesheet={state.stylesheet}
-            pan={{ x: 150, y: 30 }}
             cy={(cyt) => {
               setCy(cyt);      
             }}
+            elements={CytoscapeComponent.normalizeElements(elementos)}
+            id="component"
+            layout={state.layout}
+            maxZoom={2}
+            pan={{ x: 150, y: 30 }}
+            stylesheet={state.stylesheet}
+            zoom={0.5}
           />
         </div>
       ) : null}

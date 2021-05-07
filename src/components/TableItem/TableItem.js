@@ -1,5 +1,4 @@
-import React from "react";
-
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 
@@ -9,8 +8,8 @@ import Box from "@material-ui/core/Box";
 import Tab from "@material-ui/core/Tab";
 import Tabs from "@material-ui/core/Tabs";
 
-import NodesTable from "./Nodes/Nodes";
 import EdgesTable from "./Edges/Edges";
+import NodesTable from "./Nodes/Nodes";
 
 /**
  * Componente que representa al contenedor
@@ -57,7 +56,7 @@ function a11yProps(index) {
 const TableItem = () => {
   const classes = useStyles();
   const theme = useTheme();
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
 
   /**
    * Manejador de eventos sobre

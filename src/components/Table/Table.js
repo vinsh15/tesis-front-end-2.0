@@ -1,13 +1,14 @@
-import React from "react";
-
+import React, { useState, } from "react";
 import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+import { makeStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import TableItem from "../TableItem/TableItem";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import MenuIcon from "@material-ui/icons/Menu";
+
+import TableItem from "../TableItem/TableItem";
 
 /**
  * Componente que representa 
@@ -16,8 +17,7 @@ import MenuIcon from "@material-ui/icons/Menu";
  */
 const Table = () => {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   /**
    * Cambiar estado del drawer
@@ -60,7 +60,6 @@ const Table = () => {
 };
 
 /** Creacion de capa de estilos para el componente */
-const drawerWidth = 550;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",

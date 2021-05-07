@@ -28,17 +28,8 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
   const {
     user,
     setReloadSidebar,
-    selectedProject,
-    setSelectedProject,
+    selectedProject, setSelectedProject,
   } = useContext(AppContext);
-  var messages = {
-    error: "",
-    success: "",
-  };
-
-  const handleChangeStatus = ({ meta }, status) => {
-    //console.log(status, meta)
-  };
 
   /**
    * Manejar acción en base al tipo de data a subir a
@@ -101,10 +92,6 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
       projectIndex,
       setReloadSidebar
     );
-    messages = {
-      success: "Se ha creado una nueva arquitectura",
-      error: "No se ha podido crear una nueva arquitectura",
-    };
     return response;
   };
 
@@ -168,7 +155,6 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
                 </>
               ) : null}
               <Dropzone
-                onChangeStatus={handleChangeStatus}
                 onSubmit={handleSubmit}
                 styles={{ dropzone: { maxHeight: 200, maxWidth: 400 } }}
                 accept="text/xml"

@@ -1,18 +1,16 @@
-import React, { useState, useContext } from "react";
-import AppContext from "../../auth/context/context";
+import React, { useState } from "react";
 import "./SidebarItem.css";
 
 import { makeStyles } from "@material-ui/core/styles";
-
 import Accordion from "@material-ui/core/Accordion";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import AccordionActions from "@material-ui/core/AccordionActions";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import Modal from "../FileReader/FileReader";
-import SidebarDetail from "../SidebarDetail/SidebarDetail";
 import Typography from "@material-ui/core/Typography";
 
 import Menu from "../Menu/Menu";
+import Modal from "../FileReader/FileReader";
+import SidebarDetail from "../SidebarDetail/SidebarDetail";
 
 /** Componente que representa el item proyecto
  *  a ser añadido en el componente Sidebar

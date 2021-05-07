@@ -1,12 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import "./Sidebar.css";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { Drawer, List } from "@material-ui/core";
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 
 import AppContext from "../../auth/context/context";
-import CssBaseline from "@material-ui/core/CssBaseline";
 import Loader from "../Loader/Loader";
 import LoginButton from "../LoginButton/LoginButton";
 import Navbar from "../Navbar/Navbar";
@@ -20,7 +20,6 @@ import SidebarItem from "../SidebarItem/SidebarItem";
  */
 const Sidebar = ({ loader, login, logout, items, open, setOpen }) => {
   const classes = useStyles();
-
   const { user } = useContext(AppContext);
 
   /**

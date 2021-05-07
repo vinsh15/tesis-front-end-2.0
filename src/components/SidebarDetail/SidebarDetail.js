@@ -3,11 +3,12 @@ import Swal from "sweetalert2";
 
 import { makeStyles } from "@material-ui/core/styles";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AppContext from "../../auth/context/context";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import TreeItem from "@material-ui/lab/TreeItem";
 import TreeView from "@material-ui/lab/TreeView";
+
+import AppContext from "../../auth/context/context";
 
 /**
  * Componente que representa el contenido
@@ -26,7 +27,6 @@ const SidebarDetail = ({ projectIndex, item }) => {
    * @param {JSON} elems objeto que contiene los elementos que conforman al grafo
    */
   const handleSelect = (nodeName, arqIndex, verIndex, elems, length) => {
-    
     if (nodeName !== selectedProject) {
       Swal.fire({
         text: "¿Deseas mostrar " + nodeName + "?",
