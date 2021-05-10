@@ -2,12 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import "./Content.css";
 
 import { makeStyles } from "@material-ui/core/styles";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import IconButton from "@material-ui/core/IconButton";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
-import Swal from "sweetalert2";
 
 import AppContext from "../../auth/context/context";
 import CytoscapeComponent from "react-cytoscapejs";
@@ -25,7 +21,6 @@ const Content = () => {
   const [load, setLoad] = useState(false);
   const {
     selectedProject,
-    setSelectedProject,
     cy,
     setCy,
     selectedNodes,
@@ -93,42 +88,16 @@ const Content = () => {
    * Mostrar u ocultar el nombre de las
    * relaciones entre los nodos
    */
-  const setEdgesLabel = () => {   
+  const setEdgesLabel = () => {
     if (!checked) {
-      cy
-        .style()
-        .selector("edge")
-        .style({
-          content: edgeLabels.off.content,
-        })
+      cy.style().selector("edge").style({
+        content: edgeLabels.off.content,
+      });
     } else {
-      cy
-        .style()
-        .selector("edge")
-        .style({
-          content: edgeLabels.on.content,
-        })
+      cy.style().selector("edge").style({
+        content: edgeLabels.on.content,
+      });
     }
-  };
-
-  /**
-   * Cerrar proyecto seleccionado
-   */
-  const onClose = () => {
-    Swal.fire({
-      text: "¿Seguro que deseas cerrar " + selectedProject.versionName + "?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "var(--success)",
-      cancelButtonColor: "var(--error)",
-      confirmButtonText: "Si, seguro",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setSelectedProject();
-        setChecked(false);
-      }
-    });
   };
 
   /**
@@ -186,28 +155,29 @@ const Content = () => {
     );
   };
 
-   useEffect(() => {
-     if(cy){
-        cy.on("select", "node", selectedNodeHandler);
-        cy.on("unselect", "node", unselectNodeHandler);
-     }
+  useEffect(() => {
+    if (cy) {
+      cy.on("select", "node", selectedNodeHandler);
+      cy.on("unselect", "node", unselectNodeHandler);
+    }
   }, [cy]);
 
   useEffect(() => {
-    if(cy){
-     setEdgesLabel();
+    if (cy) {
+      setEdgesLabel();
     }
- }, [checked, cy]);
+  }, [checked, cy]);
 
   useEffect(() => {
     setLoad(true);
     setElementos(selectedProject.elements);
+    console.log(selectedProject.elements)
   }, [selectedProject]);
 
   useEffect(() => {
     if (load) {
       setLoad(false);
-      setChecked(false)
+      setChecked(false);
     }
   }, [elementos, load]);
 
@@ -217,22 +187,19 @@ const Content = () => {
         <Loader />
       ) : elementos ? (
         <div>
-        <div className={classes.onClose}>
-        <FormControlLabel
-            control={<Switch checked={checked} onChange={() => setChecked(prev => !prev)} />}
-            labelPlacement="start"
-            style={{marginRight: 5}}
-          />
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            
-            onClick={onClose}
-            edge="start"
-          >
-            <HighlightOffIcon />
-          </IconButton></div>
-          
+          <div className={classes.onClose}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={checked}
+                  onChange={() => setChecked((prev) => !prev)}
+                />
+              }
+              labelPlacement="start"
+              style={{ marginRight: 5 }}
+            />
+          </div>
+
           <CytoscapeComponent
             id="component"
             zoom={0.5}
@@ -243,7 +210,7 @@ const Content = () => {
             stylesheet={state.stylesheet}
             pan={{ x: 150, y: 30 }}
             cy={(cyt) => {
-              setCy(cyt);      
+              setCy(cyt);
             }}
           />
         </div>

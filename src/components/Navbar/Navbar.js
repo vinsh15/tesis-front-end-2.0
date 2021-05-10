@@ -9,6 +9,8 @@ import {
 } from "../../helpers/versions/versions";
 import { downloadGraph } from "../../helpers/content/downloader";
 
+import Swal from "sweetalert2";
+
 import AddIcon from "@material-ui/icons/AddOutlined";
 import AppBar from "@material-ui/core/AppBar";
 import AppContext from "../../auth/context/context";
@@ -17,6 +19,7 @@ import CreateIcon from "@material-ui/icons/CreateNewFolderOutlined";
 import EditIcon from "@material-ui/icons/EditOutlined";
 import GetAppIcon from "@material-ui/icons/GetApp";
 import IconButton from "@material-ui/core/IconButton";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import MenuIcon from "@material-ui/icons/Menu";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -38,7 +41,7 @@ const Navbar = ({ open, setOpen }) => {
     selectedProject,
     setSelectedProject,
     setReloadSidebar,
-    cy
+    cy,
   } = useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,6 +53,26 @@ const Navbar = ({ open, setOpen }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  /**
+   * Cerrar proyecto seleccionado
+   */
+  const onClose = () => {
+    Swal.fire({
+      text: "¿Seguro que deseas cerrar " + selectedProject.versionName + "?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "var(--success)",
+      cancelButtonColor: "var(--error)",
+      confirmButtonText: "Si, seguro",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        setSelectedProject();
+      }
+    });
+  };
+
   return (
     <>
       <AppBar
@@ -127,9 +150,17 @@ const Navbar = ({ open, setOpen }) => {
                     },
                   }}
                 >
-                  <Excel type="nodes" data={[{id: "hola", name: "mari"}]} fileName="hola"/>
-                  <MenuItem onClick={() => downloadGraph("jpg", cy, "prueba")}>Descargar JPG</MenuItem>
-                  <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>Descargar PNG</MenuItem>
+                  <Excel
+                    type="nodes"
+                    data={[{ id: "hola", name: "mari" }]}
+                    fileName="hola"
+                  />
+                  <MenuItem onClick={() => downloadGraph("jpg", cy, "prueba")}>
+                    Descargar JPG
+                  </MenuItem>
+                  <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>
+                    Descargar PNG
+                  </MenuItem>
                 </Menu>
                 <NavbarItem
                   icon={<CreateIcon />}
@@ -147,6 +178,15 @@ const Navbar = ({ open, setOpen }) => {
                   title={"Agregar elementos"}
                   onClick={() => setShowModal(true)}
                 />
+
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={onClose}
+                  edge="start"
+                >
+                  <HighlightOffIcon />
+                </IconButton>
               </div>
             </>
           ) : null}
@@ -217,7 +257,7 @@ const useStyles = makeStyles((theme) => ({
     fontFamily: "var(font-family-content)",
     display: "inline",
     paddingRight: 16,
-    fontSize: 24
+    fontSize: 24,
   },
 
   icon: {
