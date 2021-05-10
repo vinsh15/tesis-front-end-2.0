@@ -12,24 +12,10 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
  * en formato de archivo Excel
  */
 function Excel({
-    type,
-    data,
+    nodesData,
+    relationsData,
     fileName
 }) {
-
-    /**
-     * Establecer el tipo de sheet a utilizar
-     * @returns componente ExcelSheet
-     */
-    const setSheet = () => {
-        switch (type) {
-            case "nodes":
-                return getNodeSheet();
-            default:
-                return getRelationSheet();
-        }
-    }
-
     /**
      * Obtener ExcelSheet para la tabla
      * de nodos
@@ -38,7 +24,7 @@ function Excel({
     const getNodeSheet = () => {
         return (
                 <ExcelSheet
-                    data={data}
+                    data={nodesData}
                     name="Nodos"
                 >
                     <ExcelColumn label="ID" value="id" />
@@ -55,7 +41,7 @@ function Excel({
     const getRelationSheet = () => {
         return (
             <ExcelSheet
-                data={data}
+                data={relationsData}
                 name="Relaciones"
             >
                 <ExcelColumn label="ID" value="id" />
@@ -71,7 +57,8 @@ function Excel({
             filename={fileName}
             element={<MenuItem>Descargar Excel</MenuItem>}
         >
-            { setSheet() }
+            { getNodeSheet() }
+            { getRelationSheet() }
         </ExcelFile>
     )
 }

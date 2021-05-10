@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
+import { DataGrid } from "@material-ui/data-grid";
 
 import AppContext from "../../../auth/context/context";
-
-import { DataGrid } from "@material-ui/data-grid";
 import Loader from "../../Loader/Loader";
+import nodeHelper from "../../../helpers/nodes/nodes";
 
 /**
  * Componente que representa
@@ -11,23 +11,14 @@ import Loader from "../../Loader/Loader";
  */
 const EdgesTable = () => {
   const { selectedProject } = useContext(AppContext);
-  let [loader, setLoader] = useState(true);
-  let rows = [];
+  const [loader, setLoader] = useState(true);
+
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "source", headerName: "Source", width: 200 },
-    { field: "target", headerName: "Target", width: 200 },
-    { field: "relation", headerName: "Relation", width: 130 },
+    { field: "source", headerName: "Origen", width: 200 },
+    { field: "target", headerName: "Destino", width: 200 },
+    { field: "relation", headerName: "Relación", width: 200 },
   ];
-
-  selectedProject.elements.edges.map((x, index) => {
-    rows.push({
-      id: index,
-      source: x.data.source,
-      target: x.data.target,
-      relation: x.scratch.relation,
-    });
-  });
 
   useEffect(() => {
     setLoader(false);
@@ -36,7 +27,11 @@ const EdgesTable = () => {
   return (
     <div style={{ height: 400, width: "100%" }}>
       {!loader ? (
-        <DataGrid rows={rows} columns={columns} pageSize={10} />
+        <DataGrid 
+          rows={nodeHelper.getRelationData(selectedProject)} 
+          columns={columns} 
+          pageSize={10} 
+        />
       ) : (
         <Loader />
       )}
