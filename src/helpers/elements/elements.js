@@ -16,7 +16,7 @@ const manageResponse = (response, selectedProject, setSelectedProject, setReload
   } else {
     setSelectedProject({
       ...selectedProject,
-      elements: response
+      elements: response.elements
     });
     setReloadSidebar(false);
     ModalMessage(
