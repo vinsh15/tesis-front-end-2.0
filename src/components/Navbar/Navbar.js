@@ -132,8 +132,8 @@ const Navbar = ({ open, setOpen }) => {
                     nodesData={nodeHelper.getNodeData(selectedProject)}  
                     relationsData={nodeHelper.getRelationData(selectedProject)}
                   />
-                  <MenuItem onClick={() => downloadGraph("jpg", cy, "prueba")}>Descargar JPG</MenuItem>
-                  <MenuItem onClick={() => downloadGraph("png", cy, "prueba")}>Descargar PNG</MenuItem>
+                  <MenuItem onClick={() => downloadGraph("jpg", cy, selectedProject.versionName)}>Descargar JPG</MenuItem>
+                  <MenuItem onClick={() => downloadGraph("png", cy, selectedProject.versionName)}>Descargar PNG</MenuItem>
                 </Menu>
                 <NavbarItem
                   icon={<CreateIcon />}
