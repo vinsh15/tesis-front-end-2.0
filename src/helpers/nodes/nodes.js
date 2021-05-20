@@ -6,15 +6,21 @@
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {Function} setSelectionModel Función para setear el selection model
  */
-const addNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
-    const temp = selectedNodes;
-    temp.add(id);
-    setSelectedNodes(temp);
-    setSelectionModel([...temp]);
-    changeNodeColor(cy, id, 'add');
-    const edges = getEdges(cy, id);
-    changeEdgesColor(cy, edges, 'add');
-}
+const addNode = (
+  id,
+  selectedNodes,
+  setSelectedNodes,
+  cy,
+  setSelectionModel
+) => {
+  const temp = selectedNodes;
+  temp.add(id);
+  setSelectedNodes(temp);
+  setSelectionModel([...temp]);
+  changeNodeColor(cy, id, "add");
+  const edges = getEdges(cy, id);
+  changeEdgesColor(cy, edges, "add");
+};
 
 /**
  * Eliminar un nodo del set
@@ -24,36 +30,47 @@ const addNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) => 
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {Function} setSelectionModel Función para setear el selection model
  */
-const removeNode = (id, selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
-    const temp = selectedNodes;
-    temp.delete(id);
-    setSelectedNodes(temp);
-    setSelectionModel([...temp]);
-    changeNodeColor(cy, id, 'remove');
-    const edges = getEdges(cy, id);
-    changeEdgesColor(cy, edges, 'remove');
-}
+const removeNode = (
+  id,
+  selectedNodes,
+  setSelectedNodes,
+  cy,
+  setSelectionModel
+) => {
+  const temp = selectedNodes;
+  temp.delete(id);
+  setSelectedNodes(temp);
+  setSelectionModel([...temp]);
+  changeNodeColor(cy, id, "remove");
+  const edges = getEdges(cy, id);
+  changeEdgesColor(cy, edges, "remove");
+};
 
 /**
- * Manejar acción al hacer click en una 
+ * Manejar acción al hacer click en una
  * celda de la tabla
- * @param {String} nodeId 
+ * @param {String} nodeId
  * @param {Set} selectedNodes Nodos globalmente seleccionados
  * @param {Function} setSelectedNodes Función para setear los nodos seleccionados
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {Function} setSelectionModel Función para setear el selection model
  */
-const manageCellClick = (nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
-    if(selectedNodes.has(nodeId)){
-        removeNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
-        cy.getElementById(nodeId)['_private']['selected'] = false;
-        repaintEdges(selectedNodes, cy);
-    }
-    else{
-        addNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
-        cy.getElementById(nodeId)['_private']['selected'] = true;
-    }
-}
+const manageCellClick = (
+  nodeId,
+  selectedNodes,
+  setSelectedNodes,
+  cy,
+  setSelectionModel
+) => {
+  if (selectedNodes.has(nodeId)) {
+    removeNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    cy.getElementById(nodeId)["_private"]["selected"] = false;
+    repaintEdges(selectedNodes, cy);
+  } else {
+    addNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    cy.getElementById(nodeId)["_private"]["selected"] = true;
+  }
+};
 
 /**
  * Cambiar el color del nodo
@@ -62,21 +79,21 @@ const manageCellClick = (nodeId, selectedNodes, setSelectedNodes, cy, setSelecti
  * @param {String} type Selección/Deselección del nodo
  */
 const changeNodeColor = (cy, nodeId, type) => {
-    const backgroundColor = type === 'remove' ? "#18202C" : "#ffc74d";
-    cy.getElementById(nodeId).animate(
-      {
-        style: {
-          "background-color": backgroundColor,
-        },
+  const backgroundColor = type === "remove" ? "#18202C" : "#ffc74d";
+  cy.getElementById(nodeId).animate(
+    {
+      style: {
+        "background-color": backgroundColor,
       },
-      {
-        duration: 0,
-      }
-    );
-}
+    },
+    {
+      duration: 0,
+    }
+  );
+};
 
 /**
- * Obtener todas las aristas de 
+ * Obtener todas las aristas de
  * un nodo
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {String} nodeId ID del nodo
@@ -84,7 +101,7 @@ const changeNodeColor = (cy, nodeId, type) => {
  */
 const getEdges = (cy, nodeId) => {
   return cy.getElementById(nodeId).connectedEdges();
-}
+};
 
 /**
  * Manejar el cambio de color de todas las aristas
@@ -94,11 +111,11 @@ const getEdges = (cy, nodeId) => {
  * @param {String} type Selección/Deselección del nodo
  */
 const changeEdgesColor = (cy, edges, type) => {
-  edges.forEach(edge => {
-    const edgeId = edge['_private']['data'].id;
+  edges.forEach((edge) => {
+    const edgeId = edge["_private"]["data"].id;
     changeEdgeColor(cy, edgeId, type);
-  })
-}
+  });
+};
 
 /**
  * Cambiar el color de una arista
@@ -107,13 +124,11 @@ const changeEdgesColor = (cy, edges, type) => {
  * @param {String} type Selección/Deselección del nodo
  */
 const changeEdgeColor = (cy, edgeId, type) => {
-  const backgroundColor = type === 'remove' ? "#18202C" : "#ffc74d";
-    cy.getElementById(edgeId).style(
-      {
-        "line-color": backgroundColor,
-      },
-    );
-}
+  const backgroundColor = type === "remove" ? "#18202C" : "#ffc74d";
+  cy.getElementById(edgeId).style({
+    "line-color": backgroundColor,
+  });
+};
 
 /**
  * Manejar selección de columna de nodos
@@ -122,29 +137,38 @@ const changeEdgeColor = (cy, edgeId, type) => {
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {Function} setSelectionModel Función para setear el selection model
  */
-const manageCheckSelection = (selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
-  const nodes = cy.filter('nodes');
-  if(selectedNodes.size > 0){
+const manageCheckSelection = (
+  selectedNodes,
+  setSelectedNodes,
+  cy,
+  setSelectionModel
+) => {
+  const nodes = cy.filter("nodes");
+  if (selectedNodes.size > 0) {
     removeAllNodes(selectedNodes, setSelectedNodes, cy, setSelectionModel);
-  }
-  else{
+  } else {
     addAllNodes(nodes, selectedNodes, setSelectedNodes, cy, setSelectionModel);
   }
-}
+};
 
 /**
- * Deseleccionar todos los nodos 
+ * Deseleccionar todos los nodos
  * @param {Set} selectedNodes Nodos globalmente seleccionados
  * @param {Function} setSelectedNodes Función para setear los nodos seleccionados
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {Function} setSelectionModel Función para setear el selection model
  */
-const removeAllNodes = (selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
-  selectedNodes.forEach(node => {
+const removeAllNodes = (
+  selectedNodes,
+  setSelectedNodes,
+  cy,
+  setSelectionModel
+) => {
+  selectedNodes.forEach((node) => {
     removeNode(node, selectedNodes, setSelectedNodes, cy, setSelectionModel);
-    cy.getElementById(node)['_private']['selected'] = false;
+    cy.getElementById(node)["_private"]["selected"] = false;
   });
-}
+};
 
 /**
  * Seleccionar todos los nodos
@@ -154,13 +178,19 @@ const removeAllNodes = (selectedNodes, setSelectedNodes, cy, setSelectionModel) 
  * @param {Ref} cy Referencia a objeto cytoscape
  * @param {Function} setSelectionModel Función para setear el selection model
  */
-const addAllNodes = (nodeArray, selectedNodes, setSelectedNodes, cy, setSelectionModel) => {
-  nodeArray.forEach(node => {
-    const nodeId = node['_private']['data'].id;
+const addAllNodes = (
+  nodeArray,
+  selectedNodes,
+  setSelectedNodes,
+  cy,
+  setSelectionModel
+) => {
+  nodeArray.forEach((node) => {
+    const nodeId = node["_private"]["data"].id;
     addNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
-    cy.getElementById(nodeId)['_private']['selected'] = true;
+    cy.getElementById(nodeId)["_private"]["selected"] = true;
   });
-}
+};
 
 /**
  * Repintar las aristas
@@ -168,21 +198,24 @@ const addAllNodes = (nodeArray, selectedNodes, setSelectedNodes, cy, setSelectio
  * @param {Ref} cy Referencia a objeto cytoscape
  */
 const repaintEdges = (selectedNodes, cy) => {
-  selectedNodes.forEach(node => {
+  selectedNodes.forEach((node) => {
     const edges = getEdges(cy, node);
     changeEdgesColor(cy, edges);
-  })
-}
+  });
+};
 
 /**
- * Conseguir todos los nodos del proyecto 
+ * Conseguir todos los nodos del proyecto
  * actualmente abierto
  * @param {JSON} selectedProject Objeto con información del proyecto actual
  * @returns Arreglo de objetos de tipo nodo
  */
 const getNodeData = (selectedProject) => {
-  return selectedProject.elements.nodes.map((node, index) => ({id: index, name: node.data.name}))
-}
+  return selectedProject.elements.nodes.map((node, index) => ({
+    id: index,
+    name: node.data.name,
+  }));
+};
 
 /**
  * Conseguir todas las relaciones existentes
@@ -197,9 +230,9 @@ const getRelationData = (selectedProject) => {
       source: edge.data.source,
       target: edge.data.target,
       relation: getRelationType(edge.scratch.relation),
-    }
+    };
   });
-}
+};
 
 /**
  * Obtener el nombre de una relación
@@ -208,21 +241,21 @@ const getRelationData = (selectedProject) => {
  */
 const getRelationType = (relation) => {
   switch (relation) {
-    case 'implements':
-      return 'Implementación'
-    case 'extends':
-      return 'Extensión'
+    case "implements":
+      return "Implementación";
+    case "extends":
+      return "Extensión";
     default:
       break;
   }
-}
+};
 
 export default {
-    addNode,
-    manageCellClick,
-    manageCheckSelection,
-    getNodeData,
-    getRelationData,
-    removeNode,
-    repaintEdges,
-}
+  addNode,
+  manageCellClick,
+  manageCheckSelection,
+  getNodeData,
+  getRelationData,
+  removeNode,
+  repaintEdges,
+};

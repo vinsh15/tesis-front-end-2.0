@@ -2,12 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import "./Content.css";
 
 import { makeStyles } from "@material-ui/core/styles";
-import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import IconButton from "@material-ui/core/IconButton";
 import Switch from "@material-ui/core/Switch";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-
-import Swal from "sweetalert2";
 
 import AppContext from "../../auth/context/context";
 import CytoscapeComponent from "react-cytoscapejs";
@@ -25,22 +21,12 @@ const Content = () => {
   const [load, setLoad] = useState(false);
   const {
     selectedProject,
-    setSelectedProject,
     cy,
     setCy,
     selectedNodes,
     setSelectedNodes,
     setSelectionModel,
   } = useContext(AppContext);
-
-  var edgeLabels = {
-    on: {
-      content: "data(id)",
-    },
-    off: {
-      content: "",
-    },
-  };
 
   /** Creacion de capa de estilos para el grafo segun Cytoscape */
   var state = {
@@ -73,7 +59,11 @@ const Content = () => {
       {
         selector: "edge",
         style: {
-          content: checked ? edgeLabels.on.content :  edgeLabels.off.content, 
+          content: function (ele) {
+            return checked ? ele.scratch("relation") === "implements"
+              ? "Implementa"
+              : "Extiende" : "";
+          },
           width: 4,
           "font-size": 20,
           "curve-style": "bezier",
@@ -95,42 +85,22 @@ const Content = () => {
    * Mostrar u ocultar el nombre de las
    * relaciones entre los nodos
    */
-  const setEdgesLabel = () => {   
+  const setEdgesLabel = () => {
     if (!checked) {
-      cy
-        .style()
-        .selector("edge")
-        .style({
-          content: edgeLabels.off.content,
-        })
+      cy.style().selector("edge").style({
+        content: "",
+      });
     } else {
-      cy
-        .style()
+      cy.style()
         .selector("edge")
         .style({
-          content: edgeLabels.on.content,
-        })
+          content: function (ele) {
+            return ele.scratch("relation") === "implements"
+              ? "Implementa"
+              : "Extiende";
+          },
+        });
     }
-  };
-
-  /**
-   * Cerrar proyecto seleccionado
-   */
-  const onClose = () => {
-    Swal.fire({
-      text: "¿Seguro que deseas cerrar " + selectedProject.versionName + "?",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "var(--success)",
-      cancelButtonColor: "var(--error)",
-      confirmButtonText: "Si, seguro",
-      cancelButtonText: "Cancelar",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        setSelectedProject();
-        setChecked(false);
-      }
-    });
   };
 
   /**
@@ -139,7 +109,13 @@ const Content = () => {
    */
   const selectNodeHandler = (evt) => {
     const nodeId = evt["target"]["_private"]["data"].id;
-    nodesHelper.addNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    nodesHelper.addNode(
+      nodeId,
+      selectedNodes,
+      setSelectedNodes,
+      cy,
+      setSelectionModel
+    );
     // cy.animate(
     //   {
     //     fit: {
@@ -161,34 +137,41 @@ const Content = () => {
   const unselectNodeHandler = (evt) => {
     const nodeId = evt["target"]["_private"]["data"].id;
     // cy.fit();
-    nodesHelper.removeNode(nodeId, selectedNodes, setSelectedNodes, cy, setSelectionModel);
+    nodesHelper.removeNode(
+      nodeId,
+      selectedNodes,
+      setSelectedNodes,
+      cy,
+      setSelectionModel
+    );
     nodesHelper.repaintEdges(selectedNodes, cy);
   };
 
-   useEffect(() => {
-     if(cy){
-        cy.on("select", "node", selectNodeHandler);
-        cy.on("unselect", "node", unselectNodeHandler);
-        setSelectionModel([]);
-        setSelectedNodes(new Set());
-     }
+  useEffect(() => {
+    if (cy) {
+      cy.on("select", "node", selectNodeHandler);
+      cy.on("unselect", "node", unselectNodeHandler);
+      setSelectionModel([]);
+      setSelectedNodes(new Set());
+    }
   }, [cy]);
 
   useEffect(() => {
-    if(cy){
-     setEdgesLabel();
+    if (cy) {
+      setEdgesLabel();
     }
- }, [checked, cy]);
+  }, [checked, cy]);
 
   useEffect(() => {
     setLoad(true);
     setElementos(selectedProject.elements);
+    console.log(selectedProject.elements);
   }, [selectedProject]);
 
   useEffect(() => {
     if (load) {
       setLoad(false);
-      setChecked(false)
+      setChecked(false);
     }
   }, [elementos, load]);
 
@@ -198,22 +181,19 @@ const Content = () => {
         <Loader />
       ) : elementos ? (
         <div>
-        <div className={classes.onClose}>
-        <FormControlLabel
-            control={<Switch checked={checked} onChange={() => setChecked(prev => !prev)} />}
-            labelPlacement="start"
-            style={{marginRight: 5}}
-          />
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            
-            onClick={onClose}
-            edge="start"
-          >
-            <HighlightOffIcon />
-          </IconButton></div>
-          
+          <div className={classes.onClose}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={checked}
+                  onChange={() => setChecked((prev) => !prev)}
+                />
+              }
+              labelPlacement="start"
+              style={{ marginRight: 5 }}
+            />
+          </div>
+
           <CytoscapeComponent
             id="component"
             zoom={0.5}
@@ -224,7 +204,7 @@ const Content = () => {
             stylesheet={state.stylesheet}
             pan={{ x: 150, y: 30 }}
             cy={(cyt) => {
-              setCy(cyt);      
+              setCy(cyt);
             }}
           />
         </div>
