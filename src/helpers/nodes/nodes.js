@@ -245,6 +245,8 @@ const getRelationType = (relation) => {
       return "Implementación";
     case "extends":
       return "Extensión";
+    case "use":
+      return "Use"
     default:
       break;
   }

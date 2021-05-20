@@ -26,6 +26,25 @@ const Content = () => {
     setSelectionModel,
   } = useContext(AppContext);
 
+  /**
+   * Obtener el tipo de relación
+   * @param {JSON} ele Objeto de cytoscape
+   * @returns String tipo de label
+   */
+  const getEdgeLabel = (ele) => {
+    if(!checked) return "";
+    switch (ele.scratch("relation")) {
+      case "implements":
+        return "Implementa";
+      case "extends":
+        return "Extiende";
+      case "use":
+        return "Usa";
+      default:
+        return "";
+    }
+  }
+
   /** Creacion de capa de estilos para el grafo segun Cytoscape */
   var state = {
     layout: {
@@ -57,11 +76,7 @@ const Content = () => {
       {
         selector: "edge",
         style: {
-          content: function (ele) {
-            return checked ? ele.scratch("relation") === "implements"
-              ? "Implementa"
-              : "Extiende" : "";
-          },
+          content: getEdgeLabel,
           width: 4,
           "font-size": 20,
           "curve-style": "bezier",
@@ -92,11 +107,7 @@ const Content = () => {
       cy.style()
         .selector("edge")
         .style({
-          content: function (ele) {
-            return ele.scratch("relation") === "implements"
-              ? "Implementa"
-              : "Extiende";
-          },
+          content: getEdgeLabel
         });
     }
   };
