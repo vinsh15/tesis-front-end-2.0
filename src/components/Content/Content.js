@@ -174,7 +174,7 @@ const Content = () => {
   useEffect(() => {
     setLoad(true);
     setElementos(selectedProject.elements);
-    console.log(selectedProject.elements);
+    //console.log(selectedProject.elements);
   }, [selectedProject]);
 
   useEffect(() => {

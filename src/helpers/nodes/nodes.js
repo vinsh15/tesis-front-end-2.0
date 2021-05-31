@@ -127,6 +127,7 @@ const changeEdgeColor = (cy, edgeId, type) => {
   const backgroundColor = type === "remove" ? "#18202C" : "#ffc74d";
   cy.getElementById(edgeId).style({
     "line-color": backgroundColor,
+    "target-arrow-color": backgroundColor,
   });
 };
 
