@@ -29,20 +29,14 @@ import nodeHelper from "../../helpers/nodes/nodes";
 import Toolbar from "@material-ui/core/Toolbar";
 import NavbarItem from "../NavbarItem/NavbarItem";
 
-
-
 /**
  * Componente que representa la barra
  * superior de navegacion
  */
 const Navbar = ({ open, setOpen }) => {
   const classes = useStyles();
-  const {
-    user,
-    selectedProject, setSelectedProject,
-    setReloadSidebar,
-    cy,
-  } = useContext(AppContext);
+  const { user, selectedProject, setSelectedProject, setReloadSidebar, cy } =
+    useContext(AppContext);
   const [showModal, setShowModal] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -91,7 +85,13 @@ const Navbar = ({ open, setOpen }) => {
             <MenuIcon />
           </IconButton>
           {selectedProject ? (
-            <>
+            <div
+              style={{
+                display: "flex",
+                width: "100%",
+                justifyContent: "space-between",
+              }}
+            >
               <div className={classes.title}>
                 <h1
                   className={classes.h1}
@@ -152,11 +152,23 @@ const Navbar = ({ open, setOpen }) => {
                 >
                   <Excel
                     fileName={selectedProject.versionName}
-                    nodesData={nodeHelper.getNodeData(selectedProject)}  
+                    nodesData={nodeHelper.getNodeData(selectedProject)}
                     relationsData={nodeHelper.getRelationData(selectedProject)}
                   />
-                  <MenuItem onClick={() => downloadGraph("jpg", cy, selectedProject.versionName)}>Descargar JPG</MenuItem>
-                  <MenuItem onClick={() => downloadGraph("png", cy, selectedProject.versionName)}>Descargar PNG</MenuItem>
+                  <MenuItem
+                    onClick={() =>
+                      downloadGraph("jpg", cy, selectedProject.versionName)
+                    }
+                  >
+                    Descargar JPG
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() =>
+                      downloadGraph("png", cy, selectedProject.versionName)
+                    }
+                  >
+                    Descargar PNG
+                  </MenuItem>
                 </Menu>
                 <NavbarItem
                   icon={<CreateIcon />}
@@ -184,7 +196,7 @@ const Navbar = ({ open, setOpen }) => {
                   <HighlightOffIcon />
                 </IconButton>
               </div>
-            </>
+            </div>
           ) : null}
         </Toolbar>
       </AppBar>
