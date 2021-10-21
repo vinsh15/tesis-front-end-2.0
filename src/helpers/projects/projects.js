@@ -84,6 +84,7 @@ const manageCreateProject = async (user, setReloadSidebar) => {
     if (result.isConfirmed) {
       submitProject(user, result.value, setReloadSidebar);
     }
+    console.log("RESULT: " + result);
   });
 };
 

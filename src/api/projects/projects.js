@@ -23,6 +23,7 @@ const postProject = async (user, projectName, setReloadSidebar) => {
         return response.data;
     }
     catch(error) {
+        console.log("ERROR: " + error);
         return error.response.status;
     }
 }
