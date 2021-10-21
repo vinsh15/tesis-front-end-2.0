@@ -7,7 +7,6 @@ const settings = {
         apiUrl: "http://127.0.0.1:8000/",
     }
 }
-print("hola")
 const getCurrentSettings = (flag) => {
     if(flag) return settings.staging;
     return settings.production;
