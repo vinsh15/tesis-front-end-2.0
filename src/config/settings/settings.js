@@ -1,6 +1,6 @@
 const settings = {
     staging: {
-        apiUrl: "https://prueba-backends.herokuapp.com",
+        apiUrl: "https://tesis-back-c-v.herokuapp.com/",
     },
     production: {
         //apiUrl: "https://tesis-back-end.herokuapp.com/"
@@ -12,4 +12,4 @@ const getCurrentSettings = (flag) => {
     return settings.production;
 }
 
-export default getCurrentSettings(false);
+export default getCurrentSettings(true);
