@@ -215,6 +215,8 @@ const getNodeData = (selectedProject) => {
   return selectedProject.elements.nodes.map((node, index) => ({
     id: index,
     name: node.data.name,
+    module: node.data.module,
+    incompleteResources: node.data.incompleteResources,
   }));
 };
 
