@@ -10,6 +10,7 @@ import Tabs from "@material-ui/core/Tabs";
 
 import EdgesTable from "./Edges/Edges";
 import NodesTable from "./Nodes/Nodes";
+import { TextField } from "@material-ui/core";
 
 /**
  * Componente que representa al contenedor
@@ -79,6 +80,40 @@ const TableItem = () => {
 
   return (
     <div className={classes.root}>
+      <div className={classes.inputs}>
+        <TextField
+            label="Peso DMS"
+            id="outlined-size-small"
+            className={classes.inputAlign}
+            defaultValue="25"
+            size="small"
+            >
+        </TextField>
+         <TextField
+            label="Peso Acoplamiento"
+            id="outlined-size-small"
+            className={classes.inputAlign}
+            defaultValue="25"
+            size="small"
+            >
+        </TextField>
+        <TextField
+            label="Semejanza "
+            id="outlined-size-small"
+            className={classes.inputAlign}
+            defaultValue="25"
+            size="small"
+            >
+        </TextField>
+        <TextField
+            label="Paquete"
+            id="outlined-size-small"
+            className={classes.inputAlign}
+            defaultValue="25"
+            size="small"
+            >
+        </TextField>
+      </div>
       <AppBar position="static" color="default">
         <Tabs
           value={value}
@@ -114,6 +149,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
     width: "auto",
   },
+  inputs: {
+    padding: theme.spacing(2),
+  },
+  inputAlign: {
+    marginRight: theme.spacing(1.5),
+  }
 }));
 
 export default TableItem;
