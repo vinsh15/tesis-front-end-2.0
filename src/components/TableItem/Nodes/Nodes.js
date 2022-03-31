@@ -18,11 +18,11 @@ const NodesTable = () => {
     cy 
   } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
-  let rows = selectedProject.elements.nodes.map(node => {
-    return {id: node.data.id, name: node.data.name};
-  });
+ 
   const columns = [
     { field: "name", headerName: "Nombre", width: 250 },
+    { field: "module", headerName: "Modulo", width: 150 },
+    { field: "incompleteResources", headerName: "Recursos Incompletos", width: 250 },
   ];
 
 
@@ -34,7 +34,7 @@ const NodesTable = () => {
     <div style={{ height: 400, width: "100%" }}>
       {!loader ? (
         <DataGrid
-          rows={rows}
+          rows={nodeHelper.getNodeData(selectedProject)}
           columns={columns}
           pageSize={10}
           checkboxSelection
