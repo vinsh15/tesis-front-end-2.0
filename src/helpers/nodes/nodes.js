@@ -236,7 +236,7 @@ const getRelationData = (selectedProject) => {
       coupling: edge.metrics.coupling.value,
       instability: edge.metrics.instability.value,
       nameResemblance: edge.metrics.nameResemblance.value,
-      packageMapping: edge.metrics.packageMapping.value,
+      packageMapping: edge.metrics.packageMapping?.value,
 
     };
   })
