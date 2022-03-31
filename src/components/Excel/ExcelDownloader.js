@@ -48,6 +48,12 @@ function Excel({
                 <ExcelColumn label="Origen" value="source" />
                 <ExcelColumn label="Destino" value="target" />
                 <ExcelColumn label="Relación" value="relation" />
+                <ExcelColumn label="DMS" value="dms" />
+                <ExcelColumn label="Abstraccion" value="abstractness" />
+                <ExcelColumn label="Acoplamiento" value="coupling" />
+                <ExcelColumn label="Instabilidad" value="instability" />
+                <ExcelColumn label="Semejanza del Nombre" value="nameResemblance" />
+                <ExcelColumn label="Manejo de Paquete" value="packageMapping" />
             </ExcelSheet>
         )
     }

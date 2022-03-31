@@ -23,7 +23,7 @@ const EdgesTable = () => {
     { field: "coupling", headerName: "Acoplamiento", width: 150 },
     { field: "instability", headerName: "Instabilidad", width: 150 },
     { field: "nameResemblance", headerName: "Semejansa del Nombre", width: 200 },
-    { field: "packageMapping", headerName: "Manejo de paquete", width: 200 },
+    { field: "packageMapping", headerName: "Manejo de Paquete", width: 200 },
   ];
 
   useEffect(() => {
