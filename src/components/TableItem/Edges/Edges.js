@@ -19,11 +19,11 @@ const EdgesTable = () => {
     { field: "target", headerName: "Destino", width: 200 },
     { field: "relation", headerName: "Relación", width: 200 },
     { field: "dms", headerName: "DMS", width: 150 },
-    { field: "abstractness", headerName: "Abstraccion", width: 150 },
+    { field: "abstractness", headerName: "Abstracción", width: 150 },
     { field: "coupling", headerName: "Acoplamiento", width: 150 },
     { field: "instability", headerName: "Instabilidad", width: 150 },
     { field: "nameResemblance", headerName: "Semejanza del Nombre", width: 200 },
-    { field: "packageMapping", headerName: "Manejo de Paquete", width: 200 },
+    { field: "packageMapping", headerName: "Mapeo de Paquete", width: 200 },
   ];
 
   useEffect(() => {
