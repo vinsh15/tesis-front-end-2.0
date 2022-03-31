@@ -231,8 +231,15 @@ const getRelationData = (selectedProject) => {
       source: edge.data.source,
       target: edge.data.target,
       relation: getRelationType(edge.scratch.relation),
+      dms: edge.metrics.DMS.value,
+      abstractness: edge.metrics.abstractness.value,
+      coupling: edge.metrics.coupling.value,
+      instability: edge.metrics.instability.value,
+      nameResemblance: edge.metrics.nameResemblance.value,
+      packageMapping: edge.metrics.packageMapping.value,
+
     };
-  });
+  })
 };
 
 /**
