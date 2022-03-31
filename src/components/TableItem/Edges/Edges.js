@@ -22,7 +22,7 @@ const EdgesTable = () => {
     { field: "abstractness", headerName: "Abstraccion", width: 150 },
     { field: "coupling", headerName: "Acoplamiento", width: 150 },
     { field: "instability", headerName: "Instabilidad", width: 150 },
-    { field: "nameResemblance", headerName: "Semejansa del Nombre", width: 200 },
+    { field: "nameResemblance", headerName: "Semejanza del Nombre", width: 200 },
     { field: "packageMapping", headerName: "Manejo de Paquete", width: 200 },
   ];
 
