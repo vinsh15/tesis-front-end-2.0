@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
   },
   inputAlign: {
     marginRight: theme.spacing(1.5),
-    width: 10,
+    width: 150,
   }
 }));
 
