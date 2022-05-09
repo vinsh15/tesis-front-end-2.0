@@ -124,7 +124,7 @@ const Inputs = () => {
           </div>
           <div className="input-align-umbral">
             <input
-                className={errors.paquete ? "input-errors" : "input-styles-umbral"}
+                className={errors.umbral ? "input-errors" : "input-styles-umbral"}
                 placeholder="Umbral"
                 name="umbral"
                 {...register ("umbral", {required: "Campo requerido",  
