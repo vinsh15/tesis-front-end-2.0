@@ -20,7 +20,7 @@
 }
 
 .input-errors {
-    border-bottom: 1px solid red;
+    border-bottom: 2px solid red;
     border-top: none;
     border-right: none;
     border-left: none;

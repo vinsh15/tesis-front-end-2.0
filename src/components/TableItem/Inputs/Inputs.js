@@ -29,9 +29,9 @@ const Inputs = () => {
               className={errors.dms ? "input-errors" : "input-styles"}
               placeholder="Peso DMS"
               name="dms"
-              {...register ("dms", {required: "Input is required",  pattern: {
+              {...register ("dms", {required: "Campo requerido",  pattern: {
                  value: /^[0-9]*$/,
-                 message: "Only numbers are allowed",
+                 message: "Solo numeros requeridos",
                }})}
                onKeyUp={() => {
                 trigger ( "dms")
@@ -45,9 +45,9 @@ const Inputs = () => {
               className={errors.acloplamiento ? "input-errors" : "input-styles"}
               placeholder="Peso Acloplamiento"
               name="acloplamiento"
-              {...register ("acloplamiento", {required: "Input is required",  pattern: {
+              {...register ("acloplamiento", {required: "Campo requerido",  pattern: {
                  value: /^[0-9]*$/,
-                 message: "Only numbers are allowed",
+                 message: "Solo numeros requeridos",
                }})}
                onKeyUp={() => {
                 trigger ( "acloplamiento")
@@ -61,9 +61,9 @@ const Inputs = () => {
               className={errors.semejanza ? "input-errors" : "input-styles"}
               placeholder="Semejanza"
               name="semejanza"
-              {...register ("semejanza", {required: "Input is required",  pattern: {
+              {...register ("semejanza", {required: "Campo requerido",  pattern: {
                  value: /^[0-9]*$/,
-                 message: "Only numbers are allowed",
+                 message: "Solo numeros requeridos",
                }})}
                onKeyUp={() => {
                 trigger ( "semejanza")
@@ -76,9 +76,9 @@ const Inputs = () => {
                 className={errors.paquete ? "input-errors" : "input-styles"}
                 placeholder="Paquete"
                 name="paquete"
-                {...register ("paquete", {required: "Input is required",  pattern: {
+                {...register ("paquete", {required: "Campo requerido",  pattern: {
                   value: /^[0-9]*$/,
-                  message: "Only numbers are allowed",
+                  message: "Solo numeros requeridos",
                 }})}
                 onKeyUp={() => {
                   trigger ( "paquete")
