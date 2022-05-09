@@ -52,9 +52,9 @@ const Inputs = () => {
           <div className="input-align">
             <input
               className={errors.acloplamiento ? "input-errors" : "input-styles"}
-              placeholder="Peso Acloplamiento"
+              placeholder="Peso Acoplamiento"
               name="acloplamiento"
-              {...register ("acloplamiento", {required: "Campo requerido",  
+              {...register ("acoplamiento", {required: "Campo requerido",  
               min: {
                   value: 0,
                   message: "Valor minimo es 0"
@@ -68,11 +68,11 @@ const Inputs = () => {
                  message: "Solo numeros requeridos",
                }})}
                onKeyUp={() => {
-                trigger ( "acloplamiento")
+                trigger ( "acoplamiento")
               }}
               
           />
-              {errors.acloplamiento && (<small className="validation-text">{errors.acloplamiento.message}</small> )}
+              {errors.acoplamiento && (<small className="validation-text">{errors.acoplamiento.message}</small> )}
           </div>
          <div className="input-align">
             <input
