@@ -44,3 +44,26 @@
     width: 140px;
     height: 40px;
 }
+
+.input-align-umbral {
+    margin-right: 1rem;
+    position: relative;
+    width: 80px;
+    height: 40px;
+}
+
+.input-styles-umbral {
+    border-bottom: 1px solid #000;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    width: 80px;
+}
+
+.input-styles-umbral:focus {
+    border-bottom: 2px solid #3f51b5;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    outline: none;
+}

@@ -39,7 +39,7 @@ const Inputs = () => {
                   message: "Valor max es 100",
                 },
               pattern: {
-                 value: /^[0-9]*$/,
+                 value: /^[.0-9]*$/,
                  message: "Solo numeros requeridos",
                }})}
                onKeyUp={() => {
@@ -64,7 +64,7 @@ const Inputs = () => {
                   message: "Valor max es 100",
                 },
               pattern: {
-                 value: /^[0-9]*$/,
+                 value: /^[.0-9]*$/,
                  message: "Solo numeros requeridos",
                }})}
                onKeyUp={() => {
@@ -89,7 +89,7 @@ const Inputs = () => {
                   message: "Valor max es 100",
                 },
               pattern: {
-                 value: /^[0-9]*$/,
+                 value: /^[.0-9]*$/,
                  message: "Solo numeros requeridos",
                }})}
                onKeyUp={() => {
@@ -113,7 +113,7 @@ const Inputs = () => {
                   message: "Valor max es 100",
                 },
                 pattern: {
-                  value: /^[0-9]*$/,
+                  value: /^[.0-9]*$/,
                   message: "Solo numeros requeridos",
                 }})}
                 onKeyUp={() => {
@@ -121,6 +121,30 @@ const Inputs = () => {
                 }}
             />
              {errors.paquete && (<small className="validation-text">{errors.paquete.message}</small> )}
+          </div>
+          <div className="input-align-umbral">
+            <input
+                className={errors.paquete ? "input-errors" : "input-styles-umbral"}
+                placeholder="Umbral"
+                name="umbral"
+                {...register ("umbral", {required: "Campo requerido",  
+                min: {
+                  value: 0,
+                  message: "Valor minimo es 0"
+                },
+                max: {
+                  value: 1,
+                  message: "Valor max es 1",
+                },
+                pattern: {
+                  value: /^[.0-9]*$/,
+                  message: "Solo numeros",
+                }})}
+                onKeyUp={() => {
+                  trigger ( "umbral")
+                }}
+            />
+             {errors.umbral && (<small className="validation-text">{errors.umbral.message}</small> )}
           </div>
         </div>
         <Button variant="contained" type="submit">
