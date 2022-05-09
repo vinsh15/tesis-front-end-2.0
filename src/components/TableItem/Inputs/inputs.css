@@ -67,3 +67,11 @@
     border-left: none;
     outline: none;
 }
+
+.input-errors-umbral {
+    border-bottom: 2px solid red;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    width: 80px;
+}
