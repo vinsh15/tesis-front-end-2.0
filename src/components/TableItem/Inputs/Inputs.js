@@ -26,7 +26,7 @@ const Inputs = () => {
         <div className='input'>
           <div className="input-align">
             <input
-              className="input-styles"
+              className={errors.dms ? "input-errors" : "input-styles"}
               placeholder="Peso DMS"
               name="dms"
               {...register ("dms", {required: "Input is required",  pattern: {
@@ -42,7 +42,7 @@ const Inputs = () => {
           </div>
           <div className="input-align">
             <input
-              className="input-styles"
+              className={errors.acloplamiento ? "input-errors" : "input-styles"}
               placeholder="Peso Acloplamiento"
               name="acloplamiento"
               {...register ("acloplamiento", {required: "Input is required",  pattern: {
@@ -58,7 +58,7 @@ const Inputs = () => {
           </div>
          <div className="input-align">
             <input
-              className="input-styles"
+              className={errors.semejanza ? "input-errors" : "input-styles"}
               placeholder="Semejanza"
               name="semejanza"
               {...register ("semejanza", {required: "Input is required",  pattern: {
@@ -73,7 +73,7 @@ const Inputs = () => {
          </div>
           <div className="input-align">
             <input
-                className="input-styles"
+                className={errors.paquete ? "input-errors" : "input-styles"}
                 placeholder="Paquete"
                 name="paquete"
                 {...register ("paquete", {required: "Input is required",  pattern: {

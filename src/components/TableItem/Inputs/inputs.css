@@ -19,6 +19,19 @@
     outline: none;
 }
 
+.input-errors {
+    border-bottom: 1px solid red;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    width: 140px;
+}
+
+.input-errors:focus {
+    outline: none;
+}
+
+
 .validation-text {
    color: red;
    font-size: 10px;
