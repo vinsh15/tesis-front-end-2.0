@@ -1,0 +1,33 @@
+.input {
+    display: flex;
+    margin: 1rem 0.5rem;
+}
+
+.input-styles {
+    border-bottom: 1px solid #000;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    width: 140px;
+}
+
+.input-styles:focus {
+    border-bottom: 2px solid #3f51b5;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    outline: none;
+}
+
+.validation-text {
+   color: red;
+   font-size: 10px;
+   margin-top: 5px;
+}
+
+.input-align {
+    margin-right: 1rem;
+    position: relative;
+    width: 140px;
+    height: 40px;
+}
