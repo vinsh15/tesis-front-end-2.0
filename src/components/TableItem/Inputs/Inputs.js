@@ -51,7 +51,7 @@ const Inputs = () => {
           </div>
           <div className="input-align">
             <input
-              className={errors.acloplamiento ? "input-errors" : "input-styles"}
+              className={errors.acoplamiento ? "input-errors" : "input-styles"}
               placeholder="Peso Acoplamiento"
               name="acloplamiento"
               {...register ("acoplamiento", {required: "Campo requerido",  
@@ -124,7 +124,7 @@ const Inputs = () => {
           </div>
           <div className="input-align-umbral">
             <input
-                className={errors.paquete ? "input-errors" : "input-styles-umbral"}
+                className={errors.umbral ? "input-errors-umbral" : "input-styles-umbral"}
                 placeholder="Umbral"
                 name="umbral"
                 {...register ("umbral", {required: "Campo requerido",  
