@@ -51,7 +51,7 @@ const Inputs = () => {
           </div>
           <div className="input-align">
             <input
-              className={errors.acloplamiento ? "input-errors" : "input-styles"}
+              className={errors.acoplamiento ? "input-errors" : "input-styles"}
               placeholder="Peso Acoplamiento"
               name="acloplamiento"
               {...register ("acoplamiento", {required: "Campo requerido",  
