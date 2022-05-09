@@ -24,6 +24,8 @@ const EdgesTable = () => {
     { field: "instability", headerName: "Instabilidad", width: 150 },
     { field: "nameResemblance", headerName: "Semejanza del Nombre", width: 200 },
     { field: "packageMapping", headerName: "Mapeo de Paquete", width: 200 },
+    { field: " ", headerName: "Prueba", width: 150 },
+    { field: " ", headerName: "Componente Compuesto", width: 250 },
   ];
 
   useEffect(() => {
@@ -36,7 +38,7 @@ const EdgesTable = () => {
         <DataGrid 
           rows={nodeHelper.getRelationData(selectedProject)} 
           columns={columns} 
-          pageSize={10} 
+          pageSize={12} 
         />
       ) : (
         <Loader />
