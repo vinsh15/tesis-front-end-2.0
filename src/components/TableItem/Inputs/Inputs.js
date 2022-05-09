@@ -29,7 +29,16 @@ const Inputs = () => {
               className={errors.dms ? "input-errors" : "input-styles"}
               placeholder="Peso DMS"
               name="dms"
-              {...register ("dms", {required: "Campo requerido",  pattern: {
+              {...register ("dms", {required: "Campo requerido",  
+              min: {
+                  value: 0,
+                  message: "Valor minimo es 0"
+                },
+              max: {
+                  value: 100,
+                  message: "Valor max es 100",
+                },
+              pattern: {
                  value: /^[0-9]*$/,
                  message: "Solo numeros requeridos",
                }})}
@@ -45,7 +54,16 @@ const Inputs = () => {
               className={errors.acloplamiento ? "input-errors" : "input-styles"}
               placeholder="Peso Acloplamiento"
               name="acloplamiento"
-              {...register ("acloplamiento", {required: "Campo requerido",  pattern: {
+              {...register ("acloplamiento", {required: "Campo requerido",  
+              min: {
+                  value: 0,
+                  message: "Valor minimo es 0"
+                },
+              max: {
+                  value: 100,
+                  message: "Valor max es 100",
+                },
+              pattern: {
                  value: /^[0-9]*$/,
                  message: "Solo numeros requeridos",
                }})}
@@ -61,7 +79,16 @@ const Inputs = () => {
               className={errors.semejanza ? "input-errors" : "input-styles"}
               placeholder="Semejanza"
               name="semejanza"
-              {...register ("semejanza", {required: "Campo requerido",  pattern: {
+              {...register ("semejanza", {required: "Campo requerido",  
+              min: {
+                  value: 0,
+                  message: "Valor minimo es 0"
+                },
+                max: {
+                  value: 100,
+                  message: "Valor max es 100",
+                },
+              pattern: {
                  value: /^[0-9]*$/,
                  message: "Solo numeros requeridos",
                }})}
@@ -76,7 +103,16 @@ const Inputs = () => {
                 className={errors.paquete ? "input-errors" : "input-styles"}
                 placeholder="Paquete"
                 name="paquete"
-                {...register ("paquete", {required: "Campo requerido",  pattern: {
+                {...register ("paquete", {required: "Campo requerido",  
+                min: {
+                  value: 0,
+                  message: "Valor minimo es 0"
+                },
+                max: {
+                  value: 100,
+                  message: "Valor max es 100",
+                },
+                pattern: {
                   value: /^[0-9]*$/,
                   message: "Solo numeros requeridos",
                 }})}
