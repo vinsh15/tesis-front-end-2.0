@@ -68,23 +68,23 @@ const Inputs = () => {
                onKeyUp={() => {
                 trigger ( "semejanza")
               }}
-          />
+            />
              {errors.semejanza && (<small className="validation-text">{errors.semejanza.message}</small> )}
          </div>
           <div className="input-align">
-          <input
-              className="input-styles"
-              placeholder="Paquete"
-              name="paquete"
-              {...register ("paquete", {required: "Input is required",  pattern: {
-                 value: /^[0-9]*$/,
-                 message: "Only numbers are allowed",
-               }})}
-               onKeyUp={() => {
-                trigger ( "paquete")
-              }}
-          />
-             {errors.semejanza && (<small className="validation-text">{errors.paquete.message}</small> )}
+            <input
+                className="input-styles"
+                placeholder="Paquete"
+                name="paquete"
+                {...register ("paquete", {required: "Input is required",  pattern: {
+                  value: /^[0-9]*$/,
+                  message: "Only numbers are allowed",
+                }})}
+                onKeyUp={() => {
+                  trigger ( "paquete")
+                }}
+            />
+             {errors.paquete && (<small className="validation-text">{errors.paquete.message}</small> )}
           </div>
         </div>
         <Button variant="contained" type="submit">
