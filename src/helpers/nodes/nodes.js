@@ -239,6 +239,8 @@ const getRelationData = (selectedProject) => {
       instability: edge.metrics.instability.value,
       nameResemblance: edge.metrics.nameResemblance.value,
       packageMapping: edge.metrics.packageMapping?.value,
+      q: null,
+      answer: null,
 
     };
   })
