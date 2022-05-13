@@ -9,7 +9,7 @@ import nodeHelper from "../../../helpers/nodes/nodes";
  * Componente que representa
  * la tabla de aristas del proyecto selecionado
  */
-const EdgesTable = () => {
+const EdgesTable = ({prueba}) => {
   const { selectedProject } = useContext(AppContext);
   const [loader, setLoader] = useState(true);
 
@@ -24,8 +24,7 @@ const EdgesTable = () => {
     { field: "instability", headerName: "Instabilidad", width: 150 },
     { field: "nameResemblance", headerName: "Semejanza del Nombre", width: 200 },
     { field: "packageMapping", headerName: "Mapeo de Paquete", width: 200 },
-    { field: " ", headerName: "Prueba", width: 150 },
-    { field: " ", headerName: "Componente Compuesto", width: 250 },
+    { field: `${prueba}`, headerName: "Q --> Es compuesto?", width: 250 }
   ];
 
   useEffect(() => {
@@ -36,7 +35,7 @@ const EdgesTable = () => {
     <div style={{ height: 400, width: "100%" }}>
       {!loader ? (
         <DataGrid 
-          rows={nodeHelper.getRelationData(selectedProject)} 
+          rows={nodeHelper.getRelationData(selectedProject)} prueba={prueba} 
           columns={columns} 
           pageSize={12} 
         />
