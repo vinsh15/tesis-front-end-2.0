@@ -11,7 +11,6 @@ import Tabs from "@material-ui/core/Tabs";
 import EdgesTable from "./Edges/Edges";
 import NodesTable from "./Nodes/Nodes";
 import { TextField } from "@material-ui/core";
-import Inputs from "./Inputs/Inputs";
 
 /**
  * Componente que representa al contenedor
@@ -81,7 +80,6 @@ const TableItem = () => {
 
   return (
     <div className={classes.root}>
-      <Inputs />
       <AppBar position="static" color="default">
         <Tabs
           value={value}
