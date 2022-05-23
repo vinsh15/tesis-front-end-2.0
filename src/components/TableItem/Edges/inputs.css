@@ -1,3 +1,7 @@
+.form-styles {
+    display: flex;
+}
+
 .input {
     display: flex;
     margin: 1rem 0.5rem;
@@ -17,6 +21,14 @@
     border-right: none;
     border-left: none;
     outline: none;
+}
+
+.input-label {
+    font-size: 10px;
+}
+
+.input-label:focus-within {
+    color: #3f51b5;
 }
 
 .input-errors {
@@ -74,4 +86,36 @@
     border-right: none;
     border-left: none;
     width: 80px;
+}
+
+.btn-total {
+    align-items: center;
+    display: flex;
+}
+
+.btn-total button {
+    border: #3f51b5 solid 2px !important;
+    background: #3f51b5 !important;
+    color: #fff !important;
+    font-weight: bold !important;
+}
+
+.btn-total button:hover {
+    background: #273060 !important;
+    border: #273060 solid 2px !important;
+}
+
+.total-sum {
+    display: flex;
+    justify-content: center;
+}
+
+.total-sum p {
+    font-size: 20px;
+
+}
+
+.total-sum span {
+    font-weight: 600;
+
 }

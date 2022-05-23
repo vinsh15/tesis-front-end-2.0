@@ -29,10 +29,10 @@ const EdgesTable = () => {
   ];
 
   // Getting the values of each input fields
-  const [dms, setDms] = useState(0);
-  const [coupling, setCoupling] = useState(0);
-  const [nameResemblance, setNameResemblance] = useState(0);
-  const [packageMapping, setPackageMapping] = useState(0);
+  const [dms, setDms] = useState(25);
+  const [coupling, setCoupling] = useState(25);
+  const [nameResemblance, setNameResemblance] = useState(25);
+  const [packageMapping, setPackageMapping] = useState(25);
   const [umbral, setUmbral] = useState(0);
   const [sum, setSum] = useState(dms  + coupling + nameResemblance + packageMapping)
 
@@ -95,10 +95,11 @@ const EdgesTable = () => {
   }, [selectedProject.elements]);
 
   return (
-    <div style={{ height: 800, width: "100%" }}>
+    <div style={{ height: 550, width: "100%" }}>
      <form  className="form-styles">
         <div className="input">
           <div className="input-align">
+          <label className="input-label">DMS</label>
             <input
               value={dms}
               onChange={(e) => setDms(+e.target.value)}
@@ -108,6 +109,7 @@ const EdgesTable = () => {
             />
           </div>
           <div className="input-align">
+          <label className="input-label">Acoplamiento</label>
             <input
               className="input-styles"
               placeholder="W Acoplamiento"
@@ -117,6 +119,7 @@ const EdgesTable = () => {
             />
           </div>
           <div className="input-align">
+          <label className="input-label">Semejanza de Nombre</label>
             <input
               className="input-styles"
               placeholder="W Sem. de Nombre"
@@ -126,6 +129,7 @@ const EdgesTable = () => {
             />
           </div>
           <div className="input-align">
+          <label className="input-label">Mapeo de Paquete</label>
             <input
               className="input-styles"
               placeholder="W Mapeo de Paquete"
@@ -135,6 +139,7 @@ const EdgesTable = () => {
             />
           </div>
           <div className="input-align-umbral">
+          <label className="input-label">Umbral</label>
             <input
               className="input-styles-umbral"
               placeholder="Umbral"
@@ -144,11 +149,15 @@ const EdgesTable = () => {
             />
           </div>
         </div>
-        <Button onClick={calculateTotal} variant="contained">
-          Total
-        </Button>
-        <h1>{sum}</h1>
+        <div className="btn-total"> 
+          <Button onClick={calculateTotal} variant="contained">
+            Total
+          </Button>
+        </div>
       </form>
+      <div className="total-sum">
+        <p>Total:<span>{sum}</span></p>
+      </div>
       {!loader ? (
         <DataGrid 
           rows={edgesTest} 
