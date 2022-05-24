@@ -173,7 +173,7 @@ const EdgesTable = () => {
         </div>
         <div className="btn-total">
           <Button onClick={calculateTotal} variant="contained">
-            Total
+            Calcular
           </Button>
         </div>
       </form>
