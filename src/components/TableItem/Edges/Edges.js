@@ -38,7 +38,7 @@ const EdgesTable = () => {
   const [coupling, setCoupling] = useState(25);
   const [nameResemblance, setNameResemblance] = useState(25);
   const [packageMapping, setPackageMapping] = useState(25);
-  const [umbral, setUmbral] = useState(0);
+  const [umbral, setUmbral] = useState(0.5);
   const [sum, setSum] = useState(
     dms + coupling + nameResemblance + packageMapping
   );
@@ -72,7 +72,7 @@ const EdgesTable = () => {
       for (let j = 0; j < nodesDos.length; j++) {
         if (
           nodesDos[j].id === edgesDos[i].source &&
-          nodesDos[j].incompleteResources === true
+          nodesDos[j].incompleteResources 
         ) {
           flag1 = true;
           edgesDos[i].q = "NA";
@@ -80,7 +80,7 @@ const EdgesTable = () => {
         }
         if (
           nodesDos[j].id === edgesDos[i].target &&
-          nodesDos[j].incompleteResources === true
+          nodesDos[j].incompleteResources 
         ) {
           flag2 = true;
           edgesDos[i].q = "NA";
@@ -117,7 +117,7 @@ const EdgesTable = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div style={{ height: 650, width: "100%" }}>
+    <div style={{ height: "80vh", width: "100%" }}>
       <form className="form-styles">
         <div className="input">
           <div className="input-align">
@@ -167,6 +167,9 @@ const EdgesTable = () => {
               placeholder="Umbral"
               name="umbral"
               value={umbral}
+              type="number"
+              min="0"
+              max="1"
               onChange={(e) => setUmbral(e.target.value)}
             />
           </div>

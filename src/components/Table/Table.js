@@ -7,6 +7,7 @@ import Drawer from "@material-ui/core/Drawer";
 import IconButton from "@material-ui/core/IconButton";
 import KeyboardArrowDownIcon from "@material-ui/icons/KeyboardArrowDown";
 import MenuIcon from "@material-ui/icons/Menu";
+import "./table.css"
 
 import TableItem from "../TableItem/TableItem";
 

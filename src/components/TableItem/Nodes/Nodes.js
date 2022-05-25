@@ -24,7 +24,7 @@ const NodesTable = () => {
   });
  
   const columns = [
-    { field: "name", headerName: "Nombre", width: 250 },
+    { field: "name", headerName: "Nombre", width: 400 },
     { field: "module", headerName: "Modulo", width: 150 },
     { field: "incompleteResources", headerName: "Recursos Incompletos", width: 250 },
   ];
@@ -35,7 +35,7 @@ const NodesTable = () => {
   }, [selectedProject.elements]);
 
   return (
-    <div style={{ height: 650, width: "100%" }}>
+    <div style={{ height: "80vh", width: "100%" }}>
       {!loader ? (
         <DataGrid
           rows={rows}
