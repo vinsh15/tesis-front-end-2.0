@@ -121,7 +121,6 @@ const EdgesTable = () => {
       <form className="form-styles">
         <div className="input">
           <div className="input-align">
-            <label className="input-label">DMS</label>
             <input
               value={dms}
               onChange={(e) => setDms(+e.target.value)}
@@ -129,9 +128,9 @@ const EdgesTable = () => {
               placeholder="W DMS"
               name="dms"
             />
+            <label className="input-label">DMS</label>
           </div>
           <div className="input-align">
-            <label className="input-label">Acoplamiento</label>
             <input
               className="input-styles"
               placeholder="W Acoplamiento"
@@ -139,9 +138,9 @@ const EdgesTable = () => {
               value={coupling}
               onChange={(e) => setCoupling(+e.target.value)}
             />
+            <label className="input-label">Acoplamiento</label>
           </div>
           <div className="input-align">
-            <label className="input-label">Semejanza de Nombre</label>
             <input
               className="input-styles"
               placeholder="W Sem. de Nombre"
@@ -149,9 +148,9 @@ const EdgesTable = () => {
               value={nameResemblance}
               onChange={(e) => setNameResemblance(+e.target.value)}
             />
+            <label className="input-label">Semejanza de Nombre</label>
           </div>
           <div className="input-align">
-            <label className="input-label">Mapeo de Paquete</label>
             <input
               className="input-styles"
               placeholder="W Mapeo de Paquete"
@@ -159,9 +158,9 @@ const EdgesTable = () => {
               value={packageMapping}
               onChange={(e) => setPackageMapping(+e.target.value)}
             />
+            <label className="input-label">Mapeo de Paquete</label>
           </div>
           <div className="input-align-umbral">
-            <label className="input-label">Umbral</label>
             <input
               className="input-styles-umbral"
               placeholder="Umbral"
@@ -172,6 +171,7 @@ const EdgesTable = () => {
               max="1"
               onChange={(e) => setUmbral(e.target.value)}
             />
+             <label className="input-label">Umbral</label>
           </div>
         </div>
         <div className="btn-total">
