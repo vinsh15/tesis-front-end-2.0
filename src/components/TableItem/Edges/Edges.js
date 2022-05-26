@@ -16,8 +16,8 @@ const EdgesTable = () => {
 
   const columns = [
     { field: "id", headerName: "ID", width: 70 },
-    { field: "source", headerName: "Origen", width: 350 },
-    { field: "target", headerName: "Destino", width: 200 },
+    { field: "source", headerName: "Origen", width: 300 },
+    { field: "target", headerName: "Destino", width: 300 },
     { field: "relation", headerName: "Relación", width: 200 },
     { field: "dms", headerName: "DMS", width: 150 },
     { field: "abstractness", headerName: "Abstracción", width: 150 },
