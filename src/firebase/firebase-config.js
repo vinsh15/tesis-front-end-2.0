@@ -1,12 +1,12 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyDNXU386GnKeCXgozGGJ-RdxD_HiMXCvFg",
-    authDomain: "tesis-406cd.firebaseapp.com",
-    databaseURL: "https://tesis-406cd-default-rtdb.firebaseio.com",
-    projectId: "tesis-406cd",
-    storageBucket: "tesis-406cd.appspot.com",
-    messagingSenderId: "757769381327",
-    appId: "1:757769381327:web:8d9264c3eb94f22ab65eba",
-    measurementId: "G-JZE35924GQ"
-};
+    apiKey: "AIzaSyBVcWdpumHoEvGVsutn3MJM0ufwVIgnug0",
+    authDomain: "tesis-carlos-vincent.firebaseapp.com",
+    databaseURL: "https://tesis-carlos-vincent-default-rtdb.firebaseio.com",
+    projectId: "tesis-carlos-vincent",
+    storageBucket: "tesis-carlos-vincent.appspot.com",
+    messagingSenderId: "1044619223708",
+    appId: "1:1044619223708:web:2f725d9f8626653e498359",
+    measurementId: "G-EW771SM7FP"
+  };
 
 export default firebaseConfig;
