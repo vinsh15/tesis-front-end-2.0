@@ -35,7 +35,7 @@ const NodesTable = () => {
   }, [selectedProject.elements]);
 
   return (
-    <div style={{ height: "80vh", width: "100%" }}>
+    <div style={{ height: "100vh", width: "100%" }}>
       {!loader ? (
         <DataGrid
           rows={rows}
