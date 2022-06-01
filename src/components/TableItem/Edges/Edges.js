@@ -34,10 +34,10 @@ const EdgesTable = () => {
   ];
 
   // Getting the values of each input fields
-  const [dms, setDms] = useState(5);
-  const [coupling, setCoupling] = useState(25);
-  const [nameResemblance, setNameResemblance] = useState(25);
-  const [packageMapping, setPackageMapping] = useState(25);
+  const [dms, setDms] = useState(10);
+  const [coupling, setCoupling] = useState(50);
+  const [nameResemblance, setNameResemblance] = useState(15);
+  const [packageMapping, setPackageMapping] = useState(15);
   const [umbral, setUmbral] = useState(0.5);
   const [sum, setSum] = useState(
     dms + coupling + nameResemblance + packageMapping
@@ -67,45 +67,46 @@ const EdgesTable = () => {
     for (let i = 0; i < edgesDos.length; i++) {
       let flag1 = false;
       let flag2 = false;
-      let upper1 = 0;
-      let upper2 = 0;
+      let dividen1 = 0;
+      let dividen2 = 0;
       for (let j = 0; j < nodesDos.length; j++) {
         if (
           nodesDos[j].id === edgesDos[i].source &&
-          nodesDos[j].incompleteResources 
+          nodesDos[j].incompleteResources
         ) {
           flag1 = true;
-          edgesDos[i].q = "NA";
-          edgesDos[i].answer = "NA";
+          edgesDos[i].q = 0;
+          edgesDos[i].answer = "No Aplica";
         }
         if (
           nodesDos[j].id === edgesDos[i].target &&
-          nodesDos[j].incompleteResources 
+          nodesDos[j].incompleteResources
         ) {
           flag2 = true;
-          edgesDos[i].q = "NA";
-          edgesDos[i].answer = "NA";
+          edgesDos[i].q = 0;
+          edgesDos[i].answer = "No Aplica";
         }
-        if (flag1 && flag2) {
+        if (flag1 || flag2) {
           break;
         }
       }
-      upper1 =
-        edgesDos[i].coupling * coupling +
-        edgesDos[i].nameResemblance * nameResemblance +
-        edgesDos[i].packageMapping * packageMapping;
-      upper2 = edgesDos[i].dms * dms;
-      let q = (upper1 - upper2) / sum;
-      edgesDos[i].q = q.toFixed(2);
+      if (!flag1 && !flag2) {
+        dividen1 =
+          edgesDos[i].coupling * coupling +
+          edgesDos[i].nameResemblance * nameResemblance +
+          edgesDos[i].packageMapping * packageMapping;
+        dividen2 = edgesDos[i].dms * dms;
+        let q = (dividen1 - dividen2) / sum;
+        edgesDos[i].q = q.toFixed(2);
 
-      if (q >= umbral) {
-        edgesDos[i].answer = "SI";
-      } else {
-        edgesDos[i].answer = "NO";
+        if (q >= umbral) {
+          edgesDos[i].answer = "SI";
+        } else {
+          edgesDos[i].answer = "NO";
+        }
       }
-    }
-  } else {
 
+    }
   }
 
   useEffect(() => {
