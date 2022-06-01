@@ -35,10 +35,10 @@ const EdgesTable = () => {
 
   // Getting the values of each input fields
   const [dms, setDms] = useState(10);
-  const [coupling, setCoupling] = useState(50);
-  const [nameResemblance, setNameResemblance] = useState(15);
-  const [packageMapping, setPackageMapping] = useState(15);
-  const [umbral, setUmbral] = useState(0.5);
+  const [coupling, setCoupling] = useState(0);
+  const [nameResemblance, setNameResemblance] = useState(40);
+  const [packageMapping, setPackageMapping] = useState(40);
+  const [umbral, setUmbral] = useState(0.65);
   const [sum, setSum] = useState(
     dms + coupling + nameResemblance + packageMapping
   );
@@ -91,11 +91,15 @@ const EdgesTable = () => {
         }
       }
       if (!flag1 && !flag2) {
-        dividen1 =
-          edgesDos[i].coupling * coupling +
-          edgesDos[i].nameResemblance * nameResemblance +
-          edgesDos[i].packageMapping * packageMapping;
+
+        if (edgesDos[i].coupling >= 0.6) {
+          dividen1 =
+            edgesDos[i].nameResemblance * nameResemblance;
+        }
+
+        dividen1 = dividen1 + edgesDos[i].packageMapping * packageMapping;
         dividen2 = edgesDos[i].dms * dms;
+
         let q = (dividen1 - dividen2) / sum;
         edgesDos[i].q = q.toFixed(2);
 
@@ -172,7 +176,7 @@ const EdgesTable = () => {
               max="1"
               onChange={(e) => setUmbral(e.target.value)}
             />
-             <label className="input-label">Umbral</label>
+            <label className="input-label">Umbral</label>
           </div>
         </div>
         <div className="btn-total">
@@ -186,15 +190,15 @@ const EdgesTable = () => {
           Total:<span>{sum}</span>
         </p>
       </div>
-      {sum > 100 ? 
-      <Alert severity="error">
-      <AlertTitle>Error</AlertTitle>
-        El total de los pesos no puede ser mayor a 100 — <strong>Vuelve a calcular!</strong>
-      </Alert>
-      : 
-      <Alert severity="success">
-        <AlertTitle>Calculo Exitoso</AlertTitle>
-      </Alert>
+      {sum > 100 ?
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          El total de los pesos no puede ser mayor a 100 — <strong>Vuelve a calcular!</strong>
+        </Alert>
+        :
+        <Alert severity="success">
+          <AlertTitle>Calculo Exitoso</AlertTitle>
+        </Alert>
       }
       {!loader ? (
         <DataGrid rows={edgesDos} columns={columns} pageSize={10} />
