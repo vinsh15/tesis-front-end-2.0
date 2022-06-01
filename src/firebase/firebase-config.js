@@ -1,6 +1,6 @@
 const firebaseConfig = {
     apiKey: "AIzaSyBVcWdpumHoEvGVsutn3MJM0ufwVIgnug0",
-    authDomain: "https://tesis-carlos-vincent.herokuapp.com/",
+    authDomain: "tesis-carlos-vincent.herokuapp.com",
     databaseURL: "https://tesis-carlos-vincent-default-rtdb.firebaseio.com",
     projectId: "tesis-carlos-vincent",
     storageBucket: "tesis-carlos-vincent.appspot.com",
