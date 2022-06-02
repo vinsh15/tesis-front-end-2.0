@@ -95,7 +95,7 @@ const EdgesTable = () => {
           dividen1 =
             edgesDos[i].nameResemblance * nameResemblance;
         }
-
+//hola esto es una prueba
         dividen1 = dividen1 + edgesDos[i].packageMapping * packageMapping;
         dividen2 = edgesDos[i].dms * dms;
 
