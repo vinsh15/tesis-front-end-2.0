@@ -35,17 +35,16 @@ const EdgesTable = () => {
 
   // Getting the values of each input fields
   const [dms, setDms] = useState(10);
-  const [coupling, setCoupling] = useState(0);
   const [nameResemblance, setNameResemblance] = useState(40);
   const [packageMapping, setPackageMapping] = useState(40);
   const [umbral, setUmbral] = useState(0.65);
   const [sum, setSum] = useState(
-    dms + coupling + nameResemblance + packageMapping
+    dms  + nameResemblance + packageMapping
   );
 
   // Calculate the sum total of all the input fields
   function calculateTotal() {
-    setSum(dms + coupling + nameResemblance + packageMapping);
+    setSum(dms + nameResemblance + packageMapping);
   }
 
   // Getting all the nodes and mapping through each item
@@ -134,16 +133,6 @@ const EdgesTable = () => {
               name="dms"
             />
             <label className="input-label">DMS</label>
-          </div>
-          <div className="input-align">
-            <input
-              className="input-styles"
-              placeholder="W Acoplamiento"
-              name="acloplamiento"
-              value={coupling}
-              onChange={(e) => setCoupling(+e.target.value)}
-            />
-            <label className="input-label">Acoplamiento</label>
           </div>
           <div className="input-align">
             <input
