@@ -35,6 +35,7 @@ const EdgesTable = () => {
       ) : (
         <Loader />
       )}
+      <p>prueba</p>
     </div>
   );
 };
