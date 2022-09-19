@@ -18,6 +18,9 @@ const EdgesTable = () => {
     { field: "source", headerName: "Origen", width: 200 },
     { field: "target", headerName: "Destino", width: 200 },
     { field: "relation", headerName: "Relación", width: 200 },
+    { field: "dms", headerName: "DMS", width: 200 },
+    { field: "abstractness", headerName: "Abstractness", width: 200 },
+    { field: "coupling", headerName: "Coupling", width: 200 },
   ];
 
   useEffect(() => {
