@@ -134,7 +134,7 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
                 >
                   <HighlightOffIcon />
                 </IconButton>
-                <h2 className={classes.h1}>Agregar {type}</h2>
+                <h2 className={classes.h1}>Agregar prueba {type}</h2>
               </div>
 
               {type.toLowerCase() === "arquitectura" ? (
@@ -142,7 +142,7 @@ const FileReader = ({ onClose, open, projectIndex, type }) => {
                   <TextField
                     required
                     id="outlined-basic"
-                    label="Nombre"
+                    label="Nombre prueba"
                     value={name}
                     onChange={handleChange}
                     variant="outlined"

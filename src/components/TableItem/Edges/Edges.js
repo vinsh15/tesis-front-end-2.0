@@ -26,6 +26,7 @@ const EdgesTable = () => {
 
   return (
     <div style={{ height: 400, width: "100%" }}>
+    <button>prueba</button>
       {!loader ? (
         <DataGrid 
           rows={nodeHelper.getRelationData(selectedProject)} 
