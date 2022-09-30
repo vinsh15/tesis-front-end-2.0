@@ -1,5 +1,12 @@
 import React, { useContext, useState, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
+<<<<<<< HEAD
+=======
+import {
+  putMetrics,
+} from "../../../api/metrics/metrics";
+
+>>>>>>> 9a9a9abc4385c227225d8a6abed9bb57167b6200
 import AppContext from "../../../auth/context/context";
 import Loader from "../../Loader/Loader";
 import nodeHelper from "../../../helpers/nodes/nodes";
@@ -19,6 +26,7 @@ const EdgesTable = () => {
     { field: "source", headerName: "Origen", width: 300 },
     { field: "target", headerName: "Destino", width: 300 },
     { field: "relation", headerName: "Relación", width: 200 },
+<<<<<<< HEAD
     { field: "dms", headerName: "DMS", width: 150 },
     { field: "abstractness", headerName: "Abstracción", width: 150 },
     { field: "coupling", headerName: "Acoplamiento", width: 150 },
@@ -31,6 +39,11 @@ const EdgesTable = () => {
     { field: "packageMapping", headerName: "Mapeo de Paquete", width: 200 },
     { field: "q", headerName: "Q", width: 250 },
     { field: "answer", headerName: "Answer", width: 250 },
+=======
+    { field: "dms", headerName: "DMS", width: 200 },
+    { field: "abstractness", headerName: "Abstractness", width: 200 },
+    { field: "coupling", headerName: "Coupling", width: 200 },
+>>>>>>> 9a9a9abc4385c227225d8a6abed9bb57167b6200
   ];
 
   // Getting the values of each input fields
@@ -121,6 +134,7 @@ const EdgesTable = () => {
   const handleClose = () => setOpen(false);
 
   return (
+<<<<<<< HEAD
     <div style={{ height: "80vh", width: "100%" }}>
       <form className="form-styles">
         <div className="input">
@@ -189,11 +203,16 @@ const EdgesTable = () => {
           <AlertTitle>Calculo Exitoso</AlertTitle>
         </Alert>
       }
+=======
+    <div style={{ height: 400, width: "100%" }}>
+    <button onClick={putMetrics}>prueba</button>
+>>>>>>> 9a9a9abc4385c227225d8a6abed9bb57167b6200
       {!loader ? (
         <DataGrid rows={edgesDos} columns={columns} pageSize={10} />
       ) : (
         <Loader />
       )}
+      <p>prueba</p>
     </div>
   );
 };

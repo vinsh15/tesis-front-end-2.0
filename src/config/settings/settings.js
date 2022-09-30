@@ -1,6 +1,6 @@
 const settings = {
     staging: {
-        apiUrl: "https://tesis-back-c-v.herokuapp.com/",
+        apiUrl: "https://tesis-backend-final.herokuapp.com",
     },
     production: {
         //apiUrl: "https://tesis-back-end.herokuapp.com/"
