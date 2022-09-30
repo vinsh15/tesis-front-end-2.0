@@ -1,5 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
+import {
+  putMetrics,
+} from "../../../api/metrics/metrics";
 
 import AppContext from "../../../auth/context/context";
 import Loader from "../../Loader/Loader";
@@ -29,7 +32,7 @@ const EdgesTable = () => {
 
   return (
     <div style={{ height: 400, width: "100%" }}>
-    <button>prueba</button>
+    <button onClick={putMetrics}>prueba</button>
       {!loader ? (
         <DataGrid 
           rows={nodeHelper.getRelationData(selectedProject)} 

@@ -9,22 +9,21 @@ const url = "/metricas/";
  * @param {Integer} projectIndex índice del proyecto
  * @param {Integer} arcIndex índice de la arquitectura
  * @param {Integer} verIndex índice de la versión
- * @param {String} name nuevo nombre de la versión
+ * @param {Interger} nameResemblanceUmbral nombre de la versión
  * @returns versiones de una arquitectura de un proyecto
  * del usuario o error
  */
-const putMetrics = async (user, projectIndex, arcIndex,name) => {
-    const userInfo = {
+const putMetrics = async (user, projectIndex, arcIndex, verIndex, nameResemblanceUmbral) => {
+    const putMetrics = {
         user_id: user.uid,
         project_index: projectIndex,
         arch_index: arcIndex,
         ver_index: verIndex,
-        ver_name: name
+        name_ressemblance_umbral: nameResemblanceUmbral,
     };
-    const token = jwt(userInfo, 'secret');
     try {
         const response = await axios.put(url, {
-            token: token
+            setMetrics: putMetrics,
         });
         return response.data;
 
@@ -34,5 +33,5 @@ const putMetrics = async (user, projectIndex, arcIndex,name) => {
 }
 
 export {
-    putVersion,
+    putMetrics,
 }
