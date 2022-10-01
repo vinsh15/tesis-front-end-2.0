@@ -1,12 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { DataGrid } from "@material-ui/data-grid";
-<<<<<<< HEAD
-=======
 import {
   putMetrics,
 } from "../../../api/metrics/metrics";
 
->>>>>>> 9a9a9abc4385c227225d8a6abed9bb57167b6200
 import AppContext from "../../../auth/context/context";
 import Loader from "../../Loader/Loader";
 import nodeHelper from "../../../helpers/nodes/nodes";
@@ -26,24 +23,9 @@ const EdgesTable = () => {
     { field: "source", headerName: "Origen", width: 300 },
     { field: "target", headerName: "Destino", width: 300 },
     { field: "relation", headerName: "Relación", width: 200 },
-<<<<<<< HEAD
-    { field: "dms", headerName: "DMS", width: 150 },
-    { field: "abstractness", headerName: "Abstracción", width: 150 },
-    { field: "coupling", headerName: "Acoplamiento", width: 150 },
-    { field: "instability", headerName: "Instabilidad", width: 150 },
-    {
-      field: "nameResemblance",
-      headerName: "Semejanza del Nombre",
-      width: 200,
-    },
-    { field: "packageMapping", headerName: "Mapeo de Paquete", width: 200 },
-    { field: "q", headerName: "Q", width: 250 },
-    { field: "answer", headerName: "Answer", width: 250 },
-=======
     { field: "dms", headerName: "DMS", width: 200 },
     { field: "abstractness", headerName: "Abstractness", width: 200 },
     { field: "coupling", headerName: "Coupling", width: 200 },
->>>>>>> 9a9a9abc4385c227225d8a6abed9bb57167b6200
   ];
 
   // Getting the values of each input fields
@@ -134,79 +116,8 @@ const EdgesTable = () => {
   const handleClose = () => setOpen(false);
 
   return (
-<<<<<<< HEAD
-    <div style={{ height: "80vh", width: "100%" }}>
-      <form className="form-styles">
-        <div className="input">
-          <div className="input-align">
-            <input
-              value={dms}
-              onChange={(e) => setDms(+e.target.value)}
-              className="input-styles"
-              placeholder="W DMS"
-              name="dms"
-            />
-            <label className="input-label">DMS</label>
-          </div>
-          <div className="input-align">
-            <input
-              className="input-styles"
-              placeholder="W Sem. de Nombre"
-              name="semejanza"
-              value={nameResemblance}
-              onChange={(e) => setNameResemblance(+e.target.value)}
-            />
-            <label className="input-label">Semejanza de Nombre</label>
-          </div>
-          <div className="input-align">
-            <input
-              className="input-styles"
-              placeholder="W Mapeo de Paquete"
-              name="paquete"
-              value={packageMapping}
-              onChange={(e) => setPackageMapping(+e.target.value)}
-            />
-            <label className="input-label">Mapeo de Paquete</label>
-          </div>
-          <div className="input-align-umbral">
-            <input
-              className="input-styles-umbral"
-              placeholder="Umbral"
-              name="umbral"
-              value={umbral}
-              type="number"
-              min="0"
-              max="1"
-              onChange={(e) => setUmbral(e.target.value)}
-            />
-            <label className="input-label">Umbral</label>
-          </div>
-        </div>
-        <div className="btn-total">
-          <Button onClick={calculateTotal} variant="contained">
-            Calcular
-          </Button>
-        </div>
-      </form>
-      <div className="total-sum">
-        <p>
-          Total:<span>{sum}</span>
-        </p>
-      </div>
-      {sum > 100 ?
-        <Alert severity="error">
-          <AlertTitle>Error</AlertTitle>
-          El total de los pesos no puede ser mayor a 100 — <strong>Vuelve a calcular!</strong>
-        </Alert>
-        :
-        <Alert severity="success">
-          <AlertTitle>Calculo Exitoso</AlertTitle>
-        </Alert>
-      }
-=======
     <div style={{ height: 400, width: "100%" }}>
     <button onClick={putMetrics}>prueba</button>
->>>>>>> 9a9a9abc4385c227225d8a6abed9bb57167b6200
       {!loader ? (
         <DataGrid rows={edgesDos} columns={columns} pageSize={10} />
       ) : (
