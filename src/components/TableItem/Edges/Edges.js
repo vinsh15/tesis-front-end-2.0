@@ -7,9 +7,7 @@ import {
 import AppContext from "../../../auth/context/context";
 import Loader from "../../Loader/Loader";
 import nodeHelper from "../../../helpers/nodes/nodes";
-import { Button } from "@material-ui/core";
 import "./inputs.css";
-import { Alert, AlertTitle } from "@material-ui/lab";
 /**
  * Componente que representa
  * la tabla de aristas del proyecto selecionado

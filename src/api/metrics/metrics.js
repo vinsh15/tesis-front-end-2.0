@@ -13,24 +13,42 @@ const url = "/metricas/";
  * @returns versiones de una arquitectura de un proyecto
  * del usuario o error
  */
+// const putMetrics = async (user, projectIndex, arcIndex, verIndex, nameResemblanceUmbral) => {
+//     const putMetrics = {
+//         user_id: user.uid,
+//         project_index: projectIndex,
+//         arch_index: arcIndex,
+//         ver_index: verIndex,
+//         name_ressemblance_umbral: nameResemblanceUmbral,
+//     };
+//     try {
+//         const response = await axios.put(url, {
+//             setMetrics: putMetrics,
+//         });
+//         return response.data;
+
+//     } catch (error) {
+//         return error.response.status;
+//     }
+// }
+
 const putMetrics = async (user, projectIndex, arcIndex, verIndex, nameResemblanceUmbral) => {
     const putMetrics = {
-        user_id: user.uid,
-        project_index: projectIndex,
-        arch_index: arcIndex,
-        ver_index: verIndex,
-        name_ressemblance_umbral: nameResemblanceUmbral,
-    };
+         user_id: user.uid,
+         project_index: projectIndex,
+         arch_index: arcIndex,
+         ver_index: verIndex,
+         name_ressemblance_umbral: nameResemblanceUmbral,
+   }
     try {
         const response = await axios.put(url, {
-            setMetrics: putMetrics,
+            headers: { "Content-Type": "application/json" },
         });
         return response.data;
-
     } catch (error) {
         return error.response.status;
     }
-}
+};
 
 export {
     putMetrics,
