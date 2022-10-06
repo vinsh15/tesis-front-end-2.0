@@ -13,7 +13,7 @@ import "./inputs.css";
  * la tabla de aristas del proyecto selecionado
  */
 const EdgesTable = () => {
-  const { selectedProject } = useContext(AppContext);
+  const { user, selectedProject } = useContext(AppContext);
   const [loader, setLoader] = useState(true);
 
   const columns = [
@@ -114,14 +114,17 @@ const EdgesTable = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-    <button onClick={putMetrics}>prueba</button>
+    <div style={{ height: 800, width: "100%" }}>
+    <button onClick={() => putMetrics(
+      user,
+      selectedProject.projectIndex,
+      selectedProject.arcIndex,
+      selectedProject.verIndex,)}>prueba1</button>
       {!loader ? (
         <DataGrid rows={edgesDos} columns={columns} pageSize={10} />
       ) : (
         <Loader />
       )}
-      <p>prueba</p>
     </div>
   );
 };
