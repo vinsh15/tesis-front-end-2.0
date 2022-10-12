@@ -7,12 +7,13 @@ import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 
 
 
-const ManageMetrics = async (user, selectedProject, setReloadSidebar) => {  
+const ManageMetrics = async (user, selectedProject, setReloadSidebar, umbralName) => {  
     setReloadSidebar(true);
     await putMetrics(user,
         selectedProject.projectIndex,
         selectedProject.arcIndex,
-        selectedProject.verIndex);
+        selectedProject.verIndex,
+        umbralName);
     
       ModalMessage(
         "¡Metricas calculadas con exito!",

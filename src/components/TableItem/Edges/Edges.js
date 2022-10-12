@@ -196,7 +196,7 @@ const EdgesTable = () => {
           </div>
         </div>
         <div className="btn-total">
-          <button onClick={() => ManageMetrics(user, selectedProject, setReloadSidebar)
+          <button onClick={() => ManageMetrics(user, selectedProject, setReloadSidebar, umbralName)
           }>
             Calcular Metricas
           </button>

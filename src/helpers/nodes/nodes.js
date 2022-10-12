@@ -270,3 +270,7 @@ export default {
   removeNode,
   repaintEdges,
 };
+
+export {
+  repaintEdges
+}
