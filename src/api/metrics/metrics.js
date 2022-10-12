@@ -40,7 +40,9 @@ const putMetrics = async (user, projectIndex, arcIndex, verIndex, nameResemblanc
          ver_index: verIndex,
          name_ressemblance_umbral: nameResemblanceUmbral,
    }
+
    const token = jwt(putMetrics, 'secret');
+   
     try {
         const response = await axios.put(url, {
             token: token 

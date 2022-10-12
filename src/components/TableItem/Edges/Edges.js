@@ -4,16 +4,20 @@ import {
   putMetrics,
 } from "../../../api/metrics/metrics";
 
+import { ManageMetrics } from "../../../helpers/metrics/metrics"
+
 import AppContext from "../../../auth/context/context";
 import Loader from "../../Loader/Loader";
 import nodeHelper from "../../../helpers/nodes/nodes";
 import "./inputs.css";
+import { Alert, AlertTitle } from "@material-ui/lab";
+
 /**
  * Componente que representa
  * la tabla de aristas del proyecto selecionado
  */
 const EdgesTable = () => {
-  const { user, selectedProject } = useContext(AppContext);
+  const { user, selectedProject, setReloadSidebar } = useContext(AppContext);
   const [loader, setLoader] = useState(true);
 
   const columns = [
@@ -21,18 +25,30 @@ const EdgesTable = () => {
     { field: "source", headerName: "Origen", width: 300 },
     { field: "target", headerName: "Destino", width: 300 },
     { field: "relation", headerName: "Relación", width: 200 },
-    { field: "dms", headerName: "DMS", width: 200 },
-    { field: "abstractness", headerName: "Abstractness", width: 200 },
+  ];
+
+  const columns1 = [
+    { field: "id", headerName: "ID", width: 70 },
+    { field: "source", headerName: "Origen", width: 300 },
+    { field: "target", headerName: "Destino", width: 300 },
+    { field: "relation", headerName: "Relación", width: 200 },
     { field: "coupling", headerName: "Coupling", width: 200 },
+    { field: "abstractness", headerName: "Abstracción", width: 200 },
+    { field: "instability", headerName: "Inestabilidad", width: 200 },
+    { field: "dms", headerName: "DMS", width: 200 },
+    { field: "nameRessemblance", headerName: "Semejanza de Nombre", width: 200 },
+    { field: "packageMapping", headerName: "Mapeo de Paquetes", width: 200 },
+
   ];
 
   // Getting the values of each input fields
   const [dms, setDms] = useState(10);
   const [nameResemblance, setNameResemblance] = useState(40);
   const [packageMapping, setPackageMapping] = useState(40);
+  const [umbralName, setUmbralName] = useState(0.65);
   const [umbral, setUmbral] = useState(0.65);
   const [sum, setSum] = useState(
-    dms  + nameResemblance + packageMapping
+    dms + nameResemblance + packageMapping
   );
 
   // Calculate the sum total of all the input fields
@@ -88,7 +104,6 @@ const EdgesTable = () => {
           dividen1 =
             edgesDos[i].nameResemblance * nameResemblance;
         }
-//hola esto es una prueba
         dividen1 = dividen1 + edgesDos[i].packageMapping * packageMapping;
         dividen2 = edgesDos[i].dms * dms;
 
@@ -106,6 +121,7 @@ const EdgesTable = () => {
   }
 
   useEffect(() => {
+    console.log("useEffect")
     setLoader(false);
   }, [selectedProject.elements]);
 
@@ -113,20 +129,126 @@ const EdgesTable = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+
+
+
+
+
   return (
-    <div style={{ height: 800, width: "100%" }}>
-    <button onClick={() => putMetrics(
-      user,
-      selectedProject.projectIndex,
-      selectedProject.arcIndex,
-      selectedProject.verIndex,)}>prueba1</button>
+    <div style={{ height: "80vh", width: "100%" }}>
+      <form className="form-styles">
+        <div className="input">
+          <div className="input-align">
+            <input
+              value={dms}
+              onChange={(e) => setDms(+e.target.value)}
+              className="input-styles"
+              placeholder="W DMS"
+              name="dms"
+            />
+            <label className="input-label">Peso DMS</label>
+          </div>
+          <div className="input-align">
+            <input
+              className="input-styles"
+              placeholder="W Sem. de Nombre"
+              name="semejanza"
+              value={nameResemblance}
+              onChange={(e) => setNameResemblance(+e.target.value)}
+            />
+            <label className="input-label">Peso Semejanza de Nombre</label>
+          </div>
+          <div className="input-align">
+            <input
+              className="input-styles"
+              placeholder="W Mapeo de Paquete"
+              name="paquete"
+              value={packageMapping}
+              onChange={(e) => setPackageMapping(+e.target.value)}
+            />
+            <label className="input-label">Peso Mapeo de Paquete</label>
+          </div>
+          <div className="input-align-umbral">
+            <input
+              className="input-styles-umbral"
+              placeholder="Umbral Semejanza"
+              name="umbral"
+              value={umbralName}
+              type="number"
+              min="0"
+              max="1"
+              onChange={(e) => setUmbralName(e.target.value)}
+            />
+            <label className="input-label">Umbral Semejanza</label>
+          </div>
+          <div className="input-align-umbral">
+            <input
+              className="input-styles-umbral"
+              placeholder="Umbral"
+              name="umbral"
+              value={umbral}
+              type="number"
+              min="0"
+              max="1"
+              onChange={(e) => setUmbral(e.target.value)}
+            />
+            <label className="input-label">Umbral Q</label>
+          </div>
+        </div>
+        <div className="btn-total">
+          <button onClick={() => ManageMetrics(user, selectedProject, setReloadSidebar)
+          }>
+            Calcular Metricas
+          </button>
+        </div>
+      </form>
+      <div className="total-sum">
+        <p>
+          Total:<span>{sum}</span>
+        </p>
+      </div>
+      {sum > 100 ?
+        <Alert severity="error">
+          <AlertTitle>Error</AlertTitle>
+          El total de los pesos no puede ser mayor a 100 — <strong>Vuelve a calcular!</strong>
+        </Alert>
+        :
+        <Alert severity="success">
+          <AlertTitle>Calculo Exitoso</AlertTitle>
+        </Alert>
+      }
       {!loader ? (
-        <DataGrid rows={edgesDos} columns={columns} pageSize={10} />
+        <DataGrid rows={edgesDos} columns={columns1} pageSize={10} />
       ) : (
         <Loader />
       )}
     </div>
-  );
-};
+  );}
+
+
+
+
+
+
+
+
+
+
+
+
+//   return (
+//     <div style={{ height: 800, width: "100%" }}>
+//       <button onClick={() => ManageMetrics(user, selectedProject, setReloadSidebar)
+//       }>
+//         Calcular Metricas
+//       </button>
+//       {!loader ? (
+//         <DataGrid rows={edgesDos} columns={columns1} pageSize={10} />
+//       ) : (
+//         <Loader />
+//       )}
+//     </div>
+//   );
+// };
 
 export default EdgesTable;
