@@ -12,4 +12,4 @@ const getCurrentSettings = (flag) => {
     return settings.production;
 }
 
-export default getCurrentSettings(false);
+export default getCurrentSettings(true);

@@ -1,5 +1,19 @@
+.form-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
 .form-styles {
     display: flex;
+    padding-bottom: 2rem;
+    align-items: center;
+}
+
+.form-umbral {
+    display: flex;
+    padding-top: 2rem;
+    border-top: 1px solid;
 }
 
 .input {
@@ -43,7 +57,7 @@
 .input-align-umbral {
     margin-right: 1rem;
     position: relative;
-    width: 80px;
+    width: 100px;
     height: 40px;
     display: flex;
     flex-direction: column-reverse;
@@ -54,7 +68,7 @@
     border-top: none;
     border-right: none;
     border-left: none;
-    width: 80px;
+    width: 100px;
 }
 
 .input-styles-umbral:focus {
