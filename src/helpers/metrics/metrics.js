@@ -7,22 +7,22 @@ import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 
 
 
-const ManageMetrics = async (user, selectedProject, setReloadSidebar, umbralName) => {  
-    setReloadSidebar(true);
+const ManageMetrics = async (user, selectedProject, setReloadSidebar, name_ressemblance_umbral) => {  
+    // setReloadSidebar(true);
     await putMetrics(user,
         selectedProject.projectIndex,
         selectedProject.arcIndex,
         selectedProject.verIndex,
-        umbralName);
+        name_ressemblance_umbral);
     
-      ModalMessage(
-        "¡Metricas calculadas con exito!",
-        " ",
-        "success",
-        false,
-        4000
-      );
-    //   window.location.reload()
+      // ModalMessage(
+      //   "¡Metricas calculadas con exito!",
+      //   " ",
+      //   "success",
+      //   false,
+      //   4000
+      // );
+    window.location.reload()
   };
 
   export { ManageMetrics };

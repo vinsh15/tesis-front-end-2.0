@@ -26,7 +26,7 @@ const NodesTable = () => {
   const columns = [
     { field: "name", headerName: "Nombre", width: 400 },
     { field: "module", headerName: "Modulo", width: 150 },
-    { field: "incompleteResources", headerName: "Recursos Incompletos", width: 250 },
+    { field: "incomompleteProperties", headerName: "Propiedades Incompletas", width: 250 },
   ];
 
 

@@ -216,7 +216,7 @@ const getNodeData = (selectedProject) => {
     id: index,
     name: node.data.name,
     module: node.data.module,
-    incompleteResources: node.data.incompleteResources,
+    incomompleteProperties: node.data.incomompleteProperties,
   }));
 };
 

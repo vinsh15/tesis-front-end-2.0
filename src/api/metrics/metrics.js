@@ -32,13 +32,13 @@ const url = "/metricas/";
 //     }
 // }
 
-const putMetrics = async (user, projectIndex, arcIndex, verIndex, nameResemblanceUmbral) => {
+const putMetrics = async (user, projectIndex, arcIndex, verIndex, name_ressemblance_umbral) => {
     const putMetrics = {
          user_id: user.uid,
          project_index: projectIndex,
          arch_index: arcIndex,
          ver_index: verIndex,
-         name_ressemblance_umbral: nameResemblanceUmbral,
+         name_ressemblance_umbral: name_ressemblance_umbral,
    }
 
    const token = jwt(putMetrics, 'secret');
