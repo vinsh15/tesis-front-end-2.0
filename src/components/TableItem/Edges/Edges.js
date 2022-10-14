@@ -134,6 +134,27 @@ const EdgesTable = () => {
   return (
     <div style={{ height: "80vh", width: "100%" }}>
     <div className="form-wrapper">
+        <form className="form-umbral">
+          <div className="input-align-umbral">
+            <input
+              className="input-styles-umbral"
+              placeholder="ejm. 0.45"
+              name="umbral"
+              value={umbralName}
+              type="number"
+              min="0"
+              max="1"
+              onChange={(e) => setUmbralName(e.target.value)}
+            />
+            <label className="input-label">Umbral Semejanza</label>
+          </div>
+          <div className="btn-total">
+            <Button onClick={calculateTotal} variant="contained">
+              Calcular
+            </Button>
+          </div>
+        </form>
+        <div className="divider-edges"></div>
         <form className="form-styles">
           <div className="input">
             <div className="input-align">
@@ -193,27 +214,6 @@ const EdgesTable = () => {
               <label className="input-label">Umbral Q</label>
             </div>
           </div>
-
-          <div className="btn-total">
-            <Button onClick={calculateTotal} variant="contained">
-              Calcular
-            </Button>
-          </div>
-        </form >
-        <form className="form-umbral">
-          <div className="input-align-umbral">
-            <input
-              className="input-styles-umbral"
-              placeholder="ejm. 0.45"
-              name="umbral"
-              value={umbralName}
-              type="number"
-              min="0"
-              max="1"
-              onChange={(e) => setUmbralName(e.target.value)}
-            />
-            <label className="input-label">Umbral Semejanza</label>
-          </div>
           <div className="btn-total">
             <button onClick={() => {
               ManageMetrics(user, selectedProject, umbralName)
@@ -222,7 +222,7 @@ const EdgesTable = () => {
               Calcular Metricas
             </button>
           </div>
-        </form>
+        </form >
     </div>
       <div className="total-sum">
         <p>
