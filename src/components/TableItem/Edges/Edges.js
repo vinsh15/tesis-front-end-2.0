@@ -135,96 +135,115 @@ const EdgesTable = () => {
 
   return (
     <div style={{ height: "80vh", width: "100%" }}>
-      <form className="form-styles">
-        <div className="input">
-          <div className="input-align">
-            <input
-              value={dms}
-              onChange={(e) => {setDms(+e.target.value) 
-                calculateTotal()}}
-              className="input-styles"
-              placeholder="ejm. 15"
-              name="dms"
-            />
-            <label className="input-label">Peso DMS</label>
-          </div>
-          <div className="input-align">
-            <input
-              className="input-styles"
-              placeholder="ejm. 35"
-              name="semejanza"
-              value={nameResemblance}
-              onChange={(e) => {setNameResemblance(+e.target.value)
-                                calculateTotal()}}
-            />
-            <label className="input-label">Peso Semejanza de Nombre</label>
-          </div>
-          <div className="input-align">
-            <input
-              className="input-styles"
-              placeholder="ejm. 35"
-              name="paquete"
-              value={packageMapping}
-              onChange={(e) => {setPackageMapping(+e.target.value)
-                                calculateTotal() }}
-            />
-            <label className="input-label">Peso Mapeo de Paquete</label>
-          </div>
+      <div className="form-wrapper">
+        <form className="form-umbral">
           <div className="input-align-umbral">
             <input
               className="input-styles-umbral"
               placeholder="ejm. 0.45"
               name="umbral"
               value={umbralName}
-              type="text"
+              type="number"
+              min="0"
+              max="1"
               onChange={(e) => setUmbralName(e.target.value)}
             />
             <label className="input-label">Umbral Semejanza</label>
           </div>
-          <div className="input-align-umbral">
-            <input
-              className="input-styles-umbral"
-              placeholder="ejm. 0.65"
-              name="umbral"
-              value={umbralCoupling}
-              type="text"
-              onChange={(e) => setUmbralCoupling(e.target.value)}
-            />
-            <label className="input-label">Umbral Acoplamiento</label>
+          <div className="btn-total">
+            <Button onClick={calculateTotal} variant="contained">
+              Calcular
+            </Button>
           </div>
-          <div className="input-align-umbral">
-            <input
-              className="input-styles-umbral"
-              placeholder="Umbral"
-              name="umbral"
-              value={umbral}
-              type="text"
-              onChange={(e) => setUmbral(e.target.value)}
-            />
-            <label className="input-label">Umbral Q</label>
-          </div>
-        </div>
+        </form>
+        <div className="divider-edges"></div>
+          <form className="form-styles">
+            <div className="input">
+              <div className="input-align">
+                <input
+                  value={dms}
+                  onChange={(e) => {
+                    setDms(+e.target.value)
+                    calculateTotal()
+                  }}
+                  className="input-styles"
+                  placeholder="ejm. 15"
+                  name="dms"
+                />
+                <label className="input-label">Peso DMS</label>
+              </div>
+              <div className="input-align">
+                <input
+                  className="input-styles"
+                  placeholder="ejm. 35"
+                  name="semejanza"
+                  value={nameResemblance}
+                  onChange={(e) => {
+                    setNameResemblance(+e.target.value)
+                    calculateTotal()
+                  }}
+                />
+                <label className="input-label">Peso Semejanza de Nombre</label>
+              </div>
+              <div className="input-align">
+                <input
+                  className="input-styles"
+                  placeholder="ejm. 35"
+                  name="paquete"
+                  value={packageMapping}
+                  onChange={(e) => {
+                    setPackageMapping(+e.target.value)
+                    calculateTotal()
+                  }}
+                />
+                <label className="input-label">Peso Mapeo de Paquete</label>
+              </div>
+              <div className="input-align-umbral">
+                <input
+                  className="input-styles-umbral"
+                  placeholder="ejm. 0.45"
+                  name="umbral"
+                  value={umbralName}
+                  type="text"
+                  onChange={(e) => setUmbralName(e.target.value)}
+                />
+                <label className="input-label">Umbral Semejanza</label>
+              </div>
+              <div className="input-align-umbral">
+                <input
+                  className="input-styles-umbral"
+                  placeholder="ejm. 0.65"
+                  name="umbral"
+                  value={umbralCoupling}
+                  type="text"
+                  onChange={(e) => setUmbralCoupling(e.target.value)}
+                />
+                <label className="input-label">Umbral Acoplamiento</label>
+              </div>
+              <div className="input-align-umbral">
+                <input
+                  className="input-styles-umbral"
+                  placeholder="Umbral"
+                  name="umbral"
+                  value={umbral}
+                  type="text"
+                  onChange={(e) => setUmbral(e.target.value)}
+                />
+                <label className="input-label">Umbral Q</label>
+              </div>
+            </div>
 
+            <div className="btn-total">
+              <Button onClick={() => {
+                ManageMetrics(user, selectedProject, umbralName)
+              }
+              }>
+                Calcular Metricas
+              </Button>
+            </div>
 
-        <div className="btn-total">
-          <button onClick={() => {
-            console.log("UMBRAL NAME: " + umbralName)
-            ManageMetrics(user, selectedProject, umbralName)
-          }
-          }>
-            Calcular Metricas
-          </button>
-        </div>
-
-
-        <div>
-          <Button onClick={calculateTotal} variant="contained">
-            Calcular
-          </Button>
-        </div>
-
-
-      </form >
+          </form >
+      </div>
       <div className="total-sum">
         <p>
           Total:<span>{total}</span>
@@ -248,7 +267,7 @@ const EdgesTable = () => {
           <Loader />
         )
       }
-    </div >
+  </div >
   );
 }
 
