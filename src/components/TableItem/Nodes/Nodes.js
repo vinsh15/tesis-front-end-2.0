@@ -11,22 +11,28 @@ import nodeHelper from "../../../helpers/nodes/nodes";
  * la tabla de nodos del proyecto selecionado
  */
 const NodesTable = () => {
-  const { 
-    selectedProject, 
+  const {
+    selectedProject,
     selectedNodes, setSelectedNodes,
-    selectionModel, setSelectionModel, 
-    cy 
+    selectionModel, setSelectionModel,
+    cy
   } = useContext(AppContext);
   let [loader, setLoader] = useState(true);
 
   let rows = selectedProject.elements.nodes.map(node => {
-    return {id: node.data.id, name: node.data.name, module: node.data.module, incompleteResources: node.data.incompleteResources };
+    return { id: node.data.id, name: node.data.name, 
+             isInterface: !node.data.incomompleteProperties ? node.data.isInterface ? 'Si' : 'No' : '-', 
+             isAbtsract: node.data.hasOwnProperty('isAbstract') ? node.data.isAbtsract ? 'Si' : 'No' : '-', 
+             module: node.data.hasOwnProperty('module') ? node.data.module : "-", 
+             incomompleteProperties: node.data.incomompleteProperties ? "No" : "Si" };
   });
- 
+
   const columns = [
     { field: "name", headerName: "Nombre", width: 400 },
+    { field: "isInterface", headerName: "Es Interfaz?", width: 150 },
+    { field: "isAbtsract", headerName: "Es Abstracto?", width: 150 },
     { field: "module", headerName: "Modulo", width: 150 },
-    { field: "incomompleteProperties", headerName: "Propiedades Incompletas", width: 250 },
+    { field: "incomompleteProperties", headerName: "Propiedades Completas", width: 250 },
   ];
 
 
@@ -46,7 +52,7 @@ const NodesTable = () => {
             nodeHelper.manageCellClick(params.row.name, selectedNodes, setSelectedNodes, cy, setSelectionModel);
           }}
           onColumnHeaderClick={param => {
-            if(param.field === '__check__'){
+            if (param.field === '__check__') {
               nodeHelper.manageCheckSelection(selectedNodes, setSelectedNodes, cy, setSelectionModel);
             }
           }}
