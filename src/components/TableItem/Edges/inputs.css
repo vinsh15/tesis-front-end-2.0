@@ -1,10 +1,23 @@
+.form-wrapper {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
 .form-styles {
     display: flex;
+    padding-top: 1.5rem;
+    align-items: center;
+}
+
+.form-umbral {
+    display: flex;
+    padding: 1rem 0rem;
 }
 
 .input {
     display: flex;
-    margin: 1rem 0.5rem;
+    margin: 0 0.5rem 0 0;
 }
 
 .input-styles {
@@ -43,7 +56,7 @@
 .input-align-umbral {
     margin-right: 1rem;
     position: relative;
-    width: 80px;
+    width: 100px;
     height: 40px;
     display: flex;
     flex-direction: column-reverse;
@@ -54,7 +67,7 @@
     border-top: none;
     border-right: none;
     border-left: none;
-    width: 80px;
+    width: 100px;
 }
 
 .input-styles-umbral:focus {
@@ -93,7 +106,7 @@
 }
 
 input:focus+label {
-   color: #3f51b5;
+    color: #3f51b5;
 }
 
 .btn-total {
@@ -106,6 +119,8 @@ input:focus+label {
     background: #3f51b5 !important;
     color: #fff !important;
     font-weight: bold !important;
+    padding: 9px;
+    border-radius: 4px !important;
 }
 
 .btn-total button:hover {
@@ -126,4 +141,10 @@ input:focus+label {
 .total-sum span {
     font-weight: 600;
 
+}
+
+.divider-edges {
+    border: solid 1px #3f51b5;
+    box-shadow: 0 1em 1em -1em rgba(0, 0, 0, .25);
+    width: 100%
 }
