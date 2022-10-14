@@ -121,6 +121,7 @@ input:focus+label {
     color: #fff !important;
     font-weight: bold !important;
     padding: 9px;
+    border-radius: 4px !important;
 }
 
 .btn-total button:hover {
