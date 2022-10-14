@@ -149,8 +149,11 @@ const EdgesTable = () => {
             <label className="input-label">Umbral Semejanza</label>
           </div>
           <div className="btn-total">
-            <Button onClick={calculateTotal} variant="contained">
-              Calcular
+            <Button onClick={() => {
+              ManageMetrics(user, selectedProject, umbralName)
+            }
+            }>
+              Calcular Metricas
             </Button>
           </div>
         </form>
@@ -215,12 +218,9 @@ const EdgesTable = () => {
             </div>
           </div>
           <div className="btn-total">
-            <button onClick={() => {
-              ManageMetrics(user, selectedProject, umbralName)
-            }
-            }>
-              Calcular Metricas
-            </button>
+            <Button onClick={calculateTotal} variant="contained">
+              Calcular
+            </Button>
           </div>
         </form >
     </div>
