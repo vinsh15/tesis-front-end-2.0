@@ -194,7 +194,7 @@ const EdgesTable = () => {
             </div>
           </div>
 
-          <div>
+          <div className="btn-total">
             <Button onClick={calculateTotal} variant="contained">
               Calcular
             </Button>
