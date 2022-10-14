@@ -23,7 +23,7 @@ const ManageMetrics = async (user, selectedProject, umbralName) => {
       //   false,
       //   4000
       // );
-    //window.location.reload()
+    window.location.reload()
   };
 
   export { ManageMetrics };
