@@ -9,7 +9,6 @@ import { ModalMessage } from "../../components/ModalMessage/ModalMessage";
 
 const ManageMetrics = async (user, selectedProject, umbralName) => {  
     // setReloadSidebar(true);
-    console.log("UMBRAL NAME1: " + umbralName)
     await putMetrics(user,
         selectedProject.projectIndex,
         selectedProject.arcIndex,

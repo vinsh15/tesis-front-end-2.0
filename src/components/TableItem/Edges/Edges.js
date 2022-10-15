@@ -151,7 +151,10 @@ const EdgesTable = () => {
             <label className="input-label">Umbral Semejanza</label>
           </div>
           <div className="btn-total">
-            <Button onClick={ ManageMetrics(user, selectedProject, umbralName)} variant="contained">
+          <Button onClick={() => {
+             ManageMetrics(user, selectedProject, umbralName);
+            }
+            }>
               Calcular Métricas
             </Button>
           </div>
@@ -197,17 +200,6 @@ const EdgesTable = () => {
                 }}
               />
               <label className="input-label">Peso Mapeo de Paquete</label>
-            </div>
-            <div className="input-align-umbral">
-              <input
-                className="input-styles-umbral"
-                placeholder="ejm. 0.45"
-                name="umbral"
-                value={umbralName}
-                type="text"
-                onChange={(e) => setUmbralName(e.target.value)}
-              />
-              <label className="input-label">Umbral Semejanza</label>
             </div>
             <div className="input-align-umbral">
               <input
@@ -271,31 +263,6 @@ const EdgesTable = () => {
   );
 }
 
-
-
-
-
-
-
-
-
-
-
-
-//   return (
-//     <div style={{ height: 800, width: "100%" }}>
-//       <button onClick={() => ManageMetrics(user, selectedProject, setReloadSidebar)
-//       }>
-//         Calcular Metricas
-//       </button>
-//       {!loader ? (
-//         <DataGrid rows={edgesDos} columns={columns1} pageSize={10} />
-//       ) : (
-//         <Loader />
-//       )}
-//     </div>
-//   );
-// };
 
 export default EdgesTable;
 
