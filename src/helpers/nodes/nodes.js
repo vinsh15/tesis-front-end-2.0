@@ -233,12 +233,12 @@ const getRelationData = (selectedProject) => {
       source: edge.data.source,
       target: edge.data.target,
       relation: getRelationType(edge.scratch.relation),
-      dms: edge.hasOwnProperty('metrics') ? edge.metrics.DMS.value : 'No Calculado',
-      abstractness: edge.hasOwnProperty('metrics') ? edge.metrics.abstractness?.value : 'No Calculado',
-      coupling: edge.hasOwnProperty('metrics') ? edge.metrics.coupling.value : 'No Calculado',
-      instability: edge.hasOwnProperty('metrics') ? edge.metrics.instability?.value : 'No Calculado',
-      nameRessemblance: edge.hasOwnProperty('metrics') ? edge.metrics.nameRessemblance?.value : 'No Calculado',
-      packageMapping: edge.hasOwnProperty('metrics') ? edge.metrics.packageMapping?.value : 'No Calculado',
+      dms: edge.hasOwnProperty('metrics') ? edge.metrics.DMS.value.toFixed(2) : '-',
+      abstractness: edge.hasOwnProperty('metrics') ? edge.metrics.abstractness?.value.toFixed(2) : '-',
+      coupling: edge.hasOwnProperty('metrics') ? edge.metrics.coupling.value.toFixed(2) : '-',
+      instability: edge.hasOwnProperty('metrics') ? edge.metrics.instability?.value.toFixed(2) : '-',
+      nameRessemblance: edge.hasOwnProperty('metrics') ? edge.metrics.nameRessemblance?.value.toFixed(2) : '-',
+      packageMapping: edge.hasOwnProperty('metrics') ? edge.metrics.packageMapping?.value.toFixed(2) : '-',
     };
   })
 };

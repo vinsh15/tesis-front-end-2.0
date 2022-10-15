@@ -18,7 +18,7 @@ import { Button } from "@material-ui/core";
  * la tabla de aristas del proyecto selecionado
  */
 const EdgesTable = () => {
-  const { user, selectedProject, setReloadSidebar } = useContext(AppContext);
+  const { user, setUser, selectedProject, setReloadSidebar } = useContext(AppContext);
   const [loader, setLoader] = useState(true);
 
   const columns1 = [
@@ -26,7 +26,7 @@ const EdgesTable = () => {
     { field: "source", headerName: "Origen", width: 300 },
     { field: "target", headerName: "Destino", width: 300 },
     { field: "relation", headerName: "Relación", width: 200 },
-    { field: "coupling", headerName: "Coupling", width: 200 },
+    { field: "coupling", headerName: "Acoplamiento", width: 200 },
     { field: "abstractness", headerName: "Abstracción", width: 200 },
     { field: "instability", headerName: "Inestabilidad", width: 200 },
     { field: "dms", headerName: "DMS", width: 200 },
@@ -107,17 +107,28 @@ const EdgesTable = () => {
         dividen1 = dividen1 + edgesDos[i].packageMapping * packageMapping;
         dividen2 = edgesDos[i].dms * dms;
 
-        let q = (dividen1 - dividen2) / sum;
-        edgesDos[i].q = q.toFixed(2);
-
-        if (q >= umbral) {
-          edgesDos[i].answer = "Si";
+        if (edgesDos[i]['dms'] === '-') {
+          edgesDos[i].q = '-';
+          edgesDos[i].answer = '-'
         } else {
-          edgesDos[i].answer = "No";
+          let q = (dividen1 - dividen2) / sum;
+          edgesDos[i].q = q.toFixed(2);
+
+          if (q >= umbral) {
+            edgesDos[i].answer = "Si";
+          } else {
+            edgesDos[i].answer = "No";
+          }
         }
       } else {
-        edgesDos[i].q = 'Imposible Calcular'
-        edgesDos[i].answer = 'Imposible Concluir'
+        edgesDos[i]['dms'] = '-';
+        edgesDos[i]['coupling'] = '-';
+        edgesDos[i]['abstractness'] = '-';
+        edgesDos[i]['instability'] = '-';
+        edgesDos[i]['nameRessemblance'] = '-';
+        edgesDos[i]['packageMapping'] = '-';
+        edgesDos[i].q = '-'
+        edgesDos[i].answer = 'Inconcluso'
 
       }
 
@@ -127,10 +138,6 @@ const EdgesTable = () => {
   useEffect(() => {
     setLoader(false);
   }, [selectedProject.elements]);
-
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
 
 
   return (
@@ -151,8 +158,10 @@ const EdgesTable = () => {
             <label className="input-label">Umbral Semejanza</label>
           </div>
           <div className="btn-total">
-          <Button onClick={() => {
-             ManageMetrics(user, selectedProject, umbralName);
+            <Button onClick={() => {
+              {
+                ManageMetrics(user, setUser, selectedProject, umbralName, setReloadSidebar);
+              }
             }
             }>
               Calcular Métricas
