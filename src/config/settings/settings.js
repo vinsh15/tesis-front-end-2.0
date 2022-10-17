@@ -3,8 +3,7 @@ const settings = {
         apiUrl: "https://tesis-backend-final.herokuapp.com",
     },
     production: {
-        //apiUrl: "https://tesis-back-end.herokuapp.com/"
-        apiUrl: "http://127.0.0.1:8000/",
+        apiUrl: "https://tesis-backend-final.herokuapp.com",
     }
 }
 const getCurrentSettings = (flag) => {
