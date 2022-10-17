@@ -29,6 +29,10 @@ function Excel({
                 >
                     <ExcelColumn label="ID" value="id" />
                     <ExcelColumn label="Nombre" value="name" />
+                    {/* <ExcelColumn label="Es Interfaz?" value="isInterface" />
+                    <ExcelColumn label="Es Abstracto?" value="isAbstract" /> */}
+                    <ExcelColumn label="Modulo" value="module" />
+                    {/* <ExcelColumn label="Propiedas Completas" value="incomompleteProperties" /> */}
                 </ExcelSheet>
         )
     }
@@ -48,11 +52,11 @@ function Excel({
                 <ExcelColumn label="Origen" value="source" />
                 <ExcelColumn label="Destino" value="target" />
                 <ExcelColumn label="Relación" value="relation" />
-                <ExcelColumn label="DMS" value="dms" />
-                <ExcelColumn label="Abstraccion" value="abstractness" />
                 <ExcelColumn label="Acoplamiento" value="coupling" />
+                <ExcelColumn label="Abstraccion" value="abstractness" />
                 <ExcelColumn label="Instabilidad" value="instability" />
-                <ExcelColumn label="Semejanza del Nombre" value="nameResemblance" />
+                <ExcelColumn label="DMS" value="dms" />
+                <ExcelColumn label="Semejanza del Nombre" value="nameRessemblance" />
                 <ExcelColumn label="Manejo de Paquete" value="packageMapping" />
             </ExcelSheet>
         )

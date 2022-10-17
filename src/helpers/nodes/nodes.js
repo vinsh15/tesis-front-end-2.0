@@ -216,6 +216,8 @@ const getNodeData = (selectedProject) => {
     id: index,
     name: node.data.name,
     module: node.data.module,
+    isInterface: node.data.isInterface,
+    isAbstract: node.data.isAbstract,
     incomompleteProperties: node.data.incomompleteProperties,
   }));
 };
