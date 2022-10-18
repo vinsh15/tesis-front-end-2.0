@@ -6,6 +6,10 @@
     height: 92vh !important;
 }
 
+.edges-table > .MuiDataGrid-root {
+    height: 58% !important;
+}
+
 .MuiDataGrid-root {
     height: 68% !important;
 }

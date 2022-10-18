@@ -141,7 +141,7 @@ const EdgesTable = () => {
 
 
   return (
-    <div style={{ height: "80vh", width: "100%" }}>
+    <div style={{ height: "80vh", width: "100%" }} className="edges-table">
       <div className="form-wrapper">
         <form className="form-umbral">
           <div className="input-align-umbral">
@@ -150,9 +150,7 @@ const EdgesTable = () => {
               placeholder="ejm. 0.45"
               name="umbral"
               value={umbralName}
-              type="number"
-              min="0"
-              max="1"
+              type="text"
               onChange={(e) => setUmbralName(e.target.value)}
             />
             <label className="input-label">Umbral Semejanza</label>
